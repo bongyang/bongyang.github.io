@@ -1,0 +1,310 @@
+[
+  {
+    "key": "bong2026mapping",
+    "type": "article",
+    "group": "journal",
+    "title": "Mapping the digital entrepreneurship initiative ecosystem: Structural challenges and inclusivity gaps in emerging economies",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      },
+      {
+        "given": "Ghazala",
+        "family": "Tabassum"
+      },
+      {
+        "given": "Gary",
+        "family": "Loh"
+      },
+      {
+        "given": "Tariq",
+        "family": "Zaman"
+      }
+    ],
+    "year": 2026,
+    "venue": "The International Journal of Entrepreneurship and Innovation",
+    "volume": "",
+    "number": "",
+    "pages": "",
+    "publisher": "SAGE Publications",
+    "doi": "10.1177/14657503261462319",
+    "url": ""
+  },
+  {
+    "key": "bong2026two",
+    "type": "article",
+    "group": "journal",
+    "title": "The Two Sarawaks: Parallel Digital Economies and the Question of Rural Inclusion",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      }
+    ],
+    "year": 2026,
+    "venue": "Borneo Journal of Social Sciences and Humanities",
+    "volume": "8",
+    "number": "1",
+    "pages": "",
+    "publisher": "",
+    "doi": "10.35370/bjssh.2026.8.1-02",
+    "url": ""
+  },
+  {
+    "key": "bong2026multi",
+    "type": "article",
+    "group": "journal",
+    "title": "Multi-dimensional predictors of sharing platform growth: A machine learning study",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      },
+      {
+        "given": "John",
+        "family": "Harvey"
+      },
+      {
+        "given": "Georgiana",
+        "family": "Nica-Avram"
+      },
+      {
+        "given": "Gavin",
+        "family": "Smith"
+      },
+      {
+        "given": "James",
+        "family": "Goulding"
+      }
+    ],
+    "year": 2026,
+    "venue": "International Journal of Market Research",
+    "volume": "",
+    "number": "",
+    "pages": "",
+    "publisher": "SAGE Publications",
+    "doi": "10.1177/14707853261431371",
+    "url": ""
+  },
+  {
+    "key": "billones2025ai",
+    "type": "article",
+    "group": "journal",
+    "title": "AI ecosystem and value chain: A multi-layered framework for analyzing supply, value creation, and delivery mechanisms",
+    "authors": [
+      {
+        "given": "Robert Kerwin C.",
+        "family": "Billones"
+      },
+      {
+        "given": "Dan Arris S.",
+        "family": "Lauresta"
+      },
+      {
+        "given": "Jeffrey T.",
+        "family": "Dellosa"
+      },
+      {
+        "given": "Yang",
+        "family": "Bong"
+      },
+      {
+        "given": "Lampros K.",
+        "family": "Stergioulas"
+      },
+      {
+        "given": "Sharina",
+        "family": "Yunus"
+      }
+    ],
+    "year": 2025,
+    "venue": "Technologies",
+    "volume": "13",
+    "number": "9",
+    "pages": "421",
+    "publisher": "MDPI",
+    "doi": "10.3390/technologies13090421",
+    "url": ""
+  },
+  {
+    "key": "bong2025can",
+    "type": "inproceedings",
+    "group": "conference",
+    "title": "'Can My Voice Be Heard?': Taking non-WEIRD Voices Seriously in Digital Marketplaces",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      },
+      {
+        "given": "Lewis",
+        "family": "Cameron"
+      },
+      {
+        "given": "Gary",
+        "family": "Loh Chee Wyai"
+      },
+      {
+        "given": "Tariq",
+        "family": "Zaman"
+      },
+      {
+        "given": "John",
+        "family": "Harvey"
+      }
+    ],
+    "year": 2025,
+    "venue": "Proceedings of the ACM SIGCAS/SIGCHI Conference on Computing and Sustainable Societies (COMPASS '25)",
+    "volume": "",
+    "number": "",
+    "pages": "297–310",
+    "publisher": "ACM",
+    "doi": "10.1145/3715335.3735472",
+    "url": ""
+  },
+  {
+    "key": "bong2025white",
+    "type": "techreport",
+    "group": "report",
+    "title": "White Paper for Universities on Navigating Artificial Intelligence Innovation Ecosystems in AI for Sustainable Development",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      },
+      {
+        "given": "Sharina",
+        "family": "Yunus"
+      },
+      {
+        "given": "Rashikala",
+        "family": "Weerawarna"
+      },
+      {
+        "given": "Roman",
+        "family": "Senkerik"
+      },
+      {
+        "given": "Rui",
+        "family": "Tan"
+      },
+      {
+        "given": "Tehreem",
+        "family": "Masood"
+      },
+      {
+        "given": "Thomas",
+        "family": "Leoni"
+      },
+      {
+        "given": "Timothy",
+        "family": "Wawn"
+      },
+      {
+        "given": "Vanessa",
+        "family": "Camilleri"
+      }
+    ],
+    "year": 2025,
+    "venue": "Asia-Europe Foundation (ASEF), 6th Higher Education Innovation Laboratory",
+    "volume": "",
+    "number": "",
+    "pages": "",
+    "publisher": "",
+    "doi": "10.25878/QWXR-RP84",
+    "url": "https://nottingham-repository.worktribe.com/output/55510178/white-paper-for-universities-on-navigating-artificial-intelligence-innovation-ecosystems-in-ai-for-sustainable-development"
+  },
+  {
+    "key": "wawn2024positioning",
+    "type": "incollection",
+    "group": "report",
+    "title": "Positioning for Success: How Universities in Developing Countries Can Thrive in the AI Era by Focusing on Sustainable Development",
+    "authors": [
+      {
+        "given": "Timothy",
+        "family": "Wawn"
+      },
+      {
+        "given": "Tehreem",
+        "family": "Masood"
+      },
+      {
+        "given": "Oana M.",
+        "family": "Driha"
+      },
+      {
+        "given": "Yenni",
+        "family": "Astuti"
+      },
+      {
+        "given": "Yang",
+        "family": "Bong"
+      }
+    ],
+    "year": 2024,
+    "venue": "Universities' Role in Artificial Intelligence Innovation Ecosystems by 2060 in Asia and Europe: A Collection of Position Papers Produced by the 5th ASEF Higher Education Innovation Laboratory Online Cohort",
+    "volume": "",
+    "number": "",
+    "pages": "135–144",
+    "publisher": "Asia-Europe Foundation (ASEF)",
+    "doi": "",
+    "url": ""
+  },
+  {
+    "key": "bong2024selling",
+    "type": "inproceedings",
+    "group": "conference",
+    "title": "Selling durian online? Reimagining digital marketplaces that embody and empower rural businesses",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      },
+      {
+        "given": "Lewis",
+        "family": "Cameron"
+      },
+      {
+        "given": "Gary",
+        "family": "Loh Chee Wyai"
+      },
+      {
+        "given": "Stanley",
+        "family": "Marcarthy"
+      },
+      {
+        "given": "John",
+        "family": "Harvey"
+      }
+    ],
+    "year": 2024,
+    "venue": "Proceedings of the Participatory Design Conference 2024: Exploratory Papers and Workshops, Volume 2",
+    "volume": "",
+    "number": "",
+    "pages": "198–202",
+    "publisher": "ACM",
+    "doi": "",
+    "url": ""
+  },
+  {
+    "key": "bong2024digital",
+    "type": "inproceedings",
+    "group": "conference",
+    "title": "Digital Marketplaces for Rural Microenterprises: Exploring Design Implications for Digital Commerce in Sarawak",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      }
+    ],
+    "year": 2024,
+    "venue": "Proceedings of the Participatory Design Conference 2024: Doctoral Colloquium, Volume 3",
+    "volume": "",
+    "number": "",
+    "pages": "68–71",
+    "publisher": "ACM",
+    "doi": "",
+    "url": ""
+  }
+]
