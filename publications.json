@@ -29,7 +29,8 @@
     "pages": "",
     "publisher": "SAGE Publications",
     "doi": "10.1177/14657503261462319",
-    "url": ""
+    "url": "",
+    "bibtex": "@article{bong2026mapping,\n  title     = {Mapping the digital entrepreneurship initiative ecosystem: Structural challenges and inclusivity gaps in emerging economies},\n  author    = {Bong, Yang and Tabassum, Ghazala and Loh, Gary and Zaman, Tariq},\n  journal   = {The International Journal of Entrepreneurship and Innovation},\n  year      = {2026},\n  publisher = {SAGE Publications},\n  doi       = {10.1177/14657503261462319}\n}"
   },
   {
     "key": "bong2026two",
@@ -49,7 +50,8 @@
     "pages": "",
     "publisher": "",
     "doi": "10.35370/bjssh.2026.8.1-02",
-    "url": ""
+    "url": "",
+    "bibtex": "@article{bong2026two,\n  title   = {The Two Sarawaks: Parallel Digital Economies and the Question of Rural Inclusion},\n  author  = {Bong, Yang},\n  journal = {Borneo Journal of Social Sciences and Humanities},\n  volume  = {8},\n  number  = {1},\n  year    = {2026},\n  doi     = {10.35370/bjssh.2026.8.1-02}\n}"
   },
   {
     "key": "bong2026multi",
@@ -85,7 +87,8 @@
     "pages": "",
     "publisher": "SAGE Publications",
     "doi": "10.1177/14707853261431371",
-    "url": ""
+    "url": "",
+    "bibtex": "@article{bong2026multi,\n  title     = {Multi-dimensional predictors of sharing platform growth: A machine learning study},\n  author    = {Bong, Yang and Harvey, John and Nica-Avram, Georgiana and Smith, Gavin and Goulding, James},\n  journal   = {International Journal of Market Research},\n  year      = {2026},\n  publisher = {SAGE Publications},\n  doi       = {10.1177/14707853261431371}\n}"
   },
   {
     "key": "billones2025ai",
@@ -125,7 +128,8 @@
     "pages": "421",
     "publisher": "MDPI",
     "doi": "10.3390/technologies13090421",
-    "url": ""
+    "url": "",
+    "bibtex": "@article{billones2025ai,\n  title     = {AI ecosystem and value chain: A multi-layered framework for analyzing supply, value creation, and delivery mechanisms},\n  author    = {Billones, Robert Kerwin C. and Lauresta, Dan Arris S. and Dellosa, Jeffrey T. and Bong, Yang and Stergioulas, Lampros K. and Yunus, Sharina},\n  journal   = {Technologies},\n  volume    = {13},\n  number    = {9},\n  pages     = {421},\n  year      = {2025},\n  publisher = {MDPI},\n  doi       = {10.3390/technologies13090421}\n}"
   },
   {
     "key": "bong2025can",
@@ -161,7 +165,8 @@
     "pages": "297–310",
     "publisher": "ACM",
     "doi": "10.1145/3715335.3735472",
-    "url": ""
+    "url": "",
+    "bibtex": "@inproceedings{bong2025can,\n  title     = {'Can My Voice Be Heard?': Taking non-WEIRD Voices Seriously in Digital Marketplaces},\n  author    = {Bong, Yang and Cameron, Lewis and Loh Chee Wyai, Gary and Zaman, Tariq and Harvey, John},\n  booktitle = {Proceedings of the ACM SIGCAS/SIGCHI Conference on Computing and Sustainable Societies (COMPASS '25)},\n  pages     = {297--310},\n  year      = {2025},\n  publisher = {ACM},\n  doi       = {10.1145/3715335.3735472}\n}"
   },
   {
     "key": "bong2025white",
@@ -213,7 +218,8 @@
     "pages": "",
     "publisher": "",
     "doi": "10.25878/QWXR-RP84",
-    "url": "https://nottingham-repository.worktribe.com/output/55510178/white-paper-for-universities-on-navigating-artificial-intelligence-innovation-ecosystems-in-ai-for-sustainable-development"
+    "url": "https://nottingham-repository.worktribe.com/output/55510178/white-paper-for-universities-on-navigating-artificial-intelligence-innovation-ecosystems-in-ai-for-sustainable-development",
+    "bibtex": "@techreport{bong2025white,\n  title       = {White Paper for Universities on Navigating Artificial Intelligence Innovation Ecosystems in AI for Sustainable Development},\n  author      = {Bong, Yang and Yunus, Sharina and Weerawarna, Rashikala and Senkerik, Roman and Tan, Rui and Masood, Tehreem and Leoni, Thomas and Wawn, Timothy and Camilleri, Vanessa},\n  institution = {Asia-Europe Foundation (ASEF), 6th Higher Education Innovation Laboratory},\n  year        = {2025},\n  doi         = {10.25878/QWXR-RP84},\n  url         = {https://nottingham-repository.worktribe.com/output/55510178/white-paper-for-universities-on-navigating-artificial-intelligence-innovation-ecosystems-in-ai-for-sustainable-development}\n}"
   },
   {
     "key": "wawn2024positioning",
@@ -249,7 +255,8 @@
     "pages": "135–144",
     "publisher": "Asia-Europe Foundation (ASEF)",
     "doi": "",
-    "url": ""
+    "url": "",
+    "bibtex": "@incollection{wawn2024positioning,\n  title     = {Positioning for Success: How Universities in Developing Countries Can Thrive in the AI Era by Focusing on Sustainable Development},\n  author    = {Wawn, Timothy and Masood, Tehreem and Driha, Oana M. and Astuti, Yenni and Bong, Yang},\n  booktitle = {Universities' Role in Artificial Intelligence Innovation Ecosystems by 2060 in Asia and Europe: A Collection of Position Papers Produced by the 5th ASEF Higher Education Innovation Laboratory Online Cohort},\n  pages     = {135--144},\n  year      = {2024},\n  publisher = {Asia-Europe Foundation (ASEF)}\n}"
   },
   {
     "key": "bong2024selling",
@@ -285,7 +292,8 @@
     "pages": "198–202",
     "publisher": "ACM",
     "doi": "",
-    "url": ""
+    "url": "",
+    "bibtex": "@inproceedings{bong2024selling,\n  title     = {Selling durian online? Reimagining digital marketplaces that embody and empower rural businesses},\n  author    = {Bong, Yang and Cameron, Lewis and Loh Chee Wyai, Gary and Marcarthy, Stanley and Harvey, John},\n  booktitle = {Proceedings of the Participatory Design Conference 2024: Exploratory Papers and Workshops, Volume 2},\n  pages     = {198--202},\n  year      = {2024},\n  publisher = {ACM}\n}"
   },
   {
     "key": "bong2024digital",
@@ -305,6 +313,7 @@
     "pages": "68–71",
     "publisher": "ACM",
     "doi": "",
-    "url": ""
+    "url": "",
+    "bibtex": "@inproceedings{bong2024digital,\n  title     = {Digital Marketplaces for Rural Microenterprises: Exploring Design Implications for Digital Commerce in Sarawak},\n  author    = {Bong, Yang},\n  booktitle = {Proceedings of the Participatory Design Conference 2024: Doctoral Colloquium, Volume 3},\n  pages     = {68--71},\n  year      = {2024},\n  publisher = {ACM}\n}"
   }
 ]

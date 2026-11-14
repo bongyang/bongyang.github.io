@@ -69,6 +69,8 @@ link previews show.
    ```
 
 While both paths are empty, the site shows a green "YB" monogram instead.
+If you rename the photo, also update the `preload` line for it near the top
+of `index.html`.
 
 ## Connect a custom domain later (e.g. yangbong.com)
 
@@ -81,6 +83,33 @@ While both paths are empty, the site shows a green "YB" monogram instead.
    "Custom domain", and tick "Enforce HTTPS" once it becomes available.
 4. In `index.html`, replace `https://yg21-uon.github.io` with the new address
    in the `canonical`, `og:url` and `og:image` lines.
+
+## The impact map and timeline
+
+The Long Semadoh project in the Impact section is set in `content.json` under
+`impact.project` (story, tagline, outputs, timeline) and `impact.map` (places).
+
+- **Add a place to the map:** add an entry to `impact.map.places` with a
+  `lon` and `lat` (decimal degrees, e.g. from Wikipedia), a `label`, a short
+  `note`, and `labelSide` (`left` or `right`, whichever avoids overlaps).
+- **Link a timeline entry to a place:** give the entry a `place` that matches
+  the place's `id`. Hovering the entry then highlights that place on the map.
+- **Change what the map covers:** edit `impact.map.bounds`
+  (`[west, south, east, north]`), keep `impact.map.size` in the same
+  proportion, then redraw the base map:
+
+  ```
+  npm i world-atlas@2 topojson-client
+  node scripts/make_map.mjs ./node_modules
+  ```
+
+## Citations and search engines
+
+Each publication has a **Cite** panel with an APA reference and the original
+BibTeX entry, both copyable. The full `.bib` file can be downloaded from the
+Publications section. The page also includes schema.org structured data (built
+automatically from the JSON files) so search engines can read your profile and
+publication list.
 
 ## Fonts
 

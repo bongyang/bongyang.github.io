@@ -27,12 +27,13 @@ DEFAULT_GROUP = "report"  # techreport, incollection, book, misc, ...
 
 
 def split_entries(text):
-    """Yield (type, key, body) for each @type{key, ...} entry."""
+    """Yield (type, key, body, raw) for each @type{key, ...} entry."""
     i = 0
     while True:
         m = re.search(r"@(\w+)\s*\{", text[i:])
         if not m:
             return
+        at = i + m.start()
         start = i + m.end()
         depth, j = 1, start
         while j < len(text) and depth:
@@ -44,7 +45,7 @@ def split_entries(text):
         if etype in ("comment", "string", "preamble"):
             continue
         key, _, body = inner.partition(",")
-        yield etype, key.strip(), body
+        yield etype, key.strip(), body, text[at:j].strip()
 
 
 def parse_fields(body):
@@ -98,7 +99,7 @@ def main():
     if not BIB.exists():
         sys.exit(f"Cannot find {BIB}")
     pubs = []
-    for order, (etype, key, body) in enumerate(split_entries(BIB.read_text(encoding="utf-8"))):
+    for order, (etype, key, body, raw) in enumerate(split_entries(BIB.read_text(encoding="utf-8"))):
         f = parse_fields(body)
         pub = {
             "key": key,
@@ -114,6 +115,7 @@ def main():
             "publisher": f.get("publisher", ""),
             "doi": f.get("doi", ""),
             "url": f.get("url", ""),
+            "bibtex": raw,
             "_order": order,
         }
         pubs.append(pub)

@@ -32,6 +32,10 @@
 
   <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Start these downloads early; paths must match content.json (hero.photo). -->
+  <link rel="preload" href="content.json" as="fetch" crossorigin>
+  <link rel="preload" href="publications.json" as="fetch" crossorigin>
+  <link rel="preload" href="assets/img/headshot.webp" as="image" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>

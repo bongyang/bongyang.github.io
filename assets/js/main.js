@@ -62,20 +62,178 @@
     return out;
   };
   var pubUrl = function (p) { return p.doi ? 'https://doi.org/' + p.doi : p.url; };
-  var pubHtml = function (p, c) {
+
+  /* APA 7th-style reference, built from publications.json. */
+  var initials = function (given) {
+    return given.split(/\s+/).filter(Boolean).map(function (g) {
+      return g.split('-').map(function (h) { return h.charAt(0).toUpperCase() + '.'; }).join('-');
+    }).join(' ');
+  };
+  var apa = function (p) {
+    var names = p.authors.map(function (a) { return a.family + ', ' + initials(a.given); });
+    var who = names.length < 2 ? names.join('') :
+      names.slice(0, -1).join(', ') + ', & ' + names[names.length - 1];
+    var out = who + ' (' + p.year + '). ' + p.title.replace(/[.?!]?$/, function (m) { return m || '.'; }) + ' ';
+    if (p.group === 'journal') {
+      out += p.venue + (p.volume ? ', ' + p.volume + (p.number ? '(' + p.number + ')' : '') : '') +
+        (p.pages ? ', ' + p.pages : '') + '.';
+    } else if (p.type === 'techreport') {
+      out += p.venue + '.';
+    } else {
+      out += 'In ' + p.venue + (p.pages ? ' (pp. ' + p.pages + ')' : '') + '.' + (p.publisher ? ' ' + p.publisher + '.' : '');
+    }
+    var url = pubUrl(p);
+    return out + (url ? ' ' + url : '');
+  };
+
+  var citeHtml = function (p, L) {
+    return '<details class="cite"><summary>' + esc(L.cite) + '</summary><div class="cite__panel">' +
+      '<div class="cite__row"><p class="cite__label">' + esc(L.apa) + '</p>' +
+        '<p class="cite__text">' + esc(apa(p)) + '</p>' +
+        '<button type="button" class="copy" data-copy="apa">' + esc(L.copy) + '</button></div>' +
+      '<div class="cite__row"><p class="cite__label">' + esc(L.bibtex) + '</p>' +
+        '<pre class="cite__bib">' + esc(p.bibtex) + '</pre>' +
+        '<button type="button" class="copy" data-copy="bib">' + esc(L.copy) + '</button></div>' +
+      '</div></details>';
+  };
+
+  var pubHtml = function (p, c, themes) {
     var url = pubUrl(p);
     var title = esc(p.title);
-    var html = '<li class="pub" id="pub-' + esc(p.key) + '">' +
+    var html = '<li class="pub" id="pub-' + esc(p.key) + '" data-themes="' + esc((themes || []).join(' ')) + '">' +
       '<p class="pub__year">' + esc(p.year || '') + '</p><div class="pub__body">' +
       '<h4 class="pub__title">' + (url ? link(url, title) : title) + '</h4>' +
       '<p class="pub__authors">' + authorsHtml(p.authors, c.publications.highlightAuthor) + '</p>' +
       '<p class="pub__venue">' + venueHtml(p) + '</p>';
+    html += '<div class="pub__meta">';
     if (p.doi) {
       html += '<p class="pub__doi"><span>' + esc(c.labels.doi) + '</span> ' +
         link('https://doi.org/' + p.doi, esc(p.doi)) + '</p>';
     }
-    return html + '</div></li>';
+    return html + citeHtml(p, c.labels) + '</div></div></li>';
   };
+
+  /* ---------- impact map (equirectangular, matches scripts/make_map.mjs) ---------- */
+  var mapHtml = function (m, timeline) {
+    var W = m.size[0], H = m.size[1], b = m.bounds;
+    var kx = W / (b[2] - b[0]), ky = H / (b[3] - b[1]);
+    var marks = m.places.map(function (pl) {
+      var x = ((pl.lon - b[0]) * kx).toFixed(1), y = ((b[3] - pl.lat) * ky).toFixed(1);
+      var left = pl.labelSide === 'left', dx = left ? -12 : 12, anchor = left ? 'end' : 'start';
+      var r = pl.primary ? 7 : 5;
+      return '<g class="mark' + (pl.primary ? ' mark--primary' : '') + '" data-place="' + esc(pl.id) + '" transform="translate(' + x + ' ' + y + ')">' +
+        (pl.primary ? '<circle class="mark__halo" r="18"/>' : '') +
+        '<circle class="mark__dot" r="' + r + '"/>' +
+        '<text class="mark__label" x="' + dx + '" y="-1" text-anchor="' + anchor + '">' + esc(pl.label) + '</text>' +
+        '<text class="mark__note" x="' + dx + '" y="1.15em" text-anchor="' + anchor + '">' + esc(pl.note) + '</text></g>';
+    }).join('');
+    return '<figure class="map"><div class="map__frame" role="img" aria-label="' + esc(m.alt) + '">' +
+      '<img src="assets/img/map-region.svg" alt="" width="' + W + '" height="' + H + '" decoding="async">' +
+      '<svg class="map__marks" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true" focusable="false">' + marks + '</svg></div>' +
+      '<figcaption>' + esc(m.caption) + '</figcaption></figure>';
+  };
+
+  var projectHtml = function (pr, m) {
+    return '<div class="project">' +
+      mapHtml(m) +
+      '<div class="project__story"><h3>' + esc(pr.heading) + '</h3><p>' + rich(pr.summary) + '</p>' +
+        '<blockquote class="tagline"><p>' + esc(pr.quote) + '</p><footer>' + esc(pr.quoteNote) + '</footer></blockquote></div>' +
+      '<div class="project__outputs"><p class="label">' + esc(pr.outputsHeading) + '</p><ul class="outputs">' +
+        pr.outputs.map(function (o) { return '<li>' + rich(o) + '</li>'; }).join('') + '</ul></div>' +
+      '<div class="timeline"><p class="label">' + esc(pr.timelineHeading) + '</p><ol>' +
+        pr.timeline.map(function (t) {
+          return '<li' + (t.place ? ' data-place="' + esc(t.place) + '" tabindex="0"' : '') + '>' +
+            '<p class="timeline__date">' + esc(t.date) + '</p><p>' + rich(t.text) + '</p></li>';
+        }).join('') + '</ol></div>' +
+    '</div>';
+  };
+
+  /* Links timeline entries to map markers on hover and keyboard focus. */
+  function linkTimeline() {
+    var set = function (id, on) {
+      document.querySelectorAll('[data-place="' + id + '"]').forEach(function (el) { el.classList.toggle('is-lit', on); });
+    };
+    document.querySelectorAll('.timeline li[data-place]').forEach(function (li) {
+      var id = li.getAttribute('data-place');
+      ['mouseenter', 'focus'].forEach(function (e) { li.addEventListener(e, function () { set(id, true); }); });
+      ['mouseleave', 'blur'].forEach(function (e) { li.addEventListener(e, function () { set(id, false); }); });
+    });
+  }
+
+  /* Theme filter for the publication list. */
+  function filterPubs(theme) {
+    document.querySelectorAll('.filter button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-theme') === theme));
+    });
+    var shown = 0;
+    document.querySelectorAll('.pubs').forEach(function (list) {
+      var visible = 0;
+      list.querySelectorAll('.pub').forEach(function (li) {
+        var on = !theme || (' ' + li.getAttribute('data-themes') + ' ').indexOf(' ' + theme + ' ') > -1;
+        li.hidden = !on; if (on) visible++;
+      });
+      list.hidden = !visible; list.previousElementSibling.hidden = !visible;
+      shown += visible;
+    });
+    var status = $('pub-status');
+    if (status) status.textContent = status.getAttribute('data-template').replace('{n}', shown);
+  }
+
+  /* Copy buttons in the citation panels. */
+  function wireCopy(L) {
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.copy');
+      if (!btn) return;
+      var row = btn.parentNode;
+      var text = (row.querySelector('.cite__text') || row.querySelector('.cite__bib')).textContent;
+      var done = function () {
+        btn.textContent = L.copied; btn.classList.add('is-done');
+        setTimeout(function () { btn.textContent = L.copy; btn.classList.remove('is-done'); }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+      } else { fallbackCopy(text); done(); }
+    });
+  }
+  function fallbackCopy(text) {
+    var t = document.createElement('textarea');
+    t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); } catch (err) { /* nothing more to try */ }
+    document.body.removeChild(t);
+  }
+
+  /* schema.org structured data so search engines and Google Scholar-style
+     indexers can read the profile and publication list. */
+  function structuredData(c, pubs) {
+    var site = location.origin + location.pathname.replace(/index\.html$/, '');
+    var person = {
+      '@type': 'Person', '@id': site + '#person', name: 'Yang Bong', honorificPrefix: 'Dr',
+      jobTitle: c.hero.role, url: site, email: 'mailto:' + c.contact.email,
+      worksFor: { '@type': 'CollegeOrUniversity', name: c.hero.affiliation },
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of Nottingham' },
+      knowsAbout: c.research.themes.map(function (t) { return t.title; }),
+      sameAs: c.links.filter(function (l) { return l.id !== 'ae4ai'; }).map(function (l) { return l.url; })
+    };
+    if (c.hero.photo && c.hero.photo.jpg) person.image = site + c.hero.photo.jpg;
+    var works = pubs.map(function (p) {
+      var w = {
+        '@type': p.group === 'journal' ? 'ScholarlyArticle' : (p.type === 'incollection' ? 'Chapter' : (p.type === 'techreport' ? 'Report' : 'ScholarlyArticle')),
+        headline: p.title, name: p.title, datePublished: String(p.year),
+        author: p.authors.map(function (a) {
+          return a.family === 'Bong' && a.given.indexOf('Yang') === 0 ? { '@id': site + '#person' } : { '@type': 'Person', name: a.given + ' ' + a.family };
+        }),
+        isPartOf: { '@type': p.group === 'journal' ? 'Periodical' : 'CreativeWork', name: p.venue }
+      };
+      if (p.doi) { w.sameAs = 'https://doi.org/' + p.doi; w.identifier = { '@type': 'PropertyValue', propertyID: 'DOI', value: p.doi }; }
+      if (p.publisher) w.publisher = { '@type': 'Organization', name: p.publisher };
+      return w;
+    });
+    var s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': [person].concat(works) });
+    document.head.appendChild(s);
+  }
 
   /* ---------- render ---------- */
   function render(c, pubs) {
@@ -97,7 +255,7 @@
     var h = c.hero, ph = h.photo || {};
     var photo = (ph.jpg || ph.webp)
       ? '<picture>' + (ph.webp ? '<source srcset="' + esc(ph.webp) + '" type="image/webp">' : '') +
-        '<img src="' + esc(ph.jpg || ph.webp) + '" alt="' + esc(ph.alt) + '" width="640" height="800" decoding="async"></picture>'
+        '<img src="' + esc(ph.jpg || ph.webp) + '" alt="' + esc(ph.alt) + '" width="640" height="800" fetchpriority="high"></picture>'
       : '<div class="portrait__placeholder" role="img" aria-label="' + esc(h.name) + '"><span>' + esc(h.monogram) + '</span></div>';
     var links = c.links.map(function (l) {
       return '<li>' + link(l.url, icon(l.id) + '<span>' + esc(l.label) + '</span>') + '</li>';
@@ -132,14 +290,34 @@
       }).join('') + '</ol></div>';
 
     /* Publications */
-    $('publications').innerHTML = sectionHead(label.publications, 'publications', c.publications.heading) +
-      '<div class="section__body"><p class="lede">' + rich(c.publications.intro) + '</p>' +
-      c.publications.groups.map(function (g) {
+    var C = c.publications, themesOf = {};
+    c.research.themes.forEach(function (t, i) {
+      t.publications.forEach(function (k) { (themesOf[k] = themesOf[k] || []).push('t' + (i + 1)); });
+    });
+    var filter = '<div class="filter" role="group" aria-label="' + esc(C.filterLabel) + '">' +
+      '<button type="button" data-theme="" aria-pressed="true">' + esc(C.filterAll) + '</button>' +
+      c.research.themes.map(function (t, i) {
+        return '<button type="button" data-theme="t' + (i + 1) + '" aria-pressed="false">' + esc(t.short || t.title) + '</button>';
+      }).join('') + '</div>' +
+      '<p class="filter__status" id="pub-status" role="status" aria-live="polite" data-template="{n} of ' + pubs.length + ' shown"></p>';
+    $('publications').innerHTML = sectionHead(label.publications, 'publications', C.heading) +
+      '<div class="section__body"><p class="lede">' + rich(C.intro) + '</p>' +
+      '<div class="pubtools">' + filter +
+        '<a class="pubtools__bib" href="publications.bib" download>' + esc(C.downloadBib) + '</a></div>' +
+      C.groups.map(function (g) {
         var items = pubs.filter(function (p) { return p.group === g.id; });
         if (!items.length) return '';
         return '<h3 class="group">' + esc(g.label) + '</h3><ol class="pubs">' +
-          items.map(function (p) { return pubHtml(p, c); }).join('') + '</ol>';
+          items.map(function (p) { return pubHtml(p, c, themesOf[p.key]); }).join('') + '</ol>';
       }).join('') + '</div>';
+    $('publications').querySelectorAll('.filter button').forEach(function (b) {
+      b.addEventListener('click', function () { filterPubs(b.getAttribute('data-theme')); });
+    });
+    /* Clicking a research theme's paper clears any filter that would hide it. */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href^="#pub-"]');
+      if (a && document.querySelector(a.getAttribute('href')).hidden) filterPubs('');
+    });
 
     /* Impact */
     $('impact').innerHTML = sectionHead(label.impact, 'impact', c.impact.heading) +
@@ -147,8 +325,9 @@
         return '<article class="impact__item' + (i === 0 ? ' impact__item--lead' : '') + '">' +
           '<p class="label">' + esc(it.meta) + '</p><h3>' + esc(it.title) + '</h3><p>' + rich(it.text) + '</p>' +
           (it.link && it.link.url ? '<p>' + link(it.link.url, esc(it.link.label) + icon('arrow'), 'more') + '</p>' : '') +
-          '</article>';
+          '</article>' + (i === 0 && c.impact.project ? projectHtml(c.impact.project, c.impact.map) : '');
       }).join('') + '</div>';
+    linkTimeline();
 
     /* Teaching */
     $('teaching').innerHTML = sectionHead(label.teaching, 'teaching', c.teaching.heading) +
@@ -177,6 +356,9 @@
     $('footer').innerHTML = '<p>' + esc(c.footer.text) + ' ' + new Date().getFullYear() + '</p>' +
       '<p><a href="#home">' + esc(c.footer.backToTop) + '</a></p>';
 
+    filterPubs('');
+    wireCopy(c.labels);
+    structuredData(c, pubs);
     spy();
     if (location.hash) {
       var target = document.querySelector(location.hash);
@@ -203,7 +385,7 @@
   }
 
   var getJson = function (url) {
-    return fetch(url, { cache: 'no-cache' }).then(function (r) {
+    return fetch(url).then(function (r) {
       if (!r.ok) throw new Error(url + ' ' + r.status);
       return r.json();
     });
