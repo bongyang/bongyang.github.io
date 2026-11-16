@@ -1,5 +1,54 @@
 [
   {
+    "key": "bong2026whose",
+    "type": "incollection",
+    "group": "report",
+    "title": "AI for Whose Good? A Governance Framework for University Investment in AI with Underserved Communities",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      },
+      {
+        "given": "Neelima",
+        "family": "Sailaja"
+      },
+      {
+        "given": "Minjia",
+        "family": "Chen"
+      },
+      {
+        "given": "Devisakti",
+        "family": "Annamali"
+      },
+      {
+        "given": "Jin",
+        "family": "Tada"
+      },
+      {
+        "given": "Leïla",
+        "family": "Cellérier"
+      },
+      {
+        "given": "Muhammad Zahid",
+        "family": "Iqbal"
+      },
+      {
+        "given": "Vicente",
+        "family": "Pitogo"
+      }
+    ],
+    "year": 2026,
+    "venue": "ASEFInnoLab7 White Papers: The Role of Universities in Advancing AI for Good",
+    "volume": "",
+    "number": "",
+    "pages": "27–37",
+    "publisher": "Asia-Europe Foundation (ASEF)",
+    "doi": "",
+    "url": "assets/papers/bong2026ai-for-whose-good.pdf",
+    "bibtex": "@incollection{bong2026whose,\n  title     = {AI for Whose Good? A Governance Framework for University Investment in AI with Underserved Communities},\n  author    = {Bong, Yang and Sailaja, Neelima and Chen, Minjia and Annamali, Devisakti and Tada, Jin and Cellérier, Leïla and Iqbal, Muhammad Zahid and Pitogo, Vicente},\n  booktitle = {ASEFInnoLab7 White Papers: The Role of Universities in Advancing AI for Good},\n  editor    = {Tózsa, Réka and Rivera, Claudio and Cachapero, Cleo},\n  pages     = {27--37},\n  year      = {2026},\n  publisher = {Asia-Europe Foundation (ASEF)},\n  isbn      = {978-981-94-8358-7},\n  url       = {assets/papers/bong2026ai-for-whose-good.pdf}\n}"
+  },
+  {
     "key": "bong2026mapping",
     "type": "article",
     "group": "journal",

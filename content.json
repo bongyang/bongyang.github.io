@@ -120,6 +120,7 @@
         "title": "AI for sustainable development",
         "description": "The role of universities and local institutions in socially grounded innovation.",
         "publications": [
+          "bong2026whose",
           "billones2025ai",
           "bong2025white",
           "wawn2024positioning"
@@ -378,7 +379,8 @@
     "copy": "Copy",
     "copied": "Copied",
     "apa": "APA",
-    "bibtex": "BibTeX"
+    "bibtex": "BibTeX",
+    "pdf": "Download PDF"
   },
   "gallery": {
     "label": "Photos from fieldwork, events and talks",

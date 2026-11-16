@@ -62,6 +62,9 @@
     return out;
   };
   var pubUrl = function (p) { return p.doi ? 'https://doi.org/' + p.doi : p.url; };
+  /* Site-hosted files (e.g. assets/papers/*.pdf) as a full address, for citations. */
+  var absUrl = function (u) { try { return new URL(u, location.href).href; } catch (e) { return u; } };
+  var isPdf = function (u) { return /\.pdf$/i.test(u || ''); };
 
   /* APA 7th-style reference, built from publications.json. */
   var initials = function (given) {
@@ -83,7 +86,7 @@
       out += 'In ' + p.venue + (p.pages ? ' (pp. ' + p.pages + ')' : '') + '.' + (p.publisher ? ' ' + p.publisher + '.' : '');
     }
     var url = pubUrl(p);
-    return out + (url ? ' ' + url : '');
+    return out + (url ? ' ' + absUrl(url) : '');
   };
 
   var citeHtml = function (p, L) {
@@ -92,7 +95,7 @@
         '<p class="cite__text">' + esc(apa(p)) + '</p>' +
         '<button type="button" class="copy" data-copy="apa">' + esc(L.copy) + '</button></div>' +
       '<div class="cite__row"><p class="cite__label">' + esc(L.bibtex) + '</p>' +
-        '<pre class="cite__bib">' + esc(p.bibtex) + '</pre>' +
+        '<pre class="cite__bib">' + esc(p.url && !isExternal(p.url) ? p.bibtex.replace(p.url, absUrl(p.url)) : p.bibtex) + '</pre>' +
         '<button type="button" class="copy" data-copy="bib">' + esc(L.copy) + '</button></div>' +
       '</div></details>';
   };
@@ -109,6 +112,9 @@
     if (p.doi) {
       html += '<p class="pub__doi"><span>' + esc(c.labels.doi) + '</span> ' +
         link('https://doi.org/' + p.doi, esc(p.doi)) + '</p>';
+    }
+    if (isPdf(p.url)) {
+      html += '<p class="pub__doi"><a href="' + esc(p.url) + '" type="application/pdf">' + esc(c.labels.pdf) + '</a></p>';
     }
     return html + citeHtml(p, c.labels) + '</div></div></li>';
   };
@@ -226,6 +232,7 @@
         isPartOf: { '@type': p.group === 'journal' ? 'Periodical' : 'CreativeWork', name: p.venue }
       };
       if (p.doi) { w.sameAs = 'https://doi.org/' + p.doi; w.identifier = { '@type': 'PropertyValue', propertyID: 'DOI', value: p.doi }; }
+      if (isPdf(p.url)) w.url = absUrl(p.url);
       if (p.publisher) w.publisher = { '@type': 'Organization', name: p.publisher };
       return w;
     });
