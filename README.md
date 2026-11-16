@@ -72,6 +72,26 @@ While both paths are empty, the site shows a green "YB" monogram instead.
 If you rename the photo, also update the `preload` line for it near the top
 of `index.html`.
 
+## Photos in the About slideshow
+
+The slideshow beside the About text reads `gallery.items` in `content.json`
+(newest first). Each item has `src` (path without the extension), `width`,
+`height`, `caption`, `date`, `alt` and an optional `credit`.
+
+To add a photo:
+
+1. Run `python3 scripts/enhance_photos.py photo.jpg 2027-some-event`. It lightly
+   cleans up compression artefacts and sharpens, without cropping or
+   recolouring, and writes `assets/img/gallery/2027-some-event.webp` and `.jpg`.
+   On a computer without Python, save a `.webp` and a `.jpg` copy yourself
+   (e.g. with [Squoosh](https://squoosh.app)), each ideally under 200 KB.
+2. Add an entry to `gallery.items` with the photo's pixel width and height and a
+   short `alt` describing what is in the picture.
+
+To remove one, delete its entry (and its two files). The slideshow plays on its
+own, pauses on hover and has a pause button; visitors who ask their system for
+reduced motion get it paused.
+
 ## Connect a custom domain later (e.g. yangbong.com)
 
 1. Buy the domain from a registrar.

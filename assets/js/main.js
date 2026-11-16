@@ -273,7 +273,7 @@
       '<figure class="portrait">' + photo + '</figure>' +
       '<div class="about"><h2 class="about__h">' + esc(c.about.heading) + '</h2><div class="about__body">' +
         c.about.paragraphs.map(function (p) { return '<p>' + rich(p) + '</p>'; }).join('') +
-      '</div></div>';
+      '</div>' + galleryHtml(c.gallery) + '</div>';
 
     /* Research */
     $('research').innerHTML = sectionHead(label.research, 'research', c.research.heading) +
@@ -359,11 +359,127 @@
     filterPubs('');
     wireCopy(c.labels);
     structuredData(c, pubs);
+    gallery(c.gallery);
     spy();
     if (location.hash) {
       var target = document.querySelector(location.hash);
       if (target) target.scrollIntoView();
     }
+  }
+
+  /* ---------- photo gallery (About) ----------
+     A sliding carousel. Images load only when their slide is next up; it
+     autoplays unless the visitor prefers reduced motion, pauses on hover,
+     focus, when off screen or when the tab is hidden, and has a pause button
+     (WCAG 2.2.2). */
+  var GI = {
+    prev: '<path d="M15 5 8 12l7 7"/>',
+    next: '<path d="m9 5 7 7-7 7"/>',
+    pause: '<path d="M9 6v12M15 6v12"/>',
+    play: '<path d="M8 5.5v13l10.5-6.5L8 5.5Z"/>'
+  };
+  var gicon = function (k) {
+    return '<svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + GI[k] + '</svg>';
+  };
+  function galleryHtml(g) {
+    if (!g || !g.items || !g.items.length) return '';
+    var n = g.items.length;
+    var slides = g.items.map(function (it, i) {
+      var meta = [it.date, it.credit].filter(Boolean).map(esc).join(' · ');
+      return '<li class="gallery__slide" role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' ' + esc(g.of) + ' ' + n + '">' +
+        '<figure><div class="gallery__frame"><picture>' +
+          '<source data-srcset="' + esc(it.src) + '.webp" type="image/webp">' +
+          '<img data-src="' + esc(it.src) + '.jpg" alt="' + esc(it.alt) + '" width="' + it.width + '" height="' + it.height + '" decoding="async">' +
+        '</picture></div>' +
+        '<figcaption>' + esc(it.caption) + (meta ? '<span class="gallery__meta">' + meta + '</span>' : '') + '</figcaption></figure></li>';
+    }).join('');
+    var btn = function (cls, label, ic) {
+      return '<button type="button" class="gallery__btn ' + cls + '" aria-label="' + esc(label) + '">' + gicon(ic) + '</button>';
+    };
+    return '<section class="gallery" aria-roledescription="carousel" aria-label="' + esc(g.label) + '">' +
+      '<div class="gallery__controls">' +
+        '<span class="gallery__count" aria-hidden="true"><span class="gallery__now">1</span> / ' + n + '</span>' +
+        btn('gallery__toggle', g.pause, 'pause') +
+        btn('gallery__prev', g.prev, 'prev') + btn('gallery__next', g.next, 'next') +
+      '</div>' +
+      '<div class="gallery__viewport"><ul class="gallery__track" aria-live="off">' + slides + '</ul></div>' +
+      '</section>';
+  }
+  function gallery(g) {
+    var root = document.querySelector('.gallery');
+    if (!root) return;
+    var track = root.querySelector('.gallery__track');
+    var slides = [].slice.call(root.querySelectorAll('.gallery__slide'));
+    var toggle = root.querySelector('.gallery__toggle');
+    var now = root.querySelector('.gallery__now');
+    var n = slides.length, i = 0, timer = null;
+    var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var playing = !reduced && n > 1, hovered = false, focused = false, visible = false;
+
+    var load = function (k) {
+      var s = slides[(k + n) % n];
+      s.querySelectorAll('[data-srcset]').forEach(function (e) { e.srcset = e.getAttribute('data-srcset'); e.removeAttribute('data-srcset'); });
+      s.querySelectorAll('[data-src]').forEach(function (e) { e.src = e.getAttribute('data-src'); e.removeAttribute('data-src'); });
+    };
+    var show = function (k) {
+      i = (k + n) % n;
+      track.style.transform = 'translateX(' + (-100 * i) + '%)';
+      slides.forEach(function (s, j) {
+        var on = j === i;
+        s.setAttribute('aria-hidden', on ? 'false' : 'true');
+        if (on) s.removeAttribute('inert'); else s.setAttribute('inert', '');
+      });
+      now.textContent = i + 1;
+      if (visible) { load(i); load(i + 1); load(i - 1); }
+    };
+    var stop = function () { clearInterval(timer); timer = null; };
+    var sync = function () {
+      var run = playing && !hovered && !focused && visible && !document.hidden;
+      if (run && !timer) timer = setInterval(function () { show(i + 1); }, g.interval || 6000);
+      if (!run) stop();
+      track.setAttribute('aria-live', playing ? 'off' : 'polite');
+    };
+    var setPlaying = function (on) {
+      playing = on;
+      toggle.setAttribute('aria-label', on ? g.pause : g.play);
+      toggle.innerHTML = gicon(on ? 'pause' : 'play');
+      sync();
+    };
+    var go = function (d) { show(i + d); stop(); sync(); };
+
+    root.querySelector('.gallery__prev').addEventListener('click', function () { go(-1); });
+    root.querySelector('.gallery__next').addEventListener('click', function () { go(1); });
+    toggle.addEventListener('click', function () { setPlaying(!playing); });
+    root.addEventListener('mouseenter', function () { hovered = true; sync(); });
+    root.addEventListener('mouseleave', function () { hovered = false; sync(); });
+    root.addEventListener('focusin', function () { focused = true; sync(); });
+    root.addEventListener('focusout', function (e) { if (!root.contains(e.relatedTarget)) { focused = false; sync(); } });
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { go(1); e.preventDefault(); }
+    });
+    document.addEventListener('visibilitychange', sync);
+
+    /* Swipe on touch screens; vertical scrolling stays with the page. */
+    var vp = root.querySelector('.gallery__viewport'), x0 = null;
+    vp.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+    vp.addEventListener('pointerup', function (e) {
+      if (x0 === null) return;
+      var dx = e.clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+    });
+    vp.addEventListener('pointercancel', function () { x0 = null; });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        visible = en[0].isIntersecting;
+        if (visible) { load(i); load(i + 1); load(i - 1); }
+        sync();
+      }, { rootMargin: '200px 0px' }).observe(root);
+    } else { visible = true; load(0); load(1); load(-1); }
+    if (n < 2) root.querySelector('.gallery__controls').hidden = true;
+    show(0);
+    setPlaying(playing);
   }
 
   /* Highlights the nav item for the section in view. */
