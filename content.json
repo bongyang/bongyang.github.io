@@ -4,7 +4,8 @@
     "TODO: Check the wording of impact.items[0].text and the impact.project section (timeline, outputs, tagline, workshop size). They were summarised from the Horizon CDT page and should be confirmed by the site owner.",
     "TODO: The Horizon CDT page spells the brand 'Semaduh Valley' and the village both 'Semadoh' and 'Semaduh'. The site uses 'Long Semadoh' for the village and 'Semaduh Valley' for the brand; correct if needed.",
     "TODO: Map markers for Sibu, Butuan and Gadong are placed at town level (approximate), not at exact campus locations.",
-    "TODO (optional): The headshot's bright cyan stage backdrop competes with the calm palette. A photo against a plain or outdoor background would sit better; replace assets/img/headshot.* (see README)."
+    "TODO (optional): The headshot's bright cyan stage backdrop competes with the calm palette. A photo against a plain or outdoor background would sit better; replace assets/img/headshot.* (see README).",
+    "TODO: Add the year(s) for the International Journal of Entrepreneurship and Innovation reviewer entry in service.items, if wanted."
   ],
   "nav": [
     {
@@ -29,7 +30,7 @@
     },
     {
       "id": "service",
-      "label": "Service"
+      "label": "Citizenship"
     },
     {
       "id": "contact",
@@ -42,7 +43,7 @@
     "role": "Senior Lecturer, School of Business and Law",
     "affiliation": "Birmingham Newman University",
     "credentials": "PhD · AFHEA · ACMA, CGMA",
-    "bio": "I am a multidisciplinary researcher working where digital technologies, participatory research and business meet. My work spans digital inclusion, rural and Indigenous entrepreneurship, subsistence marketplaces, platform economies and AI for sustainable development, and it combines community co-design with machine learning and data analytics.",
+    "bio": "My research is multidisciplinary, sitting where digital technologies, participatory research and business meet. It spans digital inclusion, rural and Indigenous entrepreneurship, subsistence marketplaces, platform economies and AI for sustainable development, combining community co-design with machine learning and data analytics.",
     "photo": {
       "webp": "assets/img/headshot.webp",
       "jpg": "assets/img/headshot.jpg",
@@ -52,8 +53,8 @@
   "about": {
     "heading": "About",
     "paragraphs": [
-      "I am a Senior Lecturer in the School of Business and Law at Birmingham Newman University, and an Honorary Associate Researcher at N/Lab, Nottingham University Business School. I completed my PhD in Digital Economy at the University of Nottingham, with the Horizon Centre for Doctoral Training.",
-      "I am Sarawakian, and much of my research begins there, in community-engaged fieldwork and co-design with rural and Indigenous micro-entrepreneurs. Alongside this I use machine learning and data analytics to study platform economies. I am a founding member and coordinator of the [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/), where I coordinate the AI for Sustainable Development working group. Before academia, I spent eight years in international marketing and business development."
+      "I am a Senior Lecturer in the School of Business and Law at Birmingham Newman University. My PhD in Digital Economy is from the University of Nottingham, completed with the Horizon Centre for Doctoral Training.",
+      "Alongside community-engaged fieldwork with rural and Indigenous micro-entrepreneurs, I also employ machine learning and data analytics to study platform economies. The [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/), which I helped found, is another strand of this work: I coordinate the network and its AI for Sustainable Development working group. My career began in industry, with eight years in international marketing and business development."
     ]
   },
   "links": [
@@ -90,7 +91,7 @@
   ],
   "research": {
     "heading": "Research",
-    "intro": "My current research follows three connected themes.",
+    "intro": "Current work follows three connected themes.",
     "relatedLabel": "Related publications",
     "themes": [
       {
@@ -127,7 +128,7 @@
   },
   "publications": {
     "heading": "Publications",
-    "intro": "A full list, newest first. My [Google Scholar profile](https://scholar.google.com/citations?user=ZRQISOwAAAAJ) has citation details.",
+    "intro": "A full list, newest first. Citation details are on [Google Scholar](https://scholar.google.com/citations?user=ZRQISOwAAAAJ).",
     "highlightAuthor": {
       "family": "Bong",
       "given": "Yang"
@@ -156,7 +157,7 @@
       {
         "title": "Horizon CDT impact project",
         "meta": "£13,000 · October 2025 – April 2026",
-        "text": "I secured and delivered a Horizon CDT impact project, co-designing digital marketing and market-access activities with rural and Indigenous micro-entrepreneurs in Malaysia. Working with the Lun Bawang community of Long Semadoh in rural Lawas, Sarawak, and with the creative agency The Culture Capital, the project grew from digital marketing training into a village-wide branding campaign shaped by community leaders and entrepreneurs.",
+        "text": "This Horizon CDT impact project, which I secured and delivered, co-designed digital marketing and market-access activities with rural and Indigenous micro-entrepreneurs in Malaysia. Working with the Lun Bawang community of Long Semadoh in rural Lawas, Sarawak, and with the creative agency The Culture Capital, the project grew from digital marketing training into a village-wide branding campaign shaped by community leaders and entrepreneurs.",
         "link": {
           "label": "Read about the project at Horizon CDT",
           "url": "https://cdt.horizon.ac.uk/yang-bong-large-impact-grant/"
@@ -165,7 +166,7 @@
       {
         "title": "Asia-Europe for AI (AE4AI) Network",
         "meta": "Founding Member and Coordinator",
-        "text": "I am a founding member and coordinator of the AE4AI Network, and I coordinate its AI for Sustainable Development working group.",
+        "text": "Coordinating the network and its AI for Sustainable Development working group.",
         "link": {
           "label": "Visit the AE4AI Network",
           "url": "https://www.asiaeurope4ai.org/"
@@ -174,7 +175,7 @@
       {
         "title": "ASEF white paper for universities",
         "meta": "Asia-Europe Foundation · 2025",
-        "text": "I am first author of the White Paper for Universities on Navigating Artificial Intelligence Innovation Ecosystems in AI for Sustainable Development, produced through the 6th ASEF Higher Education Innovation Laboratory.",
+        "text": "First author of the White Paper for Universities on Navigating Artificial Intelligence Innovation Ecosystems in AI for Sustainable Development, produced through the 6th ASEF Higher Education Innovation Laboratory.",
         "link": {
           "label": "Read the white paper",
           "url": "https://doi.org/10.25878/QWXR-RP84"
@@ -183,7 +184,7 @@
     ],
     "project": {
       "heading": "Long Semadoh, Sarawak",
-      "summary": "In the Lun Bawang highlands of Lawas, I worked with village leaders, local micro-entrepreneurs and The Culture Capital to co-design a village-wide brand, so that the community could tell its own story to visitors and buyers.",
+      "summary": "In the Lun Bawang highlands of Lawas, the project brought together village leaders, local micro-entrepreneurs and The Culture Capital to co-design a village-wide brand, so that the community could tell its own story to visitors and buyers.",
       "quote": "Don’t come to Long Semadoh",
       "quoteNote": "The campaign’s tagline invites visitors who truly want to come, while keeping numbers manageable for the village.",
       "outputsHeading": "What we made together",
@@ -230,7 +231,7 @@
     },
     "map": {
       "caption": "Fieldwork and guest lectures across Borneo and the southern Philippines.",
-      "alt": "Map of Borneo and the southern Philippines marking Long Semadoh in Sarawak, where the fieldwork took place, and the universities in Sibu, Brunei and Butuan where I gave guest lectures.",
+      "alt": "Map of Borneo and the southern Philippines marking Long Semadoh in Sarawak, where the fieldwork took place, and the universities in Sibu, Brunei and Butuan that hosted guest lectures.",
       "bounds": [
         108.5,
         -4.3,
@@ -283,11 +284,11 @@
   },
   "teaching": {
     "heading": "Teaching",
-    "intro": "I have taught in higher education since 2023, at undergraduate and postgraduate levels.",
+    "intro": "Undergraduate and postgraduate teaching in higher education since 2023.",
     "items": [
       {
         "place": "Birmingham Newman University",
-        "text": "I lead and deliver undergraduate teaching across marketing, digital marketing and entrepreneurship.",
+        "text": "Leading and delivering undergraduate modules across marketing, digital marketing and entrepreneurship.",
         "topics": [
           "Principles of Marketing",
           "Digital Marketing",
@@ -297,7 +298,7 @@
       },
       {
         "place": "University of Nottingham",
-        "text": "I taught machine learning, predictive analytics and customer insights in the Marketing, Tourism and Analytics department, with guest lectures in the School of Computer Science.",
+        "text": "Taught machine learning, predictive analytics and customer insights in the Marketing, Tourism and Analytics department, with guest lectures in the School of Computer Science.",
         "topics": [
           "Machine Learning and Predictive Analytics",
           "Customer Insights and Analytics",
@@ -307,13 +308,13 @@
       },
       {
         "place": "Guest lectures",
-        "text": "I have given guest lectures at universities in Malaysia, Brunei and the Philippines, and taught digital marketing for rural communities.",
+        "text": "Guest lectures at universities in Malaysia, Brunei and the Philippines, and digital marketing training for rural communities.",
         "topics": []
       }
     ]
   },
   "service": {
-    "heading": "Service",
+    "heading": "Academic Citizenship",
     "items": [
       {
         "role": "Communication Chair",
@@ -323,8 +324,20 @@
       },
       {
         "role": "Reviewer",
+        "org": "CHI",
+        "year": "2025",
+        "url": ""
+      },
+      {
+        "role": "Reviewer",
         "org": "INTERACT",
         "year": "2025",
+        "url": ""
+      },
+      {
+        "role": "Reviewer",
+        "org": "International Journal of Entrepreneurship and Innovation",
+        "year": "",
         "url": ""
       },
       {
@@ -343,7 +356,7 @@
   },
   "contact": {
     "heading": "Contact",
-    "text": "I welcome conversations about research collaboration and community partnerships.",
+    "text": "Conversations about research collaboration and community partnerships are welcome.",
     "email": "y.bong@staff.newman.ac.uk",
     "address": [
       "School of Business and Law",

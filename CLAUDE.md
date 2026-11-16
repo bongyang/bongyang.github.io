@@ -1,7 +1,7 @@
 # Handover for AI sessions
 
 Personal academic site for Dr Yang Bong. Single page, plain HTML/CSS/vanilla
-JS, no build step, hosted on GitHub Pages (user site `yg21-uon.github.io`).
+JS, no build step, hosted on GitHub Pages (user site `bongyang.github.io`).
 
 ## Hard rules
 
@@ -12,7 +12,8 @@ JS, no build step, hosted on GitHub Pages (user site `yg21-uon.github.io`).
 - Use DOIs exactly as given in the `.bib`.
 - Do not push to `main` or change GitHub Pages settings unless asked. Review
   work goes on the `preview` branch; the owner merges.
-- First person, warm and confident, British English. "Indigenous" is
+- First person, warm and confident, British English, but keep "I" sparing:
+  vary sentence openings so it does not read as self-promoting. "Indigenous" is
   capitalised.
 
 ## Structure

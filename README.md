@@ -2,7 +2,7 @@
 
 A single-page site built with plain HTML, CSS and a little JavaScript. There is
 no build step. It is designed to be published with GitHub Pages at
-<https://yg21-uon.github.io>.
+<https://bongyang.github.io>.
 
 ## What is where
 
@@ -76,12 +76,12 @@ of `index.html`.
 
 1. Buy the domain from a registrar.
 2. In the registrar's DNS settings add a `CNAME` record for `www` pointing to
-   `yg21-uon.github.io`, and four `A` records for the bare domain pointing to
+   `bongyang.github.io`, and four `A` records for the bare domain pointing to
    GitHub Pages' addresses (listed in GitHub's "Managing a custom domain"
    guide).
 3. On GitHub, go to the repository's Settings → Pages, enter the domain under
    "Custom domain", and tick "Enforce HTTPS" once it becomes available.
-4. In `index.html`, replace `https://yg21-uon.github.io` with the new address
+4. In `index.html`, replace `https://bongyang.github.io` with the new address
    in the `canonical`, `og:url` and `og:image` lines.
 
 ## The impact map and timeline
