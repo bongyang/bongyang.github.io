@@ -146,6 +146,12 @@
         '<blockquote class="tagline"><p>' + esc(pr.quote) + '</p><footer>' + esc(pr.quoteNote) + '</footer></blockquote></div>' +
       '<div class="project__outputs"><p class="label">' + esc(pr.outputsHeading) + '</p><ul class="outputs">' +
         pr.outputs.map(function (o) { return '<li>' + rich(o) + '</li>'; }).join('') + '</ul></div>' +
+      (pr.photos && pr.photos.length ? '<div class="field"><p class="label">' + esc(pr.photosHeading) + '</p><ul class="field__list">' +
+        pr.photos.map(function (ph) {
+          return '<li><figure><picture><source srcset="' + esc(ph.src) + '.webp" type="image/webp">' +
+            '<img src="' + esc(ph.src) + '.jpg" alt="' + esc(ph.alt) + '" width="' + ph.width + '" height="' + ph.height + '" loading="lazy" decoding="async"></picture>' +
+            '<figcaption>' + esc(ph.caption) + '</figcaption></figure></li>';
+        }).join('') + '</ul></div>' : '') +
       '<div class="timeline"><p class="label">' + esc(pr.timelineHeading) + '</p><ol>' +
         pr.timeline.map(function (t) {
           return '<li' + (t.place ? ' data-place="' + esc(t.place) + '" tabindex="0"' : '') + '>' +
@@ -280,7 +286,7 @@
       '<figure class="portrait">' + photo + '</figure>' +
       '<div class="about"><h2 class="about__h">' + esc(c.about.heading) + '</h2><div class="about__body">' +
         c.about.paragraphs.map(function (p) { return '<p>' + rich(p) + '</p>'; }).join('') +
-      '</div>' + galleryHtml(c.gallery) + '</div>';
+      '</div></div>';
 
     /* Research */
     $('research').innerHTML = sectionHead(label.research, 'research', c.research.heading) +
@@ -366,7 +372,8 @@
     filterPubs('');
     wireCopy(c.labels);
     structuredData(c, pubs);
-    gallery(c.gallery);
+    $('banner').innerHTML = bannerHtml(c.banner);
+    banner(c.banner);
     spy();
     if (location.hash) {
       var target = document.querySelector(location.hash);
@@ -374,8 +381,8 @@
     }
   }
 
-  /* ---------- photo gallery (About) ----------
-     A sliding carousel. Images load only when their slide is next up; it
+  /* ---------- full-width photo banner (between About and Research) ----------
+     Crossfading slideshow. Images load only when their slide is next up; it
      autoplays unless the visitor prefers reduced motion, pauses on hover,
      focus, when off screen or when the tab is hidden, and has a pause button
      (WCAG 2.2.2). */
@@ -388,37 +395,40 @@
   var gicon = function (k) {
     return '<svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + GI[k] + '</svg>';
   };
-  function galleryHtml(g) {
+  var srcset = function (it, ext) {
+    return (it.widths || []).map(function (w) { return esc(it.src) + '-' + w + '.' + ext + ' ' + w + 'w'; }).join(', ');
+  };
+  function bannerHtml(g) {
     if (!g || !g.items || !g.items.length) return '';
     var n = g.items.length;
     var slides = g.items.map(function (it, i) {
       var meta = [it.date, it.credit].filter(Boolean).map(esc).join(' · ');
-      return '<li class="gallery__slide" role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' ' + esc(g.of) + ' ' + n + '">' +
-        '<figure><div class="gallery__frame"><picture>' +
-          '<source data-srcset="' + esc(it.src) + '.webp" type="image/webp">' +
-          '<img data-src="' + esc(it.src) + '.jpg" alt="' + esc(it.alt) + '" width="' + it.width + '" height="' + it.height + '" decoding="async">' +
-        '</picture></div>' +
-        '<figcaption>' + esc(it.caption) + (meta ? '<span class="gallery__meta">' + meta + '</span>' : '') + '</figcaption></figure></li>';
+      var big = it.widths[it.widths.length - 1];
+      return '<li class="banner__slide" role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' ' + esc(g.of) + ' ' + n + '">' +
+        '<figure><picture>' +
+          '<source data-srcset="' + srcset(it, 'webp') + '" sizes="100vw" type="image/webp">' +
+          '<img data-srcset="' + srcset(it, 'jpg') + '" data-src="' + esc(it.src) + '-' + big + '.jpg" sizes="100vw" alt="' + esc(it.alt) + '"' +
+          ' width="' + it.width + '" height="' + it.height + '" decoding="async" style="--pos:' + esc(it.position || '50% 50%') + '">' +
+        '</picture><figcaption class="banner__caption"><span class="banner__text">' + esc(it.caption) + '</span>' +
+          (meta ? '<span class="banner__meta">' + meta + '</span>' : '') + '</figcaption></figure></li>';
     }).join('');
     var btn = function (cls, label, ic) {
-      return '<button type="button" class="gallery__btn ' + cls + '" aria-label="' + esc(label) + '">' + gicon(ic) + '</button>';
+      return '<button type="button" class="banner__btn ' + cls + '" aria-label="' + esc(label) + '">' + gicon(ic) + '</button>';
     };
-    return '<section class="gallery" aria-roledescription="carousel" aria-label="' + esc(g.label) + '">' +
-      '<div class="gallery__controls">' +
-        '<span class="gallery__count" aria-hidden="true"><span class="gallery__now">1</span> / ' + n + '</span>' +
-        btn('gallery__toggle', g.pause, 'pause') +
-        btn('gallery__prev', g.prev, 'prev') + btn('gallery__next', g.next, 'next') +
-      '</div>' +
-      '<div class="gallery__viewport"><ul class="gallery__track" aria-live="off">' + slides + '</ul></div>' +
-      '</section>';
+    return '<section class="banner" aria-roledescription="carousel" aria-label="' + esc(g.label) + '">' +
+      '<ul class="banner__slides" aria-live="off">' + slides + '</ul>' +
+      '<div class="banner__bar"><div class="banner__controls">' +
+        '<span class="banner__count" aria-hidden="true"><span class="banner__now">1</span> / ' + n + '</span>' +
+        btn('banner__toggle', g.pause, 'pause') + btn('banner__prev', g.prev, 'prev') + btn('banner__next', g.next, 'next') +
+      '</div></div></section>';
   }
-  function gallery(g) {
-    var root = document.querySelector('.gallery');
+  function banner(g) {
+    var root = document.querySelector('.banner');
     if (!root) return;
-    var track = root.querySelector('.gallery__track');
-    var slides = [].slice.call(root.querySelectorAll('.gallery__slide'));
-    var toggle = root.querySelector('.gallery__toggle');
-    var now = root.querySelector('.gallery__now');
+    var list = root.querySelector('.banner__slides');
+    var slides = [].slice.call(root.querySelectorAll('.banner__slide'));
+    var toggle = root.querySelector('.banner__toggle');
+    var now = root.querySelector('.banner__now');
     var n = slides.length, i = 0, timer = null;
     var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var playing = !reduced && n > 1, hovered = false, focused = false, visible = false;
@@ -430,21 +440,21 @@
     };
     var show = function (k) {
       i = (k + n) % n;
-      track.style.transform = 'translateX(' + (-100 * i) + '%)';
       slides.forEach(function (s, j) {
         var on = j === i;
+        s.classList.toggle('is-active', on);
         s.setAttribute('aria-hidden', on ? 'false' : 'true');
         if (on) s.removeAttribute('inert'); else s.setAttribute('inert', '');
       });
       now.textContent = i + 1;
-      if (visible) { load(i); load(i + 1); load(i - 1); }
+      if (visible) { load(i); load(i + 1); }
     };
     var stop = function () { clearInterval(timer); timer = null; };
     var sync = function () {
       var run = playing && !hovered && !focused && visible && !document.hidden;
-      if (run && !timer) timer = setInterval(function () { show(i + 1); }, g.interval || 6000);
+      if (run && !timer) timer = setInterval(function () { show(i + 1); }, g.interval || 7000);
       if (!run) stop();
-      track.setAttribute('aria-live', playing ? 'off' : 'polite');
+      list.setAttribute('aria-live', playing ? 'off' : 'polite');
     };
     var setPlaying = function (on) {
       playing = on;
@@ -454,8 +464,8 @@
     };
     var go = function (d) { show(i + d); stop(); sync(); };
 
-    root.querySelector('.gallery__prev').addEventListener('click', function () { go(-1); });
-    root.querySelector('.gallery__next').addEventListener('click', function () { go(1); });
+    root.querySelector('.banner__prev').addEventListener('click', function () { go(-1); });
+    root.querySelector('.banner__next').addEventListener('click', function () { go(1); });
     toggle.addEventListener('click', function () { setPlaying(!playing); });
     root.addEventListener('mouseenter', function () { hovered = true; sync(); });
     root.addEventListener('mouseleave', function () { hovered = false; sync(); });
@@ -468,23 +478,23 @@
     document.addEventListener('visibilitychange', sync);
 
     /* Swipe on touch screens; vertical scrolling stays with the page. */
-    var vp = root.querySelector('.gallery__viewport'), x0 = null;
-    vp.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
-    vp.addEventListener('pointerup', function (e) {
+    var x0 = null;
+    list.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+    list.addEventListener('pointerup', function (e) {
       if (x0 === null) return;
       var dx = e.clientX - x0; x0 = null;
       if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
     });
-    vp.addEventListener('pointercancel', function () { x0 = null; });
+    list.addEventListener('pointercancel', function () { x0 = null; });
 
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {
         visible = en[0].isIntersecting;
-        if (visible) { load(i); load(i + 1); load(i - 1); }
+        if (visible) { load(i); load(i + 1); }
         sync();
-      }, { rootMargin: '200px 0px' }).observe(root);
-    } else { visible = true; load(0); load(1); load(-1); }
-    if (n < 2) root.querySelector('.gallery__controls').hidden = true;
+      }, { rootMargin: '300px 0px' }).observe(root);
+    } else { visible = true; load(0); load(1); }
+    if (n < 2) root.querySelector('.banner__controls').hidden = true;
     show(0);
     setPlaying(playing);
   }

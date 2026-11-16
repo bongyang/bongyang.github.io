@@ -72,25 +72,31 @@ While both paths are empty, the site shows a green "YB" monogram instead.
 If you rename the photo, also update the `preload` line for it near the top
 of `index.html`.
 
-## Photos in the About slideshow
+## Photos
 
-The slideshow beside the About text reads `gallery.items` in `content.json`
-(newest first). Each item has `src` (path without the extension), `width`,
-`height`, `caption`, `date`, `alt` and an optional `credit`.
+There are two sets of photos, both listed in `content.json`:
 
-To add a photo:
+- **Banner** (`banner.items`): the full-width slideshow between About and
+  Research. Use landscape photos only. Each item has `src` (path without the
+  size and extension), `widths`, `width`/`height` (the photo's shape),
+  `position` (which part to keep in view when the banner crops a wide strip,
+  e.g. `50% 30%` keeps the upper part), `caption`, `date`, `alt` and an
+  optional `credit`.
+- **Field photos** (`impact.project.photos`): the three Long Semadoh photos in
+  the Impact section.
 
-1. Run `python3 scripts/enhance_photos.py photo.jpg 2027-some-event`. It lightly
-   cleans up compression artefacts and sharpens, without cropping or
-   recolouring, and writes `assets/img/gallery/2027-some-event.webp` and `.jpg`.
-   On a computer without Python, save a `.webp` and a `.jpg` copy yourself
-   (e.g. with [Squoosh](https://squoosh.app)), each ideally under 200 KB.
-2. Add an entry to `gallery.items` with the photo's pixel width and height and a
-   short `alt` describing what is in the picture.
+To add a banner photo:
 
-To remove one, delete its entry (and its two files). The slideshow plays on its
-own, pauses on hover and has a pause button; visitors who ask their system for
-reduced motion get it paused.
+1. Run `python3 scripts/enhance_photos.py assets/img/banner photo.jpg 2027-some-event --sizes 800,1600`.
+   It lightly cleans up compression artefacts and sharpens, without cropping or
+   recolouring, and writes an 800px and a 1600px version as `.webp` and `.jpg`.
+   (For a field photo: `python3 scripts/enhance_photos.py assets/img/impact photo.jpg name`.)
+   On a computer without Python, make those files with e.g.
+   [Squoosh](https://squoosh.app), keeping the same names.
+2. Add an entry to `banner.items` with a short `alt` describing the picture.
+
+The banner plays on its own, pauses on hover and has a pause button; visitors
+who ask their system for reduced motion get it paused.
 
 ## Connect a custom domain later (e.g. yangbong.com)
 
