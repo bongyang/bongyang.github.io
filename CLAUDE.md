@@ -41,7 +41,7 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   footer render on every page. Old one-page links (`/#research`) redirect to
   the new pages. No dependencies. Escape everything with `esc()`.
 - `assets/css/style.css` — mobile-first; breakpoints at 48rem and 64rem.
-  Pill nav; on home the masthead floats over the cover (`.is-over`) until it
+  Pill nav (swipeable below 64rem, where seven pills don't fit); on home the masthead floats over the cover (`.is-over`) until it
   scrolls past.
 - Research themes link to publications by BibTeX key
   (`research.themes[].publications`), rendered as `publications.html#pub-<key>`.
@@ -67,6 +67,14 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   `kind`: country (default), state, small (both hidden on phones), island,
   water. Places are town-level; timeline entries link to places via `place` =
   place `id`.
+- Page heroes: title left, photo right; `pages.<id>.heroImage: false` gives a
+  text-only hero (Publications, where `image` is used only for the home card).
+  Title size is tied to the column width so long words never run under the
+  photo.
+- Publications: `publications.photoBreaks` puts photos after a group (`after`
+  = group id): one item = wide banner, several = a strip.
+- Citizenship: `service.feature` (ASEFInnoLab7: text + photo tiles via
+  `tileHtml()`) above the roles list (`service.listHeading`).
 - Publications: theme filter (`data-themes` from `research.themes`), Cite
   panel (`<details>`, APA built by `apa()`, raw BibTeX from the `bibtex`
   field), schema.org JSON-LD injected by `structuredData()`.

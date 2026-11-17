@@ -343,9 +343,21 @@
       C.groups.map(function (g) {
         var items = pubs.filter(function (p) { return p.group === g.id; });
         if (!items.length) return '';
+        var brk = (C.photoBreaks || []).filter(function (b) { return b.after === g.id; })[0];
         return '<h2 class="group">' + esc(g.label) + '</h2><ol class="pubs">' +
-          items.map(function (p) { return pubHtml(p, c, themesOf[p.key]); }).join('') + '</ol>';
+          items.map(function (p) { return pubHtml(p, c, themesOf[p.key]); }).join('') + '</ol>' +
+          (brk ? photoBreak(brk.items) : '');
       }).join('');
+  };
+  /* Photos between publication groups: one wide banner, or a strip of up to three. */
+  var capHtml = function (it) {
+    return '<figcaption>' + esc(it.caption) + (it.credit ? ' <span class="credit">' + esc(it.credit) + '</span>' : '') + '</figcaption>';
+  };
+  var photoBreak = function (items) {
+    if (items.length === 1) return '<figure class="pbreak">' + pic(items[0], '(min-width: 64rem) 58rem, 100vw') + capHtml(items[0]) + '</figure>';
+    return '<ul class="pstrip">' + items.map(function (it) {
+      return '<li><figure>' + pic(it, '(min-width: 48rem) 19rem, 100vw') + capHtml(it) + '</figure></li>';
+    }).join('') + '</ul>';
   };
   body.impact = function (c) {
     return '<div class="impact">' + c.impact.items.map(function (it, i) {
@@ -363,7 +375,15 @@
     }).join('') + '</div>';
   };
   body.service = function (c) {
-    return '<ul class="service">' + c.service.items.map(function (it) {
+    var f = c.service.feature;
+    var feature = f ? '<section class="sfeature" aria-labelledby="sfeature-h"><p class="eyebrow">' + esc(f.label) + '</p>' +
+        '<h2 id="sfeature-h" class="display">' + esc(f.heading) + '</h2>' +
+        '<div class="sfeature__text">' + f.text.map(function (t) { return '<p>' + rich(t) + '</p>'; }).join('') + '</div>' +
+        '<ul class="mosaic mosaic--feature">' + f.photos.map(function (it) {
+          return tileHtml(it, it.size ? '(min-width: 48rem) 50vw, 100vw' : '(min-width: 48rem) 25vw, 50vw', '');
+        }).join('') + '</ul></section>' +
+      '<h2 class="group">' + esc(c.service.listHeading) + '</h2>' : '';
+    return feature + '<ul class="service">' + c.service.items.map(function (it) {
       var org = esc(it.org) + (it.year ? ' ' + esc(it.year) : '');
       return '<li><span class="service__role">' + esc(it.role) + '</span><span class="service__org">' +
         (it.url ? link(it.url, org) : org) + '</span></li>';
@@ -434,12 +454,16 @@
         '<p class="gallery__intro">' + esc(g.intro) + '</p></div>' +
       '<ul class="places" aria-label="Places">' + places.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>' +
       '<ul class="mosaic">' + g.items.map(function (it) {
-        var sizes = it.size === 'lg' ? '(min-width: 48rem) 50vw, 100vw' : (it.size === 'wide' ? '(min-width: 48rem) 50vw, 100vw' : '(min-width: 48rem) 25vw, 50vw');
-        return '<li class="tile' + (it.size ? ' tile--' + esc(it.size) : '') + '"><figure>' + pic(it, sizes) +
-          '<figcaption><span class="tile__place">' + esc(it.place) + ' · ' + esc(it.date) + '</span>' +
-          '<span class="tile__cap">' + esc(it.caption) + '</span>' +
-          (it.credit ? '<span class="tile__credit">' + esc(it.credit) + '</span>' : '') + '</figcaption></figure></li>';
+        var sizes = it.size ? '(min-width: 48rem) 50vw, 100vw' : '(min-width: 48rem) 25vw, 50vw';
+        return tileHtml(it, sizes, it.place + ' · ' + it.date);
       }).join('') + '</ul></section>';
+  }
+  /* One photo tile (home mosaic and the Citizenship feature). */
+  function tileHtml(it, sizes, placeLine) {
+    return '<li class="tile' + (it.size ? ' tile--' + esc(it.size) : '') + '"><figure>' + pic(it, sizes) +
+      '<figcaption>' + (placeLine ? '<span class="tile__place">' + esc(placeLine) + '</span>' : '') +
+      '<span class="tile__cap">' + esc(it.caption) + '</span>' +
+      (it.credit ? '<span class="tile__credit">' + esc(it.credit) + '</span>' : '') + '</figcaption></figure></li>';
   }
 
   /* ---------- inner pages ---------- */
@@ -447,12 +471,13 @@
     var list = pages(c), i = 0;
     list.forEach(function (n, k) { if (n.id === id) i = k; });
     var me = list[i], next = list[(i + 1) % list.length], pg = c.pages[id];
-    return '<header class="phero wrap">' +
+    var showImg = pg.heroImage !== false;
+    return '<header class="phero wrap' + (showImg ? '' : ' phero--text') + '">' +
         '<div class="phero__text"><p class="eyebrow">' + pad(i + 1) + ' / ' + pad(list.length) + '</p>' +
           '<h1 class="phero__title">' + esc(c[id].heading) + '</h1>' +
           '<p class="lede">' + rich(ledeOf(c, id)) + '</p></div>' +
-        '<figure class="phero__img">' + pic(pg.image, '(min-width: 48rem) 45vw, 100vw', true) +
-          '<figcaption>' + esc(pg.image.caption) + '</figcaption></figure>' +
+        (showImg ? '<figure class="phero__img">' + pic(pg.image, '(min-width: 48rem) 45vw, 100vw', true) +
+          '<figcaption>' + esc(pg.image.caption) + '</figcaption></figure>' : '') +
       '</header>' +
       '<div class="motif" aria-hidden="true"></div>' +
       '<div class="page wrap page--' + esc(id) + '">' + body[id](c, byKey, pubs) + '</div>' +

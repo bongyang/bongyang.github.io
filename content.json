@@ -10,7 +10,9 @@
     "TODO: Check the new home-page text written from existing site content: home.tagline, home.feature.points and pages.*.teaser.",
     "TODO: Check the new photo captions (gallery.items, pages.*.image.caption): especially the PDC 2024 market walk (place given as Sarawak; the market itself is not named), the Nottingham 'group presentations' and 'white paper working session' photos, the Fudan 2024 photo, and the Manila panel date and credit (the new copy has no Archers Network watermark, so the credit was dropped).",
     "TODO: The 2023 Shanghai talk photo is still the 800px LinkedIn copy; replace it if an original exists. The 2024 InnoLab5 photo was taken out of the gallery for the same reason.",
-    "TODO: Long Semadoh field photos in assets/img/impact/ are still 800px copies; originals would help."
+    "TODO: Long Semadoh field photos in assets/img/impact/ are still 800px copies; originals would help.",
+    "TODO: Check the ASEFInnoLab7 text in service.feature and the new Citizenship entry (theme taken from the banner in the Nottingham group photo: 'The Role of Universities in Advancing AI for Good'; 'participants worked in teams on white papers' inferred from the photos and the Perth launch; year 2026). Add a link to the public event page if there is one.",
+    "TODO: Check the new Publications photo captions (publications.photoBreaks): Subsistence Marketplaces Immersion Conference 2025 has no location; the three small photos are 800px copies."
   ],
   "nav": [
     {
@@ -162,7 +164,65 @@
     ],
     "filterLabel": "Filter by theme",
     "filterAll": "All",
-    "downloadBib": "Download all as BibTeX"
+    "downloadBib": "Download all as BibTeX",
+    "photoBreaks": [
+      {
+        "after": "journal",
+        "items": [
+          {
+            "src": "assets/img/banner/2025-smic-talk",
+            "widths": [
+              800
+            ],
+            "width": 800,
+            "height": 450,
+            "position": "62% 50%",
+            "alt": "Yang Bong presenting a slide titled ‘What WEIRD assumptions can you identify?’, comparing screenshots of eBay, Amazon and other online marketplaces.",
+            "caption": "Subsistence Marketplaces Immersion Conference · 2025"
+          },
+          {
+            "src": "assets/img/banner/2025-compass-title",
+            "widths": [
+              800
+            ],
+            "width": 800,
+            "height": 572,
+            "position": "50% 50%",
+            "alt": "Yang Bong at a lectern beside a projected title slide reading ‘Can My Voice Be Heard? Taking non-WEIRD voices seriously in digital marketplaces’.",
+            "caption": "ACM COMPASS ’25, Toronto · 2025"
+          },
+          {
+            "src": "assets/img/banner/2025-manila-innolab6-speaking",
+            "widths": [
+              800
+            ],
+            "width": 800,
+            "height": 533,
+            "position": "35% 40%",
+            "alt": "Yang Bong speaking into a microphone at a panel table.",
+            "caption": "ASEFInnoLab6, Manila · 2025",
+            "credit": "Photo: AJ Olivete, Archers Network"
+          }
+        ]
+      },
+      {
+        "after": "conference",
+        "items": [
+          {
+            "src": "assets/img/banner/2026-iau-perth",
+            "widths": [
+              800,
+              1600
+            ],
+            "width": 1600,
+            "height": 1204,
+            "position": "50% 52%",
+            "alt": "Yang Bong with four colleagues in front of the stage at the IAU 2026 General Conference, under screens reading ‘The Value of Universities in the Era of AI’.",
+            "caption": "IAU 17th General Conference, ‘The Value of Universities in the Era of AI’, Murdoch University, Perth · Nov 2026"
+          }
+        ]
+      }
+    ]
   },
   "impact": {
     "heading": "Impact",
@@ -431,6 +491,12 @@
     "heading": "Academic Citizenship",
     "items": [
       {
+        "role": "Co-organiser",
+        "org": "ASEF Higher Education InnoLab 7 (ASEFInnoLab7), with the Asia-Europe Foundation (ASEF), the University of Nottingham and Fudan University",
+        "year": "2026",
+        "url": ""
+      },
+      {
         "role": "Communication Chair",
         "org": "Participatory Design Conference",
         "year": "2024",
@@ -466,7 +532,70 @@
         "year": "",
         "url": "https://www.asiaeurope4ai.org/"
       }
-    ]
+    ],
+    "feature": {
+      "label": "Featured",
+      "heading": "Co-organising ASEFInnoLab7",
+      "text": [
+        "The seventh ASEF Higher Education InnoLab asked what role universities should play in advancing AI for good. It was co-organised with the Asia-Europe Foundation (ASEF), the University of Nottingham and Fudan University, with sessions hosted at the University of Nottingham.",
+        "Participants worked in teams on white papers, which were launched at Murdoch University, Perth, in November 2026."
+      ],
+      "photos": [
+        {
+          "src": "assets/img/banner/2026-nottingham-group",
+          "widths": [
+            800,
+            1600,
+            1772
+          ],
+          "width": 1772,
+          "height": 1181,
+          "position": "50% 60%",
+          "alt": "Large group photo of InnoLab participants beside the lake at the University of Nottingham, with the Trent Building clock tower behind.",
+          "caption": "ASEFInnoLab7 participants at the University of Nottingham",
+          "size": "lg"
+        },
+        {
+          "src": "assets/img/banner/2026-nottingham-speaking",
+          "widths": [
+            800,
+            1600
+          ],
+          "width": 1600,
+          "height": 1066,
+          "alt": "Yang Bong speaking during a session at the ASEF Higher Education InnoLab, University of Nottingham.",
+          "position": "62% 40%",
+          "caption": "Discussion during an InnoLab session"
+        },
+        {
+          "src": "assets/img/banner/2026-nottingham-white-paper",
+          "widths": [
+            800,
+            1600
+          ],
+          "width": 1600,
+          "height": 1066,
+          "position": "40% 40%",
+          "alt": "Yang Bong and other InnoLab participants in discussion around a lectern.",
+          "caption": "White paper working session"
+        },
+        {
+          "src": "assets/img/banner/2026-perth-launch-panel",
+          "widths": [
+            800,
+            1600,
+            2400
+          ],
+          "width": 2400,
+          "height": 1600,
+          "position": "60% 55%",
+          "alt": "Yang Bong giving a thumbs-up on a five-person panel, beneath a screen titled ‘What is the Role of Universities in Advancing AI for the Common Good?’",
+          "caption": "Launch of the ASEFInnoLab7 white papers, Murdoch University, Perth",
+          "size": "wide"
+        }
+      ]
+    },
+    "listHeading": "Roles and reviewing"
   },
   "contact": {
     "heading": "Contact",
@@ -515,18 +644,18 @@
     "publications": {
       "teaser": "Journal articles, conference papers and reports, with citations ready to copy.",
       "image": {
-        "src": "assets/img/banner/2026-perth-launch-panel",
+        "src": "assets/img/banner/2026-iau-perth",
         "widths": [
           800,
-          1600,
-          2400
+          1600
         ],
-        "width": 2400,
-        "height": 1600,
-        "position": "60% 55%",
-        "alt": "Yang Bong giving a thumbs-up on a five-person panel, beneath a screen titled ‘What is the Role of Universities in Advancing AI for the Common Good?’",
-        "caption": "Launch of the ASEFInnoLab7 white papers, Murdoch University, Perth · 4 Nov 2026"
-      }
+        "width": 1600,
+        "height": 1204,
+        "position": "50% 52%",
+        "alt": "Yang Bong with four colleagues in front of the stage at the IAU 2026 General Conference, under screens reading ‘The Value of Universities in the Era of AI’.",
+        "caption": "IAU 17th General Conference, ‘The Value of Universities in the Era of AI’, Murdoch University, Perth · Nov 2026"
+      },
+      "heroImage": false
     },
     "impact": {
       "teaser": "Community co-design in the Lun Bawang highlands of Sarawak, and Asia–Europe work on AI for sustainable development.",
@@ -581,7 +710,7 @@
       "Digital Inclusion × Enterprise ×",
       "AI for Good"
     ],
-    "statement": "Where digital technologies, participatory research and business meet.",
+    "statement": "Towards a more inclusive digital economy.",
     "feature": {
       "label": "Featured project",
       "heading": "Co-designing a village brand",

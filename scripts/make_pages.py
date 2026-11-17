@@ -8,13 +8,16 @@ c = json.loads((root / 'content.json').read_text(encoding='utf-8'))
 SITE = 'https://bongyang.github.io/'
 NAME = c['hero']['name']
 home_desc = ('Dr Yang Bong is a Senior Lecturer at Birmingham Newman University researching digital inclusion, '
-             'rural and Indigenous entrepreneurship, subsistence marketplaces, platform economies and AI for sustainable development.')
+             'Indigenous entrepreneurship, platform economies and AI for good.')
 pages = [('home', 'index.html', f"{NAME} · Senior Lecturer, Birmingham Newman University", home_desc, c['home']['heroSlides'][0])]
 for n in c['nav']:
     if n['id'] in c['pages']:
-        pages.append((n['id'], n['href'], f"{c[n['id']]['heading']} · {NAME}", c['pages'][n['id']]['teaser'], c['pages'][n['id']]['image']))
+        pg = c['pages'][n['id']]
+        pages.append((n['id'], n['href'], f"{c[n['id']]['heading']} · {NAME}", pg['teaser'], pg['image'] if pg.get('heroImage', True) else None))
 
 def preload(im):
+    if im is None:
+        return ''
     if im.get('widths'):
         ss = ', '.join(f"{im['src']}-{w}.webp {w}w" for w in im['widths'])
         return f'<link rel="preload" as="image" type="image/webp" imagesrcset="{ss}" imagesizes="{"100vw" if pages[0][4] is im else "(min-width: 48rem) 45vw, 100vw"}" fetchpriority="high">'

@@ -429,8 +429,6 @@ a.metarow:hover .metarow__line { opacity: 1; }
 .next a:hover .next__title::after { transform: translateX(.4rem); }
 
 @media (min-width: 48rem) {
-  .nav { gap: .45rem; padding-right: 0; margin-right: 0; -webkit-mask-image: none; mask-image: none; }
-  .nav a { padding: .42rem 1rem; font-size: .875rem; }
   .cover { min-height: 100svh; }
   .cover__img img { object-position: var(--pos, 50% 50%); }
   .cover__pause { right: max(var(--gutter), calc((100vw - 68rem) / 2 + var(--gutter))); }
@@ -454,10 +452,20 @@ a.metarow:hover .metarow__line { opacity: 1; }
   .recent__list li { grid-template-columns: 4.5rem 1fr; }
   .contact { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: end; column-gap: 4rem; padding-top: 6rem; padding-bottom: 5rem; }
   .phero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 4rem; align-items: end; padding-top: 4.5rem; padding-bottom: 4rem; }
+  .phero__title { font-size: min(6.25rem, 7.2vw); overflow-wrap: break-word; }
+  .phero--text { grid-template-columns: minmax(0, 1fr); padding-bottom: 2.5rem; }
+  .phero--text .phero__title { font-size: clamp(4rem, 9vw, 7.5rem); }
+  .pstrip { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .sfeature { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 3rem; }
+  .sfeature .eyebrow, .sfeature .display { grid-column: 1 / -1; }
+  .sfeature__text { grid-column: 1 / -1; columns: 2; column-gap: 2.5rem; }
+  .sfeature__text p { break-inside: avoid; }
   .page { padding-top: 4rem; padding-bottom: 6rem; }
   .page--research > *, .page--teaching > *, .page--service > *, .page--publications > * { max-width: 58rem; }
 }
 @media (min-width: 64rem) {
+  .nav { gap: .45rem; padding-right: 0; margin-right: 0; -webkit-mask-image: none; mask-image: none; }
+  .nav a { padding: .42rem 1rem; font-size: .875rem; }
   .cards { grid-template-columns: repeat(3, 1fr); }
   .card--wide { grid-column: span 2; }
   .card--wide h3 { font-size: 3rem; }
@@ -517,3 +525,20 @@ a.metarow:hover .metarow__line { opacity: 1; }
   .tile--lg .tile__cap { font-size: 1.5rem; }
   .map__frame { aspect-ratio: 760 / 520; }
 }
+
+/* ---------- publications: photo breaks between groups ---------- */
+.pbreak, .pstrip { margin: 3rem 0 1rem; }
+.pbreak img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; object-position: var(--pos, 50% 50%); border-radius: 2px; background: var(--paper-deep); }
+.pstrip { display: grid; gap: 1.25rem; }
+.pstrip img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: var(--pos, 50% 50%); border-radius: 2px; background: var(--paper-deep); }
+.pbreak figcaption, .pstrip figcaption { margin-top: .5rem; font-size: .8125rem; line-height: 1.4; color: var(--muted); }
+.credit { display: block; font-size: .75rem; color: #7C847E; }
+
+/* ---------- citizenship: featured ASEFInnoLab7 ---------- */
+.sfeature { display: grid; gap: 1.25rem; margin-bottom: 3.5rem; }
+.page .sfeature .display { font: 400 clamp(2rem, 5.5vw, 3.25rem)/1.05 var(--serif); letter-spacing: -.025em; margin-top: -.5rem; }
+.sfeature__text p + p { margin-top: 1rem; }
+.sfeature__text p { font-size: 1.0625rem; line-height: 1.65; }
+.mosaic--feature { margin-top: .75rem; grid-column: 1 / -1; }
+.mosaic--feature .tile:not(.tile--lg):not(.tile--wide) .tile__cap { display: block; font-size: .8125rem; }
+.page--service > .group { margin-top: 0; }
