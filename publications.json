@@ -179,14 +179,14 @@
       }
     ],
     "year": 2026,
-    "venue": "Information Society 2026",
+    "venue": "Artificial Intelligence Accelerating Sustainable Development Goals (AI4SDG 2026) Workshop, 29th International Multiconference Information Society (IS2026)",
     "volume": "",
     "number": "",
     "pages": "",
     "publisher": "",
     "doi": "10.70314/is.2026.ai4sdg.163",
     "url": "https://www.researchgate.net/publication/418000723",
-    "bibtex": "@inproceedings{bong2026rethinking,\n  title     = {Rethinking 'Good' in AI for Good: Communities as Judges of University-Led AI for Sustainable Development},\n  author    = {Bong, Yang and Sailaja, Neelima and Chen, Minjia and Annamali, Devisakti and Tada, Jin and Cellérier, Leïla and Iqbal, Muhammad Zahid and Pitogo, Vicente},\n  booktitle = {Information Society 2026},\n  address   = {Ljubljana, Slovenia},\n  month     = oct,\n  year      = {2026},\n  doi       = {10.70314/is.2026.ai4sdg.163},\n  url       = {https://www.researchgate.net/publication/418000723}\n}"
+    "bibtex": "@inproceedings{bong2026rethinking,\n  title     = {Rethinking 'Good' in AI for Good: Communities as Judges of University-Led AI for Sustainable Development},\n  author    = {Bong, Yang and Sailaja, Neelima and Chen, Minjia and Annamali, Devisakti and Tada, Jin and Cellérier, Leïla and Iqbal, Muhammad Zahid and Pitogo, Vicente},\n  booktitle = {Artificial Intelligence Accelerating Sustainable Development Goals (AI4SDG 2026) Workshop, 29th International Multiconference Information Society (IS2026)},\n  address   = {Ljubljana, Slovenia},\n  month     = oct,\n  year      = {2026},\n  doi       = {10.70314/is.2026.ai4sdg.163},\n  url       = {https://www.researchgate.net/publication/418000723}\n}"
   },
   {
     "key": "billones2025ai",
