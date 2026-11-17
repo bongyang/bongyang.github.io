@@ -75,7 +75,9 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   = group id): one item = wide banner, several = a strip.
 - Citizenship: `service.feature` (ASEFInnoLab7: text + photo tiles via
   `tileHtml()`), then `service.groups` in order: "Conferences and networks"
-  (with a `photos` strip via `photoBreak()`), then "Peer review" (owner wants
+  (its `photos` shown as a rotating banner, `rotate: true` → `rotatorHtml()` /
+  `initRotators()`: 6 s, dots, pause, holds on hover/focus, off for reduced
+  motion), then "Peer review" (owner wants
   conferences listed before reviewing).
 - Publications: theme filter (`data-themes` from `research.themes`), Cite
   panel (`<details>`, APA built by `apa()`, raw BibTeX from the `bibtex`

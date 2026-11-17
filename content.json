@@ -614,7 +614,8 @@
             "alt": "Eight performers in traditional dress standing in a row with a hand on their heart.",
             "caption": "Performers in traditional dress, Participatory Design Conference 2024"
           }
-        ]
+        ],
+        "rotate": true
       },
       {
         "heading": "Peer review",
@@ -672,7 +673,10 @@
     "bibtex": "BibTeX",
     "pdf": "Download PDF",
     "next": "Next",
-    "of": "of"
+    "of": "of",
+    "rotPause": "Pause photos",
+    "rotPlay": "Play photos",
+    "rotShow": "Show photo {n} of {total}"
   },
   "pages": {
     "research": {

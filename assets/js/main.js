@@ -349,6 +349,44 @@
           (brk ? photoBreak(brk.items) : '');
       }).join('');
   };
+  /* Rotating banner: one photo at a time with its caption, dots and a pause
+     button. Driven by initRotators(); autoplay off for reduced motion. */
+  var rotatorHtml = function (items, L) {
+    return '<div class="rotator" role="group" aria-roledescription="carousel">' +
+      '<div class="rotator__stage">' + items.map(function (it, i) {
+        return '<figure class="rotator__slide' + (i === 0 ? ' is-on' : '') + '"' + (i ? ' aria-hidden="true"' : '') + '>' +
+          pic(it, '(min-width: 64rem) 58rem, 100vw') + capHtml(it) + '</figure>';
+      }).join('') + '</div>' +
+      '<div class="rotator__bar"><div class="rotator__dots">' + items.map(function (it, i) {
+        return '<button type="button" aria-label="' + esc(L.rotShow.replace('{n}', i + 1).replace('{total}', items.length)) + '"' + (i === 0 ? ' aria-current="true"' : '') + '></button>';
+      }).join('') + '</div>' +
+      '<button type="button" class="rotator__pause" data-pause="' + esc(L.rotPause) + '" data-play="' + esc(L.rotPlay) + '" aria-label="' + esc(L.rotPause) + '"><span aria-hidden="true"></span></button></div></div>';
+  };
+  function initRotators() {
+    var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('.rotator').forEach(function (r) {
+      var slides = [].slice.call(r.querySelectorAll('.rotator__slide')), dots = [].slice.call(r.querySelectorAll('.rotator__dots button'));
+      var btn = r.querySelector('.rotator__pause'), i = 0, timer = null, paused = reduced, hold = false;
+      var show = function (n) {
+        slides[i].classList.remove('is-on'); slides[i].setAttribute('aria-hidden', 'true'); dots[i].removeAttribute('aria-current');
+        i = (n + slides.length) % slides.length;
+        slides[i].classList.add('is-on'); slides[i].removeAttribute('aria-hidden'); dots[i].setAttribute('aria-current', 'true');
+        var nx = slides[(i + 1) % slides.length].querySelector('img'); if (nx) nx.loading = 'eager';
+      };
+      var run = function () { clearInterval(timer); if (!paused && !hold && !document.hidden) timer = setInterval(function () { show(i + 1); }, 6000); };
+      var label = function () { btn.setAttribute('aria-label', btn.getAttribute(paused ? 'data-play' : 'data-pause')); btn.classList.toggle('is-paused', paused); };
+      dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); run(); }); });
+      btn.addEventListener('click', function () { paused = !paused; label(); run(); });
+      /* pause while the pointer or keyboard focus is on it */
+      r.addEventListener('mouseenter', function () { hold = true; run(); });
+      r.addEventListener('mouseleave', function () { hold = false; run(); });
+      r.addEventListener('focusin', function () { hold = true; run(); });
+      r.addEventListener('focusout', function () { hold = false; run(); });
+      document.addEventListener('visibilitychange', run);
+      label(); run();
+    });
+  }
+
   /* Photos between publication groups: one wide banner, or a strip of up to three. */
   var capHtml = function (it) {
     return '<figcaption>' + esc(it.caption) + (it.credit ? ' <span class="credit">' + esc(it.credit) + '</span>' : '') + '</figcaption>';
@@ -388,7 +426,7 @@
         var org = esc(it.org) + (it.year ? ' ' + esc(it.year) : '');
         return '<li><span class="service__role">' + esc(it.role) + '</span><span class="service__org">' +
           (it.url ? link(it.url, org) : org) + '</span></li>';
-      }).join('') + '</ul>' + (g.photos && g.photos.length ? photoBreak(g.photos) : '');
+      }).join('') + '</ul>' + (g.photos && g.photos.length ? (g.rotate ? rotatorHtml(g.photos, c.labels) : photoBreak(g.photos)) : '');
     }).join('');
   };
   var ledeOf = function (c, id) { return (c[id] && c[id].intro) || c.pages[id].teaser; };
@@ -534,6 +572,7 @@
       filterPubs('');
       wireCopy(c.labels);
     }
+    initRotators();
     if (page === 'impact') { linkTimeline(); initMap(c.impact.map); }
     if (page === 'home' || page === 'publications') structuredData(c, page === 'publications' ? pubs : []);
     if (location.hash) {
