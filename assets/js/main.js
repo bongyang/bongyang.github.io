@@ -82,6 +82,7 @@
       out += p.venue + (p.volume ? ', ' + p.volume + (p.number ? '(' + p.number + ')' : '') : '') +
         (p.pages ? ', ' + p.pages : '') + '.';
     } else if (p.type === 'techreport') {
+      if (p.number) out = out.replace(/\. $/, ' (' + p.number + '). ');
       out += p.venue + '.';
     } else {
       out += 'In ' + p.venue + (p.pages ? ' (pp. ' + p.pages + ')' : '') + '.' + (p.publisher ? ' ' + p.publisher + '.' : '');
@@ -323,6 +324,8 @@
       }).join('');
       return '<li class="theme"><p class="theme__no" aria-hidden="true">' + pad(i + 1) + '</p>' +
         '<div><h2>' + esc(t.title) + '</h2><p>' + rich(t.description) + '</p>' +
+        (t.current && t.current.length ? '<p class="label">' + esc(c.research.currentLabel) + '</p><ul class="current">' +
+          t.current.map(function (x) { return '<li>' + rich(x) + '</li>'; }).join('') + '</ul>' : '') +
         (rel ? '<p class="label">' + esc(c.research.relatedLabel) + '</p><ul class="related">' + rel + '</ul>' : '') +
         '</div></li>';
     }).join('') + '</ol>';

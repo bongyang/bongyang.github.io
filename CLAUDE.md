@@ -43,7 +43,9 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
 - `assets/css/style.css` — mobile-first; breakpoints at 48rem and 64rem.
   Pill nav (swipeable below 64rem, where seven pills don't fit); on home the masthead floats over the cover (`.is-over`) until it
   scrolls past.
-- Research themes link to publications by BibTeX key
+- Research themes: optional `current` list (rendered under the label
+  `research.currentLabel`, inline links allowed) above the related
+  publications. Themes link to publications by BibTeX key
   (`research.themes[].publications`), rendered as `publications.html#pub-<key>`.
 - Photos: `pic()` in `main.js` takes `{src, widths?, width, height, alt,
   position}`; with `widths` files are `NAME-800/NAME-1600` (.webp + .jpg),

@@ -120,15 +120,24 @@
           "bong2024selling",
           "bong2024digital"
         ],
-        "short": "Digital inclusion"
+        "short": "Digital inclusion",
+        "current": [
+          "Indigenous entrepreneurship and digital platforms in Sarawak, Borneo",
+          "Subsistence marketplaces in Puebla, Mexico: the use of affective orchestration in enterprise coordination"
+        ]
       },
       {
-        "title": "Machine learning for social science",
+        "title": "Machine learning for social good",
         "description": "Machine learning and data analytics for social-science research, including innovation in agriculture research and household energy.",
         "publications": [
+          "tiwasing2026strategic",
           "bong2026multi"
         ],
-        "short": "Machine learning"
+        "short": "Machine learning",
+        "current": [
+          "Poverty amidst abundance: tackling energy poverty in the UK through machine learning and a marketplace literacy intervention",
+          "[Strategic Priorities for Agricultural Research Infrastructure Investment](https://ircaucus.ac.uk/publications/strategic-priorities-for-agricultural-research-infrastructure-investment/): report published; journal article in preparation"
+        ]
       },
       {
         "title": "AI for sustainable development",
@@ -140,9 +149,13 @@
           "bong2025white",
           "wawn2024positioning"
         ],
-        "short": "AI for sustainable development"
+        "short": "AI for sustainable development",
+        "current": [
+          "Sustainability of artificial intelligence: a conceptual framework"
+        ]
       }
-    ]
+    ],
+    "currentLabel": "Current research"
   },
   "publications": {
     "heading": "Publications",
