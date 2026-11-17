@@ -8,36 +8,39 @@
     "TODO: Add the year(s) for the International Journal of Entrepreneurship and Innovation reviewer entry in service.items, if wanted.",
     "TODO: Check the banner captions and dates. Places and events were read from what is visible in each photo, and years from when the LinkedIn post went up. In particular: the 2026 group photo is captioned 'University of Nottingham', and the 2024 photo is assumed to be from the 5th InnoLab.",
     "TODO: Check the three Long Semadoh photos in impact.project.photos are from the Dec 2025 fieldwork, and their captions.",
-    "TODO: Banner and field photos are LinkedIn copies (800px), upscaled to 1600px for the banner, so they look soft on large screens. Replace with original camera files when available (see README, 'Photos')."
+    "TODO: Banner and field photos are LinkedIn copies (800px), upscaled to 1600px for the banner, so they look soft on large screens. Replace with original camera files when available (see README, 'Photos').",
+    "TODO: Check the new home-page text written from existing site content: home.tagline, home.feature.points and pages.*.teaser."
   ],
   "nav": [
     {
-      "id": "home",
-      "label": "Home"
-    },
-    {
       "id": "research",
-      "label": "Research"
+      "label": "Research",
+      "href": "research.html"
     },
     {
       "id": "publications",
-      "label": "Publications"
+      "label": "Publications",
+      "href": "publications.html"
     },
     {
       "id": "impact",
-      "label": "Impact"
+      "label": "Impact",
+      "href": "impact.html"
     },
     {
       "id": "teaching",
-      "label": "Teaching"
+      "label": "Teaching",
+      "href": "teaching.html"
     },
     {
       "id": "service",
-      "label": "Citizenship"
+      "label": "Citizenship",
+      "href": "citizenship.html"
     },
     {
       "id": "contact",
-      "label": "Contact"
+      "label": "Contact",
+      "href": "#contact"
     }
   ],
   "hero": {
@@ -405,7 +408,9 @@
     "copied": "Copied",
     "apa": "APA",
     "bibtex": "BibTeX",
-    "pdf": "Download PDF"
+    "pdf": "Download PDF",
+    "next": "Next",
+    "of": "of"
   },
   "banner": {
     "label": "Photos from talks, panels and international collaborations",
@@ -496,5 +501,108 @@
         "alt": "Yang Bong with six colleagues giving a thumbs-up in front of an ASEF Higher Education InnoLab banner."
       }
     ]
+  },
+  "pages": {
+    "research": {
+      "teaser": "Three connected themes, from digital inclusion in rural marketplaces to AI for sustainable development.",
+      "image": {
+        "src": "assets/img/banner/2026-shanghai-forum",
+        "widths": [
+          800,
+          1600
+        ],
+        "width": 800,
+        "height": 600,
+        "position": "60% 35%",
+        "alt": "Yang Bong with two colleagues in front of the Shanghai Forum 2026 backdrop.",
+        "caption": "Shanghai Forum · Apr 2026"
+      }
+    },
+    "publications": {
+      "teaser": "Journal articles, conference papers and reports, with citations ready to copy.",
+      "image": {
+        "src": "assets/img/banner/2026-murdoch-launch-panel",
+        "widths": [
+          800,
+          1600
+        ],
+        "width": 800,
+        "height": 533,
+        "position": "50% 45%",
+        "alt": "Yang Bong giving a thumbs-up on a five-person panel, beneath a screen titled ‘What is the Role of Universities in Advancing AI for the Common Good?’",
+        "caption": "Launch of the ASEFInnoLab7 white papers, Murdoch University, Australia · Nov 2026"
+      }
+    },
+    "impact": {
+      "teaser": "Community co-design in the Lun Bawang highlands of Sarawak, and Asia–Europe work on AI for sustainable development.",
+      "image": {
+        "src": "assets/img/impact/semadoh-highlands",
+        "width": 800,
+        "height": 1067,
+        "position": "50% 62%",
+        "alt": "Three people standing on a grassy hillside overlooking forested hills and a pond.",
+        "caption": "The Lun Bawang highlands around Long Semadoh"
+      }
+    },
+    "teaching": {
+      "teaser": "Marketing, entrepreneurship and machine learning, at Birmingham Newman and Nottingham.",
+      "image": {
+        "src": "assets/img/impact/semadoh-workshop",
+        "width": 800,
+        "height": 1067,
+        "position": "50% 45%",
+        "alt": "Workshop participants around a table covered with Malay-language handouts and product samples.",
+        "caption": "Working through branding and packaging with micro-entrepreneurs"
+      }
+    },
+    "service": {
+      "teaser": "Conference roles, peer review and network leadership.",
+      "image": {
+        "src": "assets/img/banner/2024-innolab5",
+        "widths": [
+          800,
+          1600
+        ],
+        "width": 800,
+        "height": 600,
+        "position": "50% 30%",
+        "alt": "Yang Bong with six colleagues giving a thumbs-up in front of an ASEF Higher Education InnoLab banner.",
+        "caption": "The 5th ASEF Higher Education InnoLab · 2024"
+      }
+    }
+  },
+  "home": {
+    "exploreHeading": "Explore",
+    "recentHeading": "Recent publications",
+    "allPubs": "All publications",
+    "galleryHeading": "Talks and collaborations",
+    "explore": "Explore the work",
+    "inTouch": "Get in touch",
+    "tagline": "Digital inclusion × Entrepreneurship × AI for sustainable development",
+    "statement": "Where digital technologies, participatory research and business meet.",
+    "heroImage": {
+      "src": "assets/img/banner/2023-shanghai-talk",
+      "widths": [
+        800,
+        1600
+      ],
+      "width": 800,
+      "height": 600,
+      "position": "72% 35%",
+      "alt": "Yang Bong presenting a talk on AI for Sustainable Development at ASEFInnoLab, Shanghai, in October 2023."
+    },
+    "feature": {
+      "label": "Featured project",
+      "heading": "Co-designing a village brand",
+      "points": [
+        "Horizon CDT impact project, secured and delivered",
+        "With the Lun Bawang community and The Culture Capital",
+        "Grew from digital marketing training into a village-wide branding campaign"
+      ],
+      "meta": "Long Semadoh, Sarawak / October 2025 – April 2026",
+      "metaEnd": "Horizon CDT",
+      "link": "impact.html",
+      "linkLabel": "Read about the project"
+    }
   }
 }

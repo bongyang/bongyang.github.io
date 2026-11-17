@@ -12,7 +12,8 @@ no build step. It is designed to be published with GitHub Pages at
 | `publications.bib` | The source of truth for publications. |
 | `publications.json` | Generated from the `.bib`. Do not edit by hand. |
 | `scripts/bib_to_json.py` | Regenerates `publications.json` from `publications.bib`. |
-| `index.html` | Page skeleton, plus the title and social-sharing tags. |
+| `index.html`, `research.html`, `publications.html`, `impact.html`, `teaching.html`, `citizenship.html` | One page each (home plus five sections). Generated: do not edit by hand. |
+| `scripts/make_pages.py`, `scripts/page.template.html` | Rebuild the six page files: `python3 scripts/make_pages.py`. |
 | `assets/css/style.css` | All styling. Colours and fonts are set at the top. |
 | `assets/js/main.js` | Reads the two JSON files and builds the page. |
 | `assets/fonts/`, `assets/img/` | Self-hosted fonts, favicon, sharing image, headshot. |
@@ -48,9 +49,11 @@ Open `content.json` and change the text. The short bio is `hero.bio`; the
 longer one is `about.paragraphs`. To put a link inside text, write
 `[link text](https://example.org)`.
 
-If you change the short bio, also update the `description` and
-`og:description` lines near the top of `index.html`. Those are what Google and
-link previews show.
+Each section page's short description is `pages.<section>.teaser`; its photo is
+`pages.<section>.image`. The home-page cover photo, tagline and featured
+project are under `home`. After changing a teaser or photo, run
+`python3 scripts/make_pages.py` so the page titles and link previews match.
+The home-page description for Google lives in `scripts/make_pages.py`.
 
 ## Change the photo
 
@@ -69,8 +72,7 @@ link previews show.
    ```
 
 While both paths are empty, the site shows a green "YB" monogram instead.
-If you rename the photo, also update the `preload` line for it near the top
-of `index.html`.
+
 
 ## Photos
 
@@ -107,8 +109,9 @@ who ask their system for reduced motion get it paused.
    guide).
 3. On GitHub, go to the repository's Settings → Pages, enter the domain under
    "Custom domain", and tick "Enforce HTTPS" once it becomes available.
-4. In `index.html`, replace `https://bongyang.github.io` with the new address
-   in the `canonical`, `og:url` and `og:image` lines.
+4. In `scripts/make_pages.py` and `scripts/page.template.html`, replace
+   `https://bongyang.github.io` with the new address, then run
+   `python3 scripts/make_pages.py`.
 
 ## The impact map and timeline
 

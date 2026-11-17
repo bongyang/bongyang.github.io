@@ -1,5 +1,6 @@
 /* Dr Yang Bong — personal site.
-   Reads content.json and publications.json and renders the page.
+   Reads content.json and publications.json and renders the page named in
+   <body data-page>: home, research, publications, impact, teaching or service.
    No dependencies, no build step. Text never lives in this file. */
 (function () {
   'use strict';
@@ -105,7 +106,7 @@
     var title = esc(p.title);
     var html = '<li class="pub" id="pub-' + esc(p.key) + '" data-themes="' + esc((themes || []).join(' ')) + '">' +
       '<p class="pub__year">' + esc(p.year || '') + '</p><div class="pub__body">' +
-      '<h4 class="pub__title">' + (url ? link(url, title) : title) + '</h4>' +
+      '<h3 class="pub__title">' + (url ? link(url, title) : title) + '</h3>' +
       '<p class="pub__authors">' + authorsHtml(p.authors, c.publications.highlightAuthor) + '</p>' +
       '<p class="pub__venue">' + venueHtml(p) + '</p>';
     html += '<div class="pub__meta">';
@@ -248,139 +249,6 @@
     document.head.appendChild(s);
   }
 
-  /* ---------- render ---------- */
-  function render(c, pubs) {
-    var byKey = {};
-    pubs.forEach(function (p) { byKey[p.key] = p; });
-
-    document.querySelectorAll('[data-text]').forEach(function (el) {
-      var v = el.getAttribute('data-text').split('.').reduce(function (o, k) { return o && o[k]; }, c);
-      if (v) el.textContent = v;
-    });
-
-    $('nav').innerHTML = c.nav.map(function (n) {
-      return '<li><a href="#' + esc(n.id) + '">' + esc(n.label) + '</a></li>';
-    }).join('');
-    var label = {};
-    c.nav.forEach(function (n, i) { label[n.id] = i + 1; });
-
-    /* Home */
-    var h = c.hero, ph = h.photo || {};
-    var photo = (ph.jpg || ph.webp)
-      ? '<picture>' + (ph.webp ? '<source srcset="' + esc(ph.webp) + '" type="image/webp">' : '') +
-        '<img src="' + esc(ph.jpg || ph.webp) + '" alt="' + esc(ph.alt) + '" width="640" height="800" fetchpriority="high"></picture>'
-      : '<div class="portrait__placeholder" role="img" aria-label="' + esc(h.name) + '"><span>' + esc(h.monogram) + '</span></div>';
-    var links = c.links.map(function (l) {
-      return '<li>' + link(l.url, icon(l.id) + '<span>' + esc(l.label) + '</span>') + '</li>';
-    }).join('') +
-      '<li>' + link('mailto:' + c.contact.email, icon('email') + '<span>' + esc(c.labels.email) + '</span>') + '</li>';
-
-    $('home').innerHTML =
-      '<div class="hero__text">' +
-        '<p class="eyebrow">' + esc(h.credentials) + '</p>' +
-        '<h1 id="hero-name">' + esc(h.name) + '</h1>' +
-        '<p class="hero__role">' + esc(h.role) + '<br><span>' + esc(h.affiliation) + '</span></p>' +
-        '<p class="hero__bio">' + rich(h.bio) + '</p>' +
-        '<ul class="links">' + links + '</ul>' +
-      '</div>' +
-      '<figure class="portrait">' + photo + '</figure>' +
-      '<div class="about"><h2 class="about__h">' + esc(c.about.heading) + '</h2><div class="about__body">' +
-        c.about.paragraphs.map(function (p) { return '<p>' + rich(p) + '</p>'; }).join('') +
-      '</div></div>';
-
-    /* Research */
-    $('research').innerHTML = sectionHead(label.research, 'research', c.research.heading) +
-      '<div class="section__body"><p class="lede">' + rich(c.research.intro) + '</p><ol class="themes">' +
-      c.research.themes.map(function (t, i) {
-        var rel = t.publications.filter(function (k) { return byKey[k]; }).map(function (k) {
-          var p = byKey[k];
-          return '<li><a href="#pub-' + esc(k) + '">' + esc(p.title) + '</a> <span class="muted">' + esc(p.year) + '</span></li>';
-        }).join('');
-        return '<li class="theme"><p class="theme__no" aria-hidden="true">' + 'i'.repeat(i + 1) + '</p>' +
-          '<div><h3>' + esc(t.title) + '</h3><p>' + rich(t.description) + '</p>' +
-          (rel ? '<p class="label">' + esc(c.research.relatedLabel) + '</p><ul class="related">' + rel + '</ul>' : '') +
-          '</div></li>';
-      }).join('') + '</ol></div>';
-
-    /* Publications */
-    var C = c.publications, themesOf = {};
-    c.research.themes.forEach(function (t, i) {
-      t.publications.forEach(function (k) { (themesOf[k] = themesOf[k] || []).push('t' + (i + 1)); });
-    });
-    var filter = '<div class="filter" role="group" aria-label="' + esc(C.filterLabel) + '">' +
-      '<button type="button" data-theme="" aria-pressed="true">' + esc(C.filterAll) + '</button>' +
-      c.research.themes.map(function (t, i) {
-        return '<button type="button" data-theme="t' + (i + 1) + '" aria-pressed="false">' + esc(t.short || t.title) + '</button>';
-      }).join('') + '</div>' +
-      '<p class="filter__status" id="pub-status" role="status" aria-live="polite" data-template="{n} of ' + pubs.length + ' shown"></p>';
-    $('publications').innerHTML = sectionHead(label.publications, 'publications', C.heading) +
-      '<div class="section__body"><p class="lede">' + rich(C.intro) + '</p>' +
-      '<div class="pubtools">' + filter +
-        '<a class="pubtools__bib" href="publications.bib" download>' + esc(C.downloadBib) + '</a></div>' +
-      C.groups.map(function (g) {
-        var items = pubs.filter(function (p) { return p.group === g.id; });
-        if (!items.length) return '';
-        return '<h3 class="group">' + esc(g.label) + '</h3><ol class="pubs">' +
-          items.map(function (p) { return pubHtml(p, c, themesOf[p.key]); }).join('') + '</ol>';
-      }).join('') + '</div>';
-    $('publications').querySelectorAll('.filter button').forEach(function (b) {
-      b.addEventListener('click', function () { filterPubs(b.getAttribute('data-theme')); });
-    });
-    /* Clicking a research theme's paper clears any filter that would hide it. */
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest('a[href^="#pub-"]');
-      if (a && document.querySelector(a.getAttribute('href')).hidden) filterPubs('');
-    });
-
-    /* Impact */
-    $('impact').innerHTML = sectionHead(label.impact, 'impact', c.impact.heading) +
-      '<div class="section__body impact">' + c.impact.items.map(function (it, i) {
-        return '<article class="impact__item' + (i === 0 ? ' impact__item--lead' : '') + '">' +
-          '<p class="label">' + esc(it.meta) + '</p><h3>' + esc(it.title) + '</h3><p>' + rich(it.text) + '</p>' +
-          (it.link && it.link.url ? '<p>' + link(it.link.url, esc(it.link.label) + icon('arrow'), 'more') + '</p>' : '') +
-          '</article>' + (i === 0 && c.impact.project ? projectHtml(c.impact.project, c.impact.map) : '');
-      }).join('') + '</div>';
-    linkTimeline();
-
-    /* Teaching */
-    $('teaching').innerHTML = sectionHead(label.teaching, 'teaching', c.teaching.heading) +
-      '<div class="section__body"><p class="lede">' + rich(c.teaching.intro) + '</p><div class="rows">' +
-      c.teaching.items.map(function (it) {
-        return '<div class="row"><h3>' + esc(it.place) + '</h3><div><p>' + rich(it.text) + '</p>' +
-          (it.topics && it.topics.length ? '<ul class="tags">' + it.topics.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '') +
-          '</div></div>';
-      }).join('') + '</div></div>';
-
-    /* Service */
-    $('service').innerHTML = sectionHead(label.service, 'service', c.service.heading) +
-      '<div class="section__body"><ul class="service">' + c.service.items.map(function (it) {
-        var org = esc(it.org) + (it.year ? ' ' + esc(it.year) : '');
-        return '<li><span class="service__role">' + esc(it.role) + '</span><span class="service__org">' +
-          (it.url ? link(it.url, org) : org) + '</span></li>';
-      }).join('') + '</ul></div>';
-
-    /* Contact */
-    var ct = c.contact;
-    $('contact').innerHTML = sectionHead(label.contact, 'contact', ct.heading) +
-      '<div class="section__body contact"><p class="lede">' + rich(ct.text) + '</p>' +
-      '<p class="contact__email">' + link('mailto:' + ct.email, esc(ct.email)) + '</p>' +
-      '<address>' + ct.address.map(esc).join('<br>') + '</address></div>';
-
-    $('footer').innerHTML = '<p>' + esc(c.footer.text) + ' ' + new Date().getFullYear() + '</p>' +
-      '<p><a href="#home">' + esc(c.footer.backToTop) + '</a></p>';
-
-    filterPubs('');
-    wireCopy(c.labels);
-    structuredData(c, pubs);
-    $('banner').innerHTML = bannerHtml(c.banner);
-    banner(c.banner);
-    spy();
-    if (location.hash) {
-      var target = document.querySelector(location.hash);
-      if (target) target.scrollIntoView();
-    }
-  }
-
   /* ---------- full-width photo banner (between About and Research) ----------
      Crossfading slideshow. Images load only when their slide is next up; it
      autoplays unless the visitor prefers reduced motion, pauses on hover,
@@ -499,22 +367,223 @@
     setPlaying(playing);
   }
 
-  /* Highlights the nav item for the section in view. */
-  function spy() {
-    var items = {};
-    document.querySelectorAll('#nav a').forEach(function (a) { items[a.getAttribute('href').slice(1)] = a; });
-    if (!('IntersectionObserver' in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        Object.keys(items).forEach(function (id) {
-          var on = id === e.target.id;
-          items[id].classList.toggle('is-active', on);
-          if (on) items[id].setAttribute('aria-current', 'true'); else items[id].removeAttribute('aria-current');
-        });
+  /* ---------- shared pieces ---------- */
+  /* <picture> for a photo object from content.json. With `widths` the files are
+     NAME-800/NAME-1600 (.webp + .jpg); without, NAME.webp + NAME.jpg. */
+  var pic = function (im, sizes, eager) {
+    var webp, jpg, src;
+    if (im.widths) {
+      webp = srcset(im, 'webp'); jpg = srcset(im, 'jpg');
+      src = esc(im.src) + '-' + im.widths[im.widths.length - 1] + '.jpg';
+    } else { webp = esc(im.src) + '.webp'; jpg = ''; src = esc(im.src) + '.jpg'; }
+    return '<picture><source srcset="' + webp + '"' + (im.widths ? ' sizes="' + sizes + '"' : '') + ' type="image/webp">' +
+      '<img src="' + src + '"' + (jpg ? ' srcset="' + jpg + '" sizes="' + sizes + '"' : '') +
+      ' alt="' + esc(im.alt) + '" width="' + im.width + '" height="' + im.height + '"' +
+      (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async" style="--pos:' + esc(im.position || '50% 50%') + '"></picture>';
+  };
+  var pages = function (c) { return c.nav.filter(function (n) { return c.pages[n.id]; }); };
+  var arrowRow = function (left, right, href) {
+    var inner = '<span class="metarow__l">' + esc(left) + '</span><span class="metarow__line" aria-hidden="true"></span>' +
+      '<span class="metarow__r">' + esc(right) + '</span>';
+    return href ? '<a class="metarow" href="' + esc(href) + '">' + inner + '</a>' : '<p class="metarow">' + inner + '</p>';
+  };
+  var linksHtml = function (c) {
+    return '<ul class="links">' + c.links.map(function (l) {
+      return '<li>' + link(l.url, icon(l.id) + '<span>' + esc(l.label) + '</span>') + '</li>';
+    }).join('') + '</ul>';
+  };
+
+  /* ---------- section bodies (used on their own pages) ---------- */
+  var body = {};
+  body.research = function (c, byKey) {
+    return '<ol class="themes">' + c.research.themes.map(function (t, i) {
+      var rel = t.publications.filter(function (k) { return byKey[k]; }).map(function (k) {
+        var p = byKey[k];
+        return '<li><a href="publications.html#pub-' + esc(k) + '">' + esc(p.title) + '</a> <span class="muted">' + esc(p.year) + '</span></li>';
+      }).join('');
+      return '<li class="theme"><p class="theme__no" aria-hidden="true">' + pad(i + 1) + '</p>' +
+        '<div><h2>' + esc(t.title) + '</h2><p>' + rich(t.description) + '</p>' +
+        (rel ? '<p class="label">' + esc(c.research.relatedLabel) + '</p><ul class="related">' + rel + '</ul>' : '') +
+        '</div></li>';
+    }).join('') + '</ol>';
+  };
+  body.publications = function (c, byKey, pubs) {
+    var C = c.publications, themesOf = {};
+    c.research.themes.forEach(function (t, i) {
+      t.publications.forEach(function (k) { (themesOf[k] = themesOf[k] || []).push('t' + (i + 1)); });
+    });
+    var filter = '<div class="filter" role="group" aria-label="' + esc(C.filterLabel) + '">' +
+      '<button type="button" data-theme="" aria-pressed="true">' + esc(C.filterAll) + '</button>' +
+      c.research.themes.map(function (t, i) {
+        return '<button type="button" data-theme="t' + (i + 1) + '" aria-pressed="false">' + esc(t.short || t.title) + '</button>';
+      }).join('') + '</div>' +
+      '<p class="filter__status" id="pub-status" role="status" aria-live="polite" data-template="{n} of ' + pubs.length + ' shown"></p>';
+    return '<div class="pubtools">' + filter +
+        '<a class="pubtools__bib" href="publications.bib" download>' + esc(C.downloadBib) + '</a></div>' +
+      C.groups.map(function (g) {
+        var items = pubs.filter(function (p) { return p.group === g.id; });
+        if (!items.length) return '';
+        return '<h2 class="group">' + esc(g.label) + '</h2><ol class="pubs">' +
+          items.map(function (p) { return pubHtml(p, c, themesOf[p.key]); }).join('') + '</ol>';
+      }).join('');
+  };
+  body.impact = function (c) {
+    return '<div class="impact">' + c.impact.items.map(function (it, i) {
+      return '<article class="impact__item' + (i === 0 ? ' impact__item--lead' : '') + '">' +
+        '<p class="label">' + esc(it.meta) + '</p><h2>' + esc(it.title) + '</h2><p>' + rich(it.text) + '</p>' +
+        (it.link && it.link.url ? '<p>' + link(it.link.url, esc(it.link.label) + icon('arrow'), 'more') + '</p>' : '') +
+        '</article>' + (i === 0 && c.impact.project ? projectHtml(c.impact.project, c.impact.map) : '');
+    }).join('') + '</div>';
+  };
+  body.teaching = function (c) {
+    return '<div class="rows">' + c.teaching.items.map(function (it) {
+      return '<div class="row"><h2>' + esc(it.place) + '</h2><div><p>' + rich(it.text) + '</p>' +
+        (it.topics && it.topics.length ? '<ul class="tags">' + it.topics.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '') +
+        '</div></div>';
+    }).join('') + '</div>';
+  };
+  body.service = function (c) {
+    return '<ul class="service">' + c.service.items.map(function (it) {
+      var org = esc(it.org) + (it.year ? ' ' + esc(it.year) : '');
+      return '<li><span class="service__role">' + esc(it.role) + '</span><span class="service__org">' +
+        (it.url ? link(it.url, org) : org) + '</span></li>';
+    }).join('') + '</ul>';
+  };
+  var ledeOf = function (c, id) { return (c[id] && c[id].intro) || c.pages[id].teaser; };
+
+  /* ---------- home ---------- */
+  function renderHome(c, pubs) {
+    var h = c.hero, H = c.home, ph = h.photo || {};
+    var cards = pages(c).map(function (n, i) {
+      var pg = c.pages[n.id];
+      return '<li class="card' + (i === 0 ? ' card--wide' : '') + '"><a href="' + esc(n.href) + '">' +
+        '<div class="card__img">' + pic(pg.image, i === 0 ? '(min-width: 64rem) 66vw, 100vw' : '(min-width: 64rem) 33vw, (min-width: 48rem) 50vw, 100vw') + '</div>' +
+        '<div class="card__text"><p class="card__no" aria-hidden="true">' + pad(i + 1) + '</p>' +
+        '<h3>' + esc(n.label) + '</h3><p>' + esc(pg.teaser) + '</p></div>' +
+        '<span class="card__go" aria-hidden="true">' + icon('arrow') + '</span></a></li>';
+    }).join('');
+    var recent = pubs.slice().sort(function (a, b) { return (b.year || 0) - (a.year || 0); }).slice(0, 3);
+    var f = H.feature;
+    return '<section class="cover" aria-labelledby="hero-name">' +
+        '<div class="cover__img">' + pic(H.heroImage, '100vw', true) + '</div>' +
+        '<div class="cover__inner wrap">' +
+          '<h1 id="hero-name" class="cover__name"><span>' + esc(h.name.replace(/\s\S+$/, '')) + '</span> <span>' + esc(h.name.replace(/^.*\s/, '')) + '</span></h1>' +
+          '<p class="cover__role">' + esc(h.role) + ' · ' + esc(h.affiliation) + '</p>' +
+          '<p class="cover__tag">' + esc(H.tagline) + '</p>' +
+        '</div></section>' +
+
+      '<section class="intro wrap" aria-labelledby="intro-h">' +
+        '<p class="eyebrow">' + esc(c.about.heading) + ' · ' + esc(h.credentials) + '</p>' +
+        '<h2 id="intro-h" class="display">' + esc(H.statement) + '</h2>' +
+        '<div class="intro__cols"><figure class="intro__photo"><picture>' +
+          (ph.webp ? '<source srcset="' + esc(ph.webp) + '" type="image/webp">' : '') +
+          '<img src="' + esc(ph.jpg) + '" alt="' + esc(ph.alt) + '" width="640" height="800" loading="lazy" decoding="async"></picture></figure>' +
+          '<div class="intro__text"><p>' + rich(h.bio) + '</p>' + c.about.paragraphs.map(function (p) { return '<p>' + rich(p) + '</p>'; }).join('') +
+          linksHtml(c) + '</div></div>' +
+      '</section>' +
+
+      '<section class="explore wrap" aria-labelledby="explore-h">' +
+        '<div class="bandhead"><h2 id="explore-h" class="display">' + esc(H.explore) + '</h2></div>' +
+        '<ul class="cards">' + cards + '</ul></section>' +
+
+      '<section class="band band--dark" aria-labelledby="feature-h"><div class="wrap">' +
+        '<div class="feature"><div><p class="eyebrow">' + esc(f.label) + '</p><h2 id="feature-h" class="display">' + esc(f.heading) + '</h2></div>' +
+        '<ul class="feature__points">' + f.points.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul></div>' +
+        '</div>' + '<div class="band__rule">' + '<div class="wrap">' + arrowRow(f.meta, f.metaEnd, f.link) + '</div></div></section>' +
+
+      '<section class="gallery" aria-labelledby="gallery-h"><div class="wrap"><div class="bandhead"><h2 id="gallery-h" class="display">' + esc(H.galleryHeading) + '</h2></div></div>' +
+        '<div id="banner"></div></section>' +
+
+      '<section class="recent wrap" aria-labelledby="recent-h"><div class="bandhead"><h2 id="recent-h" class="display">' + esc(H.recentHeading) + '</h2>' +
+        '<a class="more" href="publications.html">' + esc(H.allPubs) + icon('arrow') + '</a></div>' +
+        '<ol class="recent__list">' + recent.map(function (p) {
+          return '<li><p class="pub__year">' + esc(p.year) + '</p><div><h3 class="pub__title"><a href="publications.html#pub-' + esc(p.key) + '">' + esc(p.title) + '</a></h3>' +
+            '<p class="pub__venue">' + venueHtml(p) + '</p></div></li>';
+        }).join('') + '</ol></section>';
+  }
+
+  /* ---------- inner pages ---------- */
+  function renderPage(c, id, byKey, pubs) {
+    var list = pages(c), i = 0;
+    list.forEach(function (n, k) { if (n.id === id) i = k; });
+    var me = list[i], next = list[(i + 1) % list.length], pg = c.pages[id];
+    return '<header class="phero wrap">' +
+        '<div class="phero__text"><p class="eyebrow">' + pad(i + 1) + ' / ' + pad(list.length) + '</p>' +
+          '<h1 class="phero__title">' + esc(c[id].heading) + '</h1>' +
+          '<p class="lede">' + rich(ledeOf(c, id)) + '</p></div>' +
+        '<figure class="phero__img">' + pic(pg.image, '(min-width: 48rem) 45vw, 100vw', true) +
+          '<figcaption>' + esc(pg.image.caption) + '</figcaption></figure>' +
+      '</header>' +
+      '<div class="motif" aria-hidden="true"></div>' +
+      '<div class="page wrap page--' + esc(id) + '">' + body[id](c, byKey, pubs) + '</div>' +
+      '<nav class="next" aria-label="' + esc(c.labels.next) + '"><div class="wrap">' +
+        '<a href="' + esc(next.href) + '"><span class="eyebrow">' + esc(c.labels.next) + '</span>' +
+        '<span class="next__title">' + esc(next.label) + '</span>' +
+        '<span class="next__teaser">' + esc(c.pages[next.id].teaser) + '</span></a></div></nav>';
+  }
+
+  /* ---------- render ---------- */
+  function render(c, pubs) {
+    var page = document.body.getAttribute('data-page') || 'home';
+    var byKey = {};
+    pubs.forEach(function (p) { byKey[p.key] = p; });
+
+    /* Old one-page links (/#research) go to the new pages. */
+    if (page === 'home' && location.hash) {
+      var old = c.nav.filter(function (n) { return '#' + n.id === location.hash && /\.html$/.test(n.href); })[0];
+      if (old) { location.replace(old.href); return; }
+    }
+
+    document.querySelectorAll('[data-text]').forEach(function (el) {
+      var v = el.getAttribute('data-text').split('.').reduce(function (o, k) { return o && o[k]; }, c);
+      if (v) el.textContent = v;
+    });
+
+    $('nav').innerHTML = c.nav.map(function (n) {
+      var cur = n.id === page;
+      return '<li' + (n.id === 'contact' ? ' class="nav__contact"' : '') + '><a href="' + esc(n.href) + '"' +
+        (cur ? ' class="is-active" aria-current="page"' : '') + '>' + esc(n.label) + '</a></li>';
+    }).join('');
+
+    $('page').innerHTML = page === 'home' ? renderHome(c, pubs) : renderPage(c, page, byKey, pubs);
+
+    var ct = c.contact;
+    $('contact').innerHTML = '<div class="wrap contact">' +
+      '<div><p class="eyebrow">' + esc(ct.heading) + '</p><h2 id="contact-h" class="display">' + rich(ct.text) + '</h2></div>' +
+      '<div class="contact__side"><p class="contact__email">' + link('mailto:' + ct.email, esc(ct.email)) + '</p>' +
+      '<address>' + ct.address.map(esc).join('<br>') + '</address>' + linksHtml(c) + '</div></div>';
+
+    $('footer').innerHTML = '<p>' + esc(c.footer.text) + ' ' + new Date().getFullYear() + '</p>' +
+      '<p><a href="#top">' + esc(c.footer.backToTop) + '</a></p>';
+
+    if (page === 'home') {
+      $('banner').innerHTML = bannerHtml(c.banner);
+      banner(c.banner);
+      overCover();
+    }
+    if (page === 'publications') {
+      document.querySelectorAll('.filter button').forEach(function (b) {
+        b.addEventListener('click', function () { filterPubs(b.getAttribute('data-theme')); });
       });
-    }, { rootMargin: '-30% 0px -65% 0px' });
-    Object.keys(items).forEach(function (id) { var s = $(id); if (s) io.observe(s); });
+      filterPubs('');
+      wireCopy(c.labels);
+    }
+    if (page === 'impact') linkTimeline();
+    if (page === 'home' || page === 'publications') structuredData(c, page === 'publications' ? pubs : []);
+    if (location.hash) {
+      var target = document.querySelector(location.hash);
+      if (target) target.scrollIntoView();
+    }
+  }
+
+  /* On the home page the masthead sits over the cover photo until it scrolls past. */
+  function overCover() {
+    var m = document.querySelector('.masthead'), cover = document.querySelector('.cover');
+    if (!m || !cover || !('IntersectionObserver' in window)) return;
+    m.classList.add('is-over');
+    new IntersectionObserver(function (en) {
+      m.classList.toggle('is-over', en[0].isIntersecting);
+    }, { rootMargin: '-64px 0px 0px 0px', threshold: 0 }).observe(cover.querySelector('.cover__inner'));
   }
 
   var getJson = function (url) {
@@ -527,6 +596,7 @@
     .then(function (d) { render(d[0], d[1]); document.documentElement.classList.add('is-ready'); })
     .catch(function (err) {
       console.error(err);
-      $('home').innerHTML = '<p class="lede">Sorry, the content failed to load. If you are viewing the file directly, serve the folder instead: python3 -m http.server</p>';
+      document.documentElement.classList.add('is-ready');
+      $('page').innerHTML = '<p class="lede wrap">Sorry, the content failed to load. If you are viewing the file directly, serve the folder instead: python3 -m http.server</p>';
     });
 })();
