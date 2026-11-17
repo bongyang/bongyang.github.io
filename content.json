@@ -14,6 +14,11 @@
   ],
   "nav": [
     {
+      "id": "home",
+      "label": "Home",
+      "href": "./"
+    },
+    {
       "id": "research",
       "label": "Research",
       "href": "research.html"
@@ -50,7 +55,7 @@
     "role": "Senior Lecturer, School of Business and Law",
     "affiliation": "Birmingham Newman University",
     "credentials": "PhD · AFHEA · ACMA, CGMA",
-    "bio": "My research is multidisciplinary, sitting where digital technologies, participatory research and business meet. It spans digital inclusion, rural and Indigenous entrepreneurship, subsistence marketplaces, platform economies and AI for sustainable development, combining community co-design with machine learning and data analytics.",
+    "bio": "My research brings together digital technologies, participatory research and business. As a Senior Lecturer in the School of Business and Law at Birmingham Newman University, I study digital inclusion, Indigenous entrepreneurship, platform economies and AI for good.",
     "photo": {
       "webp": "assets/img/headshot.webp",
       "jpg": "assets/img/headshot.jpg",
@@ -60,8 +65,8 @@
   "about": {
     "heading": "About",
     "paragraphs": [
-      "I am a Senior Lecturer in the School of Business and Law at Birmingham Newman University. My PhD in Digital Economy is from the University of Nottingham, completed with the Horizon Centre for Doctoral Training.",
-      "Alongside community-engaged fieldwork with rural and Indigenous micro-entrepreneurs, I also employ machine learning and data analytics to study platform economies. The [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/), which I helped found, is another strand of this work: I coordinate the network and its AI for Sustainable Development working group. My career began in industry, with eight years in international marketing and business development."
+      "My research combines fieldwork and community co-design with machine learning and data analytics in studying inequality and sustainable development. I also helped found the [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/) and now coordinate it and its AI for Sustainable Development working group.",
+      "Before entering academia, I spent eight years in international marketing and business development. I completed my PhD in Digital Economy at the University of Nottingham through the Horizon Centre for Doctoral Training."
     ]
   },
   "links": [
@@ -572,20 +577,11 @@
     "allPubs": "All publications",
     "explore": "Explore the work",
     "inTouch": "Get in touch",
-    "tagline": "Digital inclusion × Entrepreneurship × AI for sustainable development",
+    "tagline": [
+      "Digital Inclusion × Enterprise ×",
+      "AI for Good"
+    ],
     "statement": "Where digital technologies, participatory research and business meet.",
-    "heroImage": {
-      "src": "assets/img/banner/2026-nottingham-speaking",
-      "widths": [
-        800,
-        1600
-      ],
-      "width": 1600,
-      "height": 1066,
-      "position": "62% 40%",
-      "alt": "Yang Bong speaking during a session at the ASEF Higher Education InnoLab, University of Nottingham.",
-      "positionMobile": "74% 40%"
-    },
     "feature": {
       "label": "Featured project",
       "heading": "Co-designing a village brand",
@@ -598,6 +594,64 @@
       "metaEnd": "Horizon CDT",
       "link": "impact.html",
       "linkLabel": "Read about the project"
+    },
+    "heroSlides": [
+      {
+        "src": "assets/img/banner/2024-pdc-ethnography",
+        "widths": [
+          800,
+          1600,
+          2016
+        ],
+        "width": 2016,
+        "height": 1134,
+        "alt": "Yang Bong speaking to a group of conference participants in a covered market hall, surrounded by stalls of woven hats and baskets.",
+        "position": "58% 45%",
+        "positionMobile": "57% 45%"
+      },
+      {
+        "src": "assets/img/banner/2026-nottingham-speaking",
+        "widths": [
+          800,
+          1600
+        ],
+        "width": 1600,
+        "height": 1066,
+        "alt": "Yang Bong speaking during a session at the ASEF Higher Education InnoLab, University of Nottingham.",
+        "position": "62% 40%",
+        "positionMobile": "74% 40%"
+      },
+      {
+        "src": "assets/img/banner/2025-manila-panel",
+        "widths": [
+          800,
+          1600,
+          2400
+        ],
+        "width": 2400,
+        "height": 1803,
+        "alt": "Yang Bong speaking into a microphone on a four-person panel at De La Salle University, Manila.",
+        "position": "40% 40%",
+        "positionMobile": "38% 40%"
+      },
+      {
+        "src": "assets/img/banner/2026-nottingham-group",
+        "widths": [
+          800,
+          1600,
+          1772
+        ],
+        "width": 1772,
+        "height": 1181,
+        "alt": "Large group photo of InnoLab participants beside the lake at the University of Nottingham, with the Trent Building clock tower behind.",
+        "position": "50% 62%",
+        "positionMobile": "50% 62%"
+      }
+    ],
+    "slideLabels": {
+      "pause": "Pause photos",
+      "play": "Play photos",
+      "region": "Photos"
     }
   },
   "gallery": {

@@ -385,11 +385,15 @@
     var recent = pubs.slice().sort(function (a, b) { return (b.year || 0) - (a.year || 0); }).slice(0, 3);
     var f = H.feature;
     return '<section class="cover" aria-labelledby="hero-name">' +
-        '<div class="cover__img">' + pic(H.heroImage, '100vw', true) + '</div>' +
+        '<div class="cover__img">' + H.heroSlides.map(function (im, i) {
+          return '<div class="cover__slide' + (i === 0 ? ' is-on' : '') + '"' + (i ? ' aria-hidden="true"' : '') + '>' + pic(im, '100vw', i === 0) + '</div>';
+        }).join('') + '</div>' +
+        (H.heroSlides.length > 1 ? '<button type="button" class="cover__pause" aria-pressed="false" aria-label="' + esc(H.slideLabels.pause) + '">' +
+          '<span class="cover__pause-i" aria-hidden="true"></span></button>' : '') +
         '<div class="cover__inner wrap">' +
-          '<h1 id="hero-name" class="cover__name"><span>' + esc(h.name.replace(/\s\S+$/, '')) + '</span> <span>' + esc(h.name.replace(/^.*\s/, '')) + '</span></h1>' +
-          '<p class="cover__role">' + esc(h.role) + ' · ' + esc(h.affiliation) + '</p>' +
-          '<p class="cover__tag">' + esc(H.tagline) + '</p>' +
+          '<h1 id="hero-name" class="cover__name">' + esc(h.name) + '</h1>' +
+          '<p class="cover__role"><span>' + esc(h.role) + '</span><span>' + esc(h.affiliation) + '</span></p>' +
+          '<p class="cover__tag">' + H.tagline.map(esc).join('<br>') + '</p>' +
         '</div></section>' +
 
       '<section class="intro wrap" aria-labelledby="intro-h">' +
@@ -494,6 +498,7 @@
 
     if (page === 'home') {
       overCover();
+      coverSlides(c.home);
     }
     if (page === 'publications') {
       document.querySelectorAll('.filter button').forEach(function (b) {
@@ -508,6 +513,33 @@
       var target = document.querySelector(location.hash);
       if (target) target.scrollIntoView();
     }
+  }
+
+  /* Cover photos crossfade every 6 s. Paused for reduced motion, when the tab
+     is hidden, and by the pause button (WCAG 2.2.2). */
+  function coverSlides(H) {
+    var slides = [].slice.call(document.querySelectorAll('.cover__slide')), btn = document.querySelector('.cover__pause');
+    if (slides.length < 2 || !btn) return;
+    var i = 0, timer = null, reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var paused = reduced;
+    var show = function (n) {
+      slides[i].classList.remove('is-on'); slides[i].setAttribute('aria-hidden', 'true');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('is-on'); slides[i].removeAttribute('aria-hidden');
+      /* warm the next photo so it is ready when its turn comes */
+      var nx = slides[(i + 1) % slides.length].querySelector('img');
+      if (nx) nx.loading = 'eager';
+    };
+    var run = function () { clearInterval(timer); if (!paused && !document.hidden) timer = setInterval(function () { show(i + 1); }, 6000); };
+    var label = function () {
+      btn.setAttribute('aria-pressed', String(paused));
+      btn.setAttribute('aria-label', paused ? H.slideLabels.play : H.slideLabels.pause);
+      btn.classList.toggle('is-paused', paused);
+    };
+    btn.addEventListener('click', function () { paused = !paused; label(); run(); });
+    document.addEventListener('visibilitychange', run);
+    var nx = slides[1].querySelector('img'); if (nx) nx.loading = 'eager';
+    label(); run();
   }
 
   /* On the home page the masthead sits over the cover photo until it scrolls past. */
