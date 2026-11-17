@@ -120,185 +120,57 @@
     return html + citeHtml(p, c.labels) + '</div></div></li>';
   };
 
-  /* ---------- impact map: zoomable world map ----------
-     Base map: assets/img/map-world.svg (made by scripts/make_map.mjs), loaded
-     inline so it stays sharp at every zoom. Markers and labels are HTML laid
-     over it with the same equirectangular projection, so they keep their size.
-     Views: preset buttons, +/- buttons, drag, pinch, Ctrl/⌘ + scroll,
-     double-click, and the keyboard (+, -, arrows) when the map has focus. */
+  /* ---------- impact map ----------
+     One fixed view of Southeast Asia (impact.map.bounds; boundsMobile on
+     phones). The base map,
+     assets/img/map-world.svg (made by scripts/make_map.mjs), is loaded inline
+     and cropped with its viewBox; markers and labels are HTML laid over it
+     with the same equirectangular projection, so text stays a fixed size. */
   var mapHtml = function (m) {
-    var C = m.controls;
     var places = m.places.map(function (pl) {
-      return '<div class="mk' + (pl.primary ? ' mk--primary' : '') + (pl.home ? ' mk--home' : '') + (pl.labelSide === 'left' ? ' mk--left' : '') +
+      return '<div class="mk' + (pl.primary ? ' mk--primary' : '') + (pl.labelSide === 'left' ? ' mk--left' : '') +
         '" data-place="' + esc(pl.id) + '"><span class="mk__dot"></span><span class="mk__text"><span class="mk__label">' + esc(pl.label) + '</span>' +
         '<span class="mk__note">' + esc(pl.note) + '</span></span></div>';
     }).join('');
     var labels = m.labels.map(function (l, i) {
       return '<span class="gl gl--' + esc(l.kind || 'country') + '" data-label="' + i + '">' + esc(l.text) + '</span>';
     }).join('');
-    var btn = function (cls, label, txt) { return '<button type="button" class="map__btn ' + cls + '" aria-label="' + esc(label) + '">' + txt + '</button>'; };
-    return '<figure class="map"><div class="map__frame" tabindex="0" role="region" aria-label="' + esc(m.alt) + '">' +
-        '<div class="map__svg" aria-hidden="true"></div>' +
-        '<div class="map__layer" aria-hidden="true">' + labels + places + '</div>' +
-        '<div class="map__zoom">' + btn('map__in', C.zoomIn, '+') + btn('map__out', C.zoomOut, '−') + '</div>' +
-        '<div class="map__views" role="group" aria-label="' + esc(C.views) + '">' + m.views.map(function (v) {
-          return '<button type="button" data-view="' + esc(v.id) + '" aria-pressed="false">' + esc(v.label) + '</button>';
-        }).join('') + '</div>' +
-      '</div><figcaption>' + esc(m.caption) + ' <span class="map__hint">' + esc(C.hint) + '</span></figcaption></figure>';
+    return '<figure class="map"><div class="map__frame" role="img" aria-label="' + esc(m.alt) + '">' +
+        '<div class="map__svg"></div><div class="map__layer">' + labels + places + '</div>' +
+      '</div><figcaption>' + esc(m.caption) + '</figcaption></figure>';
   };
 
   function initMap(m) {
     var frame = document.querySelector('.map__frame');
     if (!frame) return;
-    var P = m.projection, MW = 360 * P.scale, MH = (P.lat1 - P.latMin) * P.scale;
+    var P = m.projection, svg = null;
+    var narrow = window.matchMedia ? matchMedia('(max-width: 47.99rem)') : { matches: false };
     var proj = function (lon, lat) { return [(lon - P.lon0) * P.scale, (P.lat1 - lat) * P.scale]; };
     var byId = {}; m.places.forEach(function (pl) { byId[pl.id] = pl; });
-    var marks = [].slice.call(frame.querySelectorAll('.mk')), labels = [].slice.call(frame.querySelectorAll('.gl'));
-    var svg = null, cam = { x: 0, y: 0, z: 1 }, W = 0, H = 0, zMin = 0.1, zMax = 10, anim = null;
-    var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    var fit = function (b) {
-      var p0 = proj(b[0], b[3]), p1 = proj(b[2], b[1]);
-      return { x: (p0[0] + p1[0]) / 2, y: (p0[1] + p1[1]) / 2, z: Math.min(W / (p1[0] - p0[0]), H / (p1[1] - p0[1])) };
-    };
-    var clamp = function (c) {
-      var z = Math.max(zMin, Math.min(zMax, c.z)), hw = W / z / 2, hh = H / z / 2;
-      var x = hw * 2 >= MW ? MW / 2 : Math.max(hw, Math.min(MW - hw, c.x));
-      var y = hh * 2 >= MH ? MH / 2 : Math.max(hh, Math.min(MH - hh, c.y));
-      return { x: x, y: y, z: z };
-    };
     var draw = function () {
-      var vx = cam.x - W / cam.z / 2, vy = cam.y - H / cam.z / 2;
-      if (svg) svg.setAttribute('viewBox', vx.toFixed(2) + ' ' + vy.toFixed(2) + ' ' + (W / cam.z).toFixed(2) + ' ' + (H / cam.z).toFixed(2));
-      var span = W / cam.z / P.scale;
+      var W = frame.clientWidth, H = frame.clientHeight;
+      var b = narrow.matches && m.boundsMobile ? m.boundsMobile : m.bounds;
+      var p0 = proj(b[0], b[3]), p1 = proj(b[2], b[1]);
+      var z = Math.min(W / (p1[0] - p0[0]), H / (p1[1] - p0[1]));          /* whole box in view */
+      var vx = (p0[0] + p1[0]) / 2 - W / z / 2, vy = (p0[1] + p1[1]) / 2 - H / z / 2;
+      if (svg) svg.setAttribute('viewBox', vx + ' ' + vy + ' ' + W / z + ' ' + H / z);
       var at = function (el, lon, lat) {
-        var p = proj(lon, lat), x = (p[0] - vx) * cam.z, y = (p[1] - vy) * cam.z;
-        el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
-        return x > -40 && x < W + 40 && y > -40 && y < H + 40;
+        var p = proj(lon, lat);
+        el.style.transform = 'translate(' + ((p[0] - vx) * z).toFixed(1) + 'px,' + ((p[1] - vy) * z).toFixed(1) + 'px)';
       };
-      labels.forEach(function (el) {
-        var l = m.labels[+el.getAttribute('data-label')];
-        var on = span >= (l.minSpan || 0) && span < (l.maxSpan || 1e9);
-        el.hidden = !(at(el, l.lon, l.lat) && on);
-      });
-      marks.forEach(function (el) {
-        var pl = byId[el.getAttribute('data-place')];
-        var on = pl.home ? span >= 40 : (pl.primary || span < 35);
-        el.hidden = !(at(el, pl.lon, pl.lat) && on);
-        if (pl.labelWide) el.querySelector('.mk__label').textContent = span > 25 ? pl.labelWide : pl.label;
-      });
-      frame.classList.toggle('is-wide', span >= 40);
-      frame.querySelector('.map__in').disabled = cam.z >= zMax - 1e-6;
-      frame.querySelector('.map__out').disabled = cam.z <= zMin + 1e-6;
+      frame.querySelectorAll('.gl').forEach(function (el) { var l = m.labels[+el.getAttribute('data-label')]; at(el, l.lon, l.lat); });
+      frame.querySelectorAll('.mk').forEach(function (el) { var pl = byId[el.getAttribute('data-place')]; at(el, pl.lon, pl.lat); });
     };
-    var setView = function (id) {
-      frame.querySelectorAll('.map__views button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-view') === id)); });
-    };
-    var flyTo = function (t) {
-      t = clamp(t);
-      cancelAnimationFrame(anim);
-      if (reduced) { cam = t; draw(); return; }
-      var s = { x: cam.x, y: cam.y, z: cam.z }, t0 = performance.now(), D = 700;
-      var step = function (now) {
-        var k = Math.min(1, (now - t0) / D), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-        var z = Math.exp(Math.log(s.z) + (Math.log(t.z) - Math.log(s.z)) * e);
-        cam = { x: s.x + (t.x - s.x) * e, y: s.y + (t.y - s.y) * e, z: z };
-        draw();
-        if (k < 1) anim = requestAnimationFrame(step);
-      };
-      anim = requestAnimationFrame(step);
-    };
-    /* Zoom by factor f keeping the screen point (px, py) fixed. */
-    var zoomAt = function (f, px, py, smooth) {
-      var z = Math.max(zMin, Math.min(zMax, cam.z * f));
-      var mx = cam.x + (px - W / 2) / cam.z, my = cam.y + (py - H / 2) / cam.z;
-      var t = { x: mx - (px - W / 2) / z, y: my - (py - H / 2) / z, z: z };
-      setView('');
-      if (smooth) flyTo(t); else { cancelAnimationFrame(anim); cam = clamp(t); draw(); }
-    };
-    var size = function () {
-      var r = frame.getBoundingClientRect(), span = W ? W / cam.z : 0;
-      W = r.width; H = r.height;
-      zMin = Math.max(W / MW, H / MH);
-      zMax = fit(m.views[0].bounds).z * 2.5;
-      if (span) cam.z = W / span;
-      cam = clamp(cam); draw();
-    };
-
-    size();
-    cam = clamp(fit(m.views[0].bounds)); setView(m.views[0].id); draw();
-    if ('ResizeObserver' in window) new ResizeObserver(size).observe(frame);
-
+    draw();
+    if ('ResizeObserver' in window) new ResizeObserver(draw).observe(frame);
     fetch('assets/img/map-world.svg').then(function (r) { return r.text(); }).then(function (t) {
       var box = frame.querySelector('.map__svg');
       box.innerHTML = t;
       svg = box.querySelector('svg');
       svg.removeAttribute('width'); svg.removeAttribute('height');
       svg.setAttribute('preserveAspectRatio', 'none');
-      var a = proj(byId[m.routeFrom].lon, byId[m.routeFrom].lat), b = proj(byId[m.routeTo].lon, byId[m.routeTo].lat);
-      var route = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      route.setAttribute('class', 'route');
-      route.setAttribute('d', 'M' + a + 'Q' + ((a[0] + b[0]) / 2) + ',' + (Math.min(a[1], b[1]) - 260) + ' ' + b);
-      svg.appendChild(route);
+      svg.setAttribute('aria-hidden', 'true');
       draw();
-    });
-
-    frame.querySelectorAll('.map__views button').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var v = m.views.filter(function (x) { return x.id === b.getAttribute('data-view'); })[0];
-        setView(v.id); flyTo(fit(v.bounds));
-      });
-    });
-    frame.querySelector('.map__in').addEventListener('click', function () { zoomAt(2, W / 2, H / 2, true); });
-    frame.querySelector('.map__out').addEventListener('click', function () { zoomAt(0.5, W / 2, H / 2, true); });
-
-    /* Drag with one pointer, pinch with two. */
-    var pts = {}, last = null, pinch = null;
-    var local = function (e) { var r = frame.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-    var layerTarget = function (e) { return !e.target.closest('button'); };
-    frame.addEventListener('pointerdown', function (e) {
-      if (!layerTarget(e)) return;
-      pts[e.pointerId] = local(e); frame.setPointerCapture(e.pointerId);
-      cancelAnimationFrame(anim); last = local(e); frame.classList.add('is-dragging');
-    });
-    frame.addEventListener('pointermove', function (e) {
-      if (!pts[e.pointerId]) return;
-      pts[e.pointerId] = local(e);
-      var ids = Object.keys(pts);
-      if (ids.length === 2) {
-        var p = pts[ids[0]], q = pts[ids[1]], d = Math.hypot(p[0] - q[0], p[1] - q[1]);
-        var mid = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
-        if (pinch) { zoomAt(d / pinch.d, mid[0], mid[1]); cam = clamp({ x: cam.x - (mid[0] - pinch.m[0]) / cam.z, y: cam.y - (mid[1] - pinch.m[1]) / cam.z, z: cam.z }); draw(); }
-        pinch = { d: d, m: mid };
-      } else if (last) {
-        var c = local(e);
-        cam = clamp({ x: cam.x - (c[0] - last[0]) / cam.z, y: cam.y - (c[1] - last[1]) / cam.z, z: cam.z });
-        last = c; setView(''); draw();
-      }
-    });
-    var end = function (e) {
-      delete pts[e.pointerId]; pinch = null;
-      var ids = Object.keys(pts); last = ids.length ? pts[ids[0]] : null;
-      if (!ids.length) frame.classList.remove('is-dragging');
-    };
-    frame.addEventListener('pointerup', end); frame.addEventListener('pointercancel', end);
-    frame.addEventListener('dblclick', function (e) { if (layerTarget(e)) { var c = local(e); zoomAt(2, c[0], c[1], true); } });
-    /* Plain scrolling keeps scrolling the page; Ctrl/⌘ + scroll (and trackpad pinch) zooms. */
-    frame.addEventListener('wheel', function (e) {
-      if (!e.ctrlKey && !e.metaKey) return;
-      e.preventDefault();
-      var c = local(e); zoomAt(Math.exp(-e.deltaY * 0.01), c[0], c[1]);
-    }, { passive: false });
-    frame.addEventListener('keydown', function (e) {
-      if (e.target !== frame) return;
-      var k = e.key, step = 80 / cam.z;
-      if (k === '+' || k === '=') zoomAt(2, W / 2, H / 2, true);
-      else if (k === '-' || k === '_') zoomAt(0.5, W / 2, H / 2, true);
-      else if (/^Arrow/.test(k)) {
-        cam = clamp({ x: cam.x + (k === 'ArrowLeft' ? -step : k === 'ArrowRight' ? step : 0), y: cam.y + (k === 'ArrowUp' ? -step : k === 'ArrowDown' ? step : 0), z: cam.z });
-        setView(''); draw();
-      } else return;
-      e.preventDefault();
     });
   }
 

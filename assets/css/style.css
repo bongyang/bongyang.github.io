@@ -475,22 +475,16 @@ a.metarow:hover .metarow__line { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .tile img { transition: none; } }
 
 /* ---------- impact: zoomable map ---------- */
-.map__frame { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border: 1px solid var(--rule); border-radius: 2px;
-  background: #EEF1EC; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
-.map__frame.is-dragging { cursor: grabbing; }
-.map__frame:focus-visible { outline-offset: 2px; }
+.map__frame { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border: 1px solid var(--rule); border-radius: 2px; background: #EEF1EC; }
 .map__svg, .map__svg svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .map__svg .land { fill: #F7F5EF; stroke: #CFC9B9; stroke-width: .8; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .map__svg .land--my { fill: #E7EDE6; stroke: #9DB3A5; }
 .map__svg .land--borneo { fill: #E9EEE7; stroke: #9DB3A5; }
 .map__svg .land--sarawak { fill: #CFDDD2; stroke: #1E4D3B; stroke-opacity: .6; stroke-width: 1; }
-.map__svg .route { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 5; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .3s; }
-.map__frame.is-wide .route { opacity: .7; }
 .map__layer { position: absolute; inset: 0; pointer-events: none; }
 .mk, .gl { position: absolute; left: 0; top: 0; will-change: transform; }
 .mk__dot { position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 3px solid var(--accent); transition: transform .2s; }
 .mk--primary .mk__dot { left: -8px; top: -8px; width: 16px; height: 16px; background: var(--accent); border-color: var(--paper); box-shadow: 0 0 0 10px rgba(30, 77, 59, .16); }
-.mk--home .mk__dot { background: var(--ink); border-color: var(--paper); }
 .mk__text { position: absolute; left: 12px; top: 0; transform: translateY(-50%); display: grid; white-space: nowrap; line-height: 1.15;
   text-shadow: 0 0 3px #F7F5EF, 0 0 3px #F7F5EF, 0 0 6px #F7F5EF; }
 .mk--primary .mk__text { left: 16px; }
@@ -499,24 +493,13 @@ a.metarow:hover .metarow__line { opacity: 1; }
 .mk--primary .mk__label { font: 500 1.1875rem/1.1 var(--serif); }
 .mk__note { font-size: .6875rem; font-weight: 500; letter-spacing: .04em; color: var(--muted); }
 .mk.is-lit .mk__dot { transform: scale(1.5); }
-.gl { transform-origin: 0 0; }
 .gl { font-size: .625rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #8A9189; white-space: nowrap; translate: -50% -50%; }
 .gl--island { font: italic 400 1.125rem/1 var(--serif); letter-spacing: .02em; text-transform: none; color: #5E7A69; }
-.gl--state { font-size: .625rem; color: #6E8578; }
+.gl--state { font-size: .6875rem; color: #3F5E4D; }
+.gl--small { font-size: .5625rem; letter-spacing: .1em; }
 .gl--water { font: italic 400 .8125rem/1 var(--serif); letter-spacing: .06em; text-transform: none; color: #8DA0A0; }
-.gl--region { font-size: .6875rem; letter-spacing: .3em; color: #A3A79E; }
-.map__zoom { position: absolute; top: .6rem; right: .6rem; display: grid; gap: .3rem; }
-.map__btn { width: 2.25rem; height: 2.25rem; padding: 0; border: 1px solid var(--rule); border-radius: 2px; background: #fff; color: var(--accent);
-  font: 400 1.25rem/1 var(--sans); cursor: pointer; }
-.map__btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
-.map__btn:disabled { color: #B5B9B2; cursor: default; }
-.map__views { position: absolute; left: .6rem; bottom: .6rem; display: flex; flex-wrap: wrap; gap: .3rem; }
-.map__views button { padding: .3rem .7rem; border: 1px solid var(--rule); border-radius: 999px; background: #fff; color: var(--ink);
-  font-size: .75rem; font-weight: 500; cursor: pointer; }
-.map__views button:hover { border-color: var(--accent); color: var(--accent); }
-.map__views button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+@media (max-width: 47.99rem) { .gl--state, .gl--small { display: none; } }
 .map figcaption { margin-top: .6rem; font-size: .8125rem; color: var(--muted); }
-.map__hint { color: #7C847E; }
 
 @media (min-width: 48rem) {
   .mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 13rem; gap: .75rem; }

@@ -124,20 +124,16 @@ The Long Semadoh project in the Impact section is set in `content.json` under
   `note`, and `labelSide` (`left` or `right`, whichever avoids overlaps).
 - **Link a timeline entry to a place:** give the entry a `place` that matches
   the place's `id`. Hovering the entry then highlights that place on the map.
-- **Map views and labels:** `impact.map.views` are the preset buttons
-  (Borneo, Southeast Asia, World; the first is where the map opens), each a
-  `[west, south, east, north]` box. `impact.map.labels` are the country, sea
-  and state names; `minSpan`/`maxSpan` (in degrees across the map) set the
-  zoom range where each one shows.
+- **What the map shows:** `impact.map.bounds` is the area shown
+  (`[west, south, east, north]`; `boundsMobile` for phones).
+  `impact.map.labels` are the country, sea and state names, each with a
+  `lon`/`lat` for where the text sits.
 - **Redraw the base map** (only if `impact.map.projection` changes):
 
   ```
   npm i world-atlas@2 topojson-client
   node scripts/make_map.mjs ./node_modules
   ```
-
-Visitors can zoom with the + and − buttons, pinch, double-click, or Ctrl/⌘ +
-scroll, and drag to move. Plain scrolling still scrolls the page.
 
 ## Citations and search engines
 

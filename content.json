@@ -262,8 +262,8 @@
       ]
     },
     "map": {
-      "caption": "Fieldwork and guest lectures across Borneo and the southern Philippines. Zoom out to see where Borneo sits in the world.",
-      "alt": "Zoomable map. It opens on Borneo, marking Long Semadoh in Sarawak, Malaysia, where the fieldwork took place, and the universities in Sibu, Brunei and Butuan that hosted guest lectures; zooming out shows Southeast Asia and the world, with Birmingham, UK, for reference.",
+      "caption": "Fieldwork in Long Semadoh, Sarawak (Malaysian Borneo), and guest lectures in Sibu, Brunei and the southern Philippines.",
+      "alt": "Map of Southeast Asia with Borneo highlighted and the Malaysian state of Sarawak shaded darker. It marks Long Semadoh in Sarawak, where the fieldwork took place, and the universities in Sibu, Brunei and Butuan that hosted guest lectures.",
       "places": [
         {
           "id": "semadoh",
@@ -272,8 +272,7 @@
           "lon": 115.583,
           "lat": 4.25,
           "primary": true,
-          "labelSide": "right",
-          "labelWide": "Long Semadoh, Sarawak"
+          "labelSide": "right"
         },
         {
           "id": "sibu",
@@ -301,16 +300,6 @@
           "lat": 8.95,
           "primary": false,
           "labelSide": "left"
-        },
-        {
-          "id": "birmingham",
-          "label": "Birmingham",
-          "note": "Birmingham Newman University",
-          "lon": -1.89,
-          "lat": 52.49,
-          "primary": false,
-          "labelSide": "right",
-          "home": true
         }
       ],
       "projection": {
@@ -319,166 +308,86 @@
         "latMin": -58,
         "scale": 10
       },
-      "views": [
-        {
-          "id": "borneo",
-          "label": "Borneo",
-          "bounds": [
-            108.5,
-            -4.3,
-            127.5,
-            9.7
-          ]
-        },
-        {
-          "id": "region",
-          "label": "Southeast Asia",
-          "bounds": [
-            90,
-            -14,
-            145,
-            28
-          ]
-        },
-        {
-          "id": "world",
-          "label": "World",
-          "bounds": [
-            -15,
-            -42,
-            152,
-            66
-          ]
-        }
-      ],
-      "controls": {
-        "zoomIn": "Zoom in",
-        "zoomOut": "Zoom out",
-        "views": "Map view",
-        "hint": "Drag to move. Pinch or Ctrl + scroll to zoom."
-      },
-      "routeFrom": "birmingham",
-      "routeTo": "semadoh",
       "labels": [
         {
-          "text": "United Kingdom",
-          "lon": -6,
-          "lat": 56.8,
-          "minSpan": 40
-        },
-        {
-          "text": "Europe",
-          "lon": 15,
-          "lat": 50,
-          "minSpan": 90,
-          "kind": "region"
-        },
-        {
-          "text": "China",
-          "lon": 104,
-          "lat": 34,
-          "minSpan": 30
-        },
-        {
-          "text": "India",
-          "lon": 79,
-          "lat": 21,
-          "minSpan": 40
-        },
-        {
-          "text": "Australia",
-          "lon": 134,
-          "lat": -25,
-          "minSpan": 30
-        },
-        {
-          "text": "Canada",
-          "lon": -105,
-          "lat": 58,
-          "minSpan": 90
-        },
-        {
           "text": "Malaysia",
-          "lon": 102,
-          "lat": 4.8,
-          "minSpan": 18
-        },
-        {
-          "text": "Indonesia",
-          "lon": 110,
-          "lat": -7.6,
-          "minSpan": 18
-        },
-        {
-          "text": "Philippines",
-          "lon": 122.5,
-          "lat": 15.5,
-          "minSpan": 18
+          "lon": 102.4,
+          "lat": 3.9
         },
         {
           "text": "Thailand",
           "lon": 101,
-          "lat": 16,
-          "minSpan": 18,
-          "maxSpan": 90
+          "lat": 15.5
         },
         {
           "text": "Vietnam",
-          "lon": 106.8,
-          "lat": 13.5,
-          "minSpan": 18,
-          "maxSpan": 90
+          "lon": 107.2,
+          "lat": 13.2
+        },
+        {
+          "text": "Philippines",
+          "lon": 122.4,
+          "lat": 16.4
+        },
+        {
+          "text": "Indonesia",
+          "lon": 114.6,
+          "lat": -2.3
+        },
+        {
+          "text": "Singapore",
+          "lon": 103.8,
+          "lat": 0.9,
+          "kind": "small"
         },
         {
           "text": "Borneo",
-          "lon": 114,
-          "lat": 0.6,
-          "minSpan": 30,
-          "maxSpan": 120,
+          "lon": 113.9,
+          "lat": 0.5,
           "kind": "island"
         },
         {
-          "text": "Sarawak (Malaysia)",
-          "lon": 112.4,
-          "lat": 1.25,
-          "maxSpan": 30,
+          "text": "Sarawak",
+          "lon": 113.75,
+          "lat": 2.45,
           "kind": "state"
         },
         {
-          "text": "Sabah (Malaysia)",
-          "lon": 116.9,
-          "lat": 6.4,
-          "maxSpan": 30,
-          "kind": "state"
-        },
-        {
-          "text": "Kalimantan (Indonesia)",
-          "lon": 114,
-          "lat": -1.6,
-          "maxSpan": 30,
+          "text": "Sabah",
+          "lon": 117.6,
+          "lat": 6.75,
           "kind": "state"
         },
         {
           "text": "South China Sea",
-          "lon": 113,
-          "lat": 12,
-          "maxSpan": 70,
+          "lon": 112.5,
+          "lat": 10.5,
           "kind": "water"
         },
         {
-          "text": "Indian Ocean",
-          "lon": 80,
-          "lat": -20,
-          "minSpan": 60,
+          "text": "Java Sea",
+          "lon": 111,
+          "lat": -5,
           "kind": "water"
         },
         {
-          "text": "Pacific Ocean",
-          "lon": -160,
-          "lat": 15,
-          "minSpan": 150,
+          "text": "Celebes Sea",
+          "lon": 122.5,
+          "lat": 3.2,
           "kind": "water"
         }
+      ],
+      "bounds": [
+        96,
+        -9,
+        132,
+        21
+      ],
+      "boundsMobile": [
+        105,
+        -4.5,
+        127,
+        11.5
       ]
     }
   },

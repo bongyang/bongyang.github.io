@@ -1,5 +1,5 @@
-// Regenerates assets/img/map-world.svg, the zoomable base map in the Impact
-// page. Only needed if you change the projection in content.json.
+// Regenerates assets/img/map-world.svg, the base map on the Impact page
+// (main.js crops it to impact.map.bounds with the SVG viewBox). Only needed if you change the projection in content.json.
 //
 //   npm i world-atlas@2 topojson-client      (once, in any scratch folder)
 //   node scripts/make_map.mjs path/to/node_modules
@@ -8,7 +8,7 @@
 // lon0/lat1/scale/latMin from "impact.map.projection" in content.json; main.js
 // uses the same numbers to place markers and labels.
 // Malaysian Borneo (Sarawak and Sabah) is drawn darker than the rest of Borneo.
-// Detail: 50m coastlines near Borneo (where the map zooms in), 110m elsewhere.
+// Detail: 50m coastlines around Southeast Asia, 110m elsewhere.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
