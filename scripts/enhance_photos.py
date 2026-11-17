@@ -3,6 +3,13 @@
 Usage:
   python3 scripts/enhance_photos.py OUTDIR SOURCE NAME [SOURCE NAME ...] [--sizes 800,1600]
 
+  python3 scripts/enhance_photos.py --light OUTDIR SOURCE NAME ... --sizes 800,1600,2400
+
+--light skips the denoise/sharpen step. Use it for good originals (camera or
+event-photographer files): they only need resizing.
+Widths larger than a source photo are skipped rather than upscaled when
+--light is given.
+
 Without --sizes: writes OUTDIR/NAME.webp and OUTDIR/NAME.jpg at the photo's own size.
 With --sizes:    writes OUTDIR/NAME-800.webp, OUTDIR/NAME-1600.webp (and .jpg), one
                  pair per width. Used for the full-width banner.
@@ -54,6 +61,8 @@ def save(img, path):
 
 def main(argv):
     sizes = None
+    light = '--light' in argv
+    argv = [a for a in argv if a != '--light']
     if '--sizes' in argv:
         k = argv.index('--sizes')
         sizes = [int(s) for s in argv[k + 1].split(',')]
@@ -67,9 +76,13 @@ def main(argv):
         img = cv2.imread(src, cv2.IMREAD_COLOR)
         if img is None:
             sys.exit(f'Cannot read {src}')
-        img = clean(img)
+        if not light:
+            img = clean(img)
         if sizes:
-            for w in sizes:
+            ws = [w for w in sizes if not light or w <= img.shape[1]] or [img.shape[1]]
+            if light and img.shape[1] not in ws and img.shape[1] < max(sizes):
+                ws.append(img.shape[1])
+            for w in ws:
                 save(to_width(img, w), os.path.join(out, f'{name}-{w}'))
         else:
             save(img, os.path.join(out, name))

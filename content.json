@@ -6,10 +6,11 @@
     "TODO: Map markers for Sibu, Butuan and Gadong are placed at town level (approximate), not at exact campus locations.",
     "TODO (optional): The headshot's bright cyan stage backdrop competes with the calm palette. A photo against a plain or outdoor background would sit better; replace assets/img/headshot.* (see README).",
     "TODO: Add the year(s) for the International Journal of Entrepreneurship and Innovation reviewer entry in service.items, if wanted.",
-    "TODO: Check the banner captions and dates. Places and events were read from what is visible in each photo, and years from when the LinkedIn post went up. In particular: the 2026 group photo is captioned 'University of Nottingham', and the 2024 photo is assumed to be from the 5th InnoLab.",
     "TODO: Check the three Long Semadoh photos in impact.project.photos are from the Dec 2025 fieldwork, and their captions.",
-    "TODO: Banner and field photos are LinkedIn copies (800px), upscaled to 1600px for the banner, so they look soft on large screens. Replace with original camera files when available (see README, 'Photos').",
-    "TODO: Check the new home-page text written from existing site content: home.tagline, home.feature.points and pages.*.teaser."
+    "TODO: Check the new home-page text written from existing site content: home.tagline, home.feature.points and pages.*.teaser.",
+    "TODO: Check the new photo captions (gallery.items, pages.*.image.caption): especially the PDC 2024 market walk (place given as Sarawak; the market itself is not named), the Nottingham 'group presentations' and 'white paper working session' photos, the Fudan 2024 photo, and the Manila panel date and credit (the new copy has no Archers Network watermark, so the credit was dropped).",
+    "TODO: The 2023 Shanghai talk photo is still the 800px LinkedIn copy; replace it if an original exists. The 2024 InnoLab5 photo was taken out of the gallery for the same reason.",
+    "TODO: Long Semadoh field photos in assets/img/impact/ are still 800px copies; originals would help."
   ],
   "nav": [
     {
@@ -261,18 +262,8 @@
       ]
     },
     "map": {
-      "caption": "Fieldwork and guest lectures across Borneo and the southern Philippines.",
-      "alt": "Map of Borneo and the southern Philippines marking Long Semadoh in Sarawak, where the fieldwork took place, and the universities in Sibu, Brunei and Butuan that hosted guest lectures.",
-      "bounds": [
-        108.5,
-        -4.3,
-        127.5,
-        9.7
-      ],
-      "size": [
-        760,
-        560
-      ],
+      "caption": "Fieldwork and guest lectures across Borneo and the southern Philippines. Zoom out to see where Borneo sits in the world.",
+      "alt": "Zoomable map. It opens on Borneo, marking Long Semadoh in Sarawak, Malaysia, where the fieldwork took place, and the universities in Sibu, Brunei and Butuan that hosted guest lectures; zooming out shows Southeast Asia and the world, with Birmingham, UK, for reference.",
       "places": [
         {
           "id": "semadoh",
@@ -281,7 +272,8 @@
           "lon": 115.583,
           "lat": 4.25,
           "primary": true,
-          "labelSide": "right"
+          "labelSide": "right",
+          "labelWide": "Long Semadoh, Sarawak"
         },
         {
           "id": "sibu",
@@ -309,6 +301,183 @@
           "lat": 8.95,
           "primary": false,
           "labelSide": "left"
+        },
+        {
+          "id": "birmingham",
+          "label": "Birmingham",
+          "note": "Birmingham Newman University",
+          "lon": -1.89,
+          "lat": 52.49,
+          "primary": false,
+          "labelSide": "right",
+          "home": true
+        }
+      ],
+      "projection": {
+        "lon0": -180,
+        "lat1": 80,
+        "latMin": -58,
+        "scale": 10
+      },
+      "views": [
+        {
+          "id": "borneo",
+          "label": "Borneo",
+          "bounds": [
+            108.5,
+            -4.3,
+            127.5,
+            9.7
+          ]
+        },
+        {
+          "id": "region",
+          "label": "Southeast Asia",
+          "bounds": [
+            90,
+            -14,
+            145,
+            28
+          ]
+        },
+        {
+          "id": "world",
+          "label": "World",
+          "bounds": [
+            -15,
+            -42,
+            152,
+            66
+          ]
+        }
+      ],
+      "controls": {
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "views": "Map view",
+        "hint": "Drag to move. Pinch or Ctrl + scroll to zoom."
+      },
+      "routeFrom": "birmingham",
+      "routeTo": "semadoh",
+      "labels": [
+        {
+          "text": "United Kingdom",
+          "lon": -6,
+          "lat": 56.8,
+          "minSpan": 40
+        },
+        {
+          "text": "Europe",
+          "lon": 15,
+          "lat": 50,
+          "minSpan": 90,
+          "kind": "region"
+        },
+        {
+          "text": "China",
+          "lon": 104,
+          "lat": 34,
+          "minSpan": 30
+        },
+        {
+          "text": "India",
+          "lon": 79,
+          "lat": 21,
+          "minSpan": 40
+        },
+        {
+          "text": "Australia",
+          "lon": 134,
+          "lat": -25,
+          "minSpan": 30
+        },
+        {
+          "text": "Canada",
+          "lon": -105,
+          "lat": 58,
+          "minSpan": 90
+        },
+        {
+          "text": "Malaysia",
+          "lon": 102,
+          "lat": 4.8,
+          "minSpan": 18
+        },
+        {
+          "text": "Indonesia",
+          "lon": 110,
+          "lat": -7.6,
+          "minSpan": 18
+        },
+        {
+          "text": "Philippines",
+          "lon": 122.5,
+          "lat": 15.5,
+          "minSpan": 18
+        },
+        {
+          "text": "Thailand",
+          "lon": 101,
+          "lat": 16,
+          "minSpan": 18,
+          "maxSpan": 90
+        },
+        {
+          "text": "Vietnam",
+          "lon": 106.8,
+          "lat": 13.5,
+          "minSpan": 18,
+          "maxSpan": 90
+        },
+        {
+          "text": "Borneo",
+          "lon": 114,
+          "lat": 0.6,
+          "minSpan": 30,
+          "maxSpan": 120,
+          "kind": "island"
+        },
+        {
+          "text": "Sarawak (Malaysia)",
+          "lon": 112.4,
+          "lat": 1.25,
+          "maxSpan": 30,
+          "kind": "state"
+        },
+        {
+          "text": "Sabah (Malaysia)",
+          "lon": 116.9,
+          "lat": 6.4,
+          "maxSpan": 30,
+          "kind": "state"
+        },
+        {
+          "text": "Kalimantan (Indonesia)",
+          "lon": 114,
+          "lat": -1.6,
+          "maxSpan": 30,
+          "kind": "state"
+        },
+        {
+          "text": "South China Sea",
+          "lon": 113,
+          "lat": 12,
+          "maxSpan": 70,
+          "kind": "water"
+        },
+        {
+          "text": "Indian Ocean",
+          "lon": 80,
+          "lat": -20,
+          "minSpan": 60,
+          "kind": "water"
+        },
+        {
+          "text": "Pacific Ocean",
+          "lon": -160,
+          "lat": 15,
+          "minSpan": 150,
+          "kind": "water"
         }
       ]
     }
@@ -412,125 +581,37 @@
     "next": "Next",
     "of": "of"
   },
-  "banner": {
-    "label": "Photos from talks, panels and international collaborations",
-    "prev": "Previous photo",
-    "next": "Next photo",
-    "pause": "Pause slideshow",
-    "play": "Play slideshow",
-    "of": "of",
-    "interval": 7000,
-    "items": [
-      {
-        "src": "assets/img/banner/2026-innolab7-group",
-        "widths": [
-          800,
-          1600
-        ],
-        "width": 800,
-        "height": 533,
-        "position": "50% 80%",
-        "caption": "ASEF Higher Education InnoLab participants, University of Nottingham",
-        "date": "2026",
-        "alt": "Large group photo of InnoLab participants beside a lake, with InnoLab banners on either side."
-      },
-      {
-        "src": "assets/img/banner/2026-murdoch-launch-panel",
-        "widths": [
-          800,
-          1600
-        ],
-        "width": 800,
-        "height": 533,
-        "position": "50% 45%",
-        "caption": "Launch of the ASEFInnoLab7 white papers, Murdoch University, Australia",
-        "date": "Nov 2026",
-        "alt": "Yang Bong giving a thumbs-up on a five-person panel, beneath a screen titled ‘What is the Role of Universities in Advancing AI for the Common Good?’"
-      },
-      {
-        "src": "assets/img/banner/2026-shanghai-forum",
-        "widths": [
-          800,
-          1600
-        ],
-        "width": 800,
-        "height": 600,
-        "position": "50% 40%",
-        "caption": "Shanghai Forum",
-        "date": "Apr 2026",
-        "alt": "Yang Bong with two colleagues in front of the Shanghai Forum 2026 backdrop."
-      },
-      {
-        "src": "assets/img/banner/2025-manila-panel",
-        "widths": [
-          800,
-          1600
-        ],
-        "width": 800,
-        "height": 601,
-        "position": "50% 30%",
-        "caption": "Panel discussion at ASEFInnoLab, De La Salle University, Manila",
-        "date": "2025",
-        "alt": "Yang Bong speaking into a microphone on a four-person panel at De La Salle University.",
-        "credit": "Photo: Archers Network"
-      },
-      {
-        "src": "assets/img/banner/2023-shanghai-talk",
-        "widths": [
-          800,
-          1600
-        ],
-        "width": 800,
-        "height": 600,
-        "position": "50% 30%",
-        "caption": "Talk on AI for Sustainable Development at ASEFInnoLab, Shanghai",
-        "date": "Oct 2023",
-        "alt": "Yang Bong presenting in front of a slide titled ‘AI for Sustainable Development, ASEFInnolab, Oct 2023, Shanghai’."
-      },
-      {
-        "src": "assets/img/banner/2024-innolab5",
-        "widths": [
-          800,
-          1600
-        ],
-        "width": 800,
-        "height": 600,
-        "position": "50% 30%",
-        "caption": "The 5th ASEF Higher Education InnoLab",
-        "date": "2024",
-        "alt": "Yang Bong with six colleagues giving a thumbs-up in front of an ASEF Higher Education InnoLab banner."
-      }
-    ]
-  },
   "pages": {
     "research": {
       "teaser": "Three connected themes, from digital inclusion in rural marketplaces to AI for sustainable development.",
       "image": {
-        "src": "assets/img/banner/2026-shanghai-forum",
+        "src": "assets/img/banner/2025-toronto-compass",
         "widths": [
           800,
-          1600
+          1600,
+          2400
         ],
-        "width": 800,
-        "height": 600,
-        "position": "60% 35%",
-        "alt": "Yang Bong with two colleagues in front of the Shanghai Forum 2026 backdrop.",
-        "caption": "Shanghai Forum · Apr 2026"
+        "width": 2400,
+        "height": 1800,
+        "position": "28% 62%",
+        "alt": "Yang Bong at a lectern in a lecture theatre, presenting a slide with a photo of two Sarawak micro-entrepreneurs and their shop jingle.",
+        "caption": "Presenting ‘Can My Voice Be Heard?’ at ACM COMPASS ’25, Toronto"
       }
     },
     "publications": {
       "teaser": "Journal articles, conference papers and reports, with citations ready to copy.",
       "image": {
-        "src": "assets/img/banner/2026-murdoch-launch-panel",
+        "src": "assets/img/banner/2026-perth-launch-panel",
         "widths": [
           800,
-          1600
+          1600,
+          2400
         ],
-        "width": 800,
-        "height": 533,
-        "position": "50% 45%",
+        "width": 2400,
+        "height": 1600,
+        "position": "60% 55%",
         "alt": "Yang Bong giving a thumbs-up on a five-person panel, beneath a screen titled ‘What is the Role of Universities in Advancing AI for the Common Good?’",
-        "caption": "Launch of the ASEFInnoLab7 white papers, Murdoch University, Australia · Nov 2026"
+        "caption": "Launch of the ASEFInnoLab7 white papers, Murdoch University, Perth · 4 Nov 2026"
       }
     },
     "impact": {
@@ -547,27 +628,32 @@
     "teaching": {
       "teaser": "Marketing, entrepreneurship and machine learning, at Birmingham Newman and Nottingham.",
       "image": {
-        "src": "assets/img/impact/semadoh-workshop",
-        "width": 800,
-        "height": 1067,
-        "position": "50% 45%",
-        "alt": "Workshop participants around a table covered with Malay-language handouts and product samples.",
-        "caption": "Working through branding and packaging with micro-entrepreneurs"
+        "src": "assets/img/banner/2024-pdc-ethnography",
+        "widths": [
+          800,
+          1600,
+          2016
+        ],
+        "width": 2016,
+        "height": 1134,
+        "position": "58% 50%",
+        "alt": "Yang Bong speaking to a group of conference participants in a covered market hall, surrounded by stalls of woven hats and baskets.",
+        "caption": "Leading a market walk during an ethnography workshop, Participatory Design Conference 2024"
       }
     },
     "service": {
       "teaser": "Conference roles, peer review and network leadership.",
       "image": {
-        "src": "assets/img/banner/2024-innolab5",
+        "src": "assets/img/banner/2026-nottingham-sessions",
         "widths": [
           800,
           1600
         ],
-        "width": 800,
-        "height": 600,
-        "position": "50% 30%",
-        "alt": "Yang Bong with six colleagues giving a thumbs-up in front of an ASEF Higher Education InnoLab banner.",
-        "caption": "The 5th ASEF Higher Education InnoLab · 2024"
+        "width": 1600,
+        "height": 1066,
+        "position": "50% 45%",
+        "alt": "View from above of a workshop room at the InnoLab: participants at tables while a group presents, with Yang Bong standing at the back.",
+        "caption": "Group presentations at the ASEF Higher Education InnoLab, University of Nottingham · 2026"
       }
     }
   },
@@ -575,21 +661,21 @@
     "exploreHeading": "Explore",
     "recentHeading": "Recent publications",
     "allPubs": "All publications",
-    "galleryHeading": "Talks and collaborations",
     "explore": "Explore the work",
     "inTouch": "Get in touch",
     "tagline": "Digital inclusion × Entrepreneurship × AI for sustainable development",
     "statement": "Where digital technologies, participatory research and business meet.",
     "heroImage": {
-      "src": "assets/img/banner/2023-shanghai-talk",
+      "src": "assets/img/banner/2026-nottingham-speaking",
       "widths": [
         800,
         1600
       ],
-      "width": 800,
-      "height": 600,
-      "position": "72% 35%",
-      "alt": "Yang Bong presenting a talk on AI for Sustainable Development at ASEFInnoLab, Shanghai, in October 2023."
+      "width": 1600,
+      "height": 1066,
+      "position": "62% 40%",
+      "alt": "Yang Bong speaking during a session at the ASEF Higher Education InnoLab, University of Nottingham.",
+      "positionMobile": "74% 40%"
     },
     "feature": {
       "label": "Featured project",
@@ -604,5 +690,162 @@
       "link": "impact.html",
       "linkLabel": "Read about the project"
     }
+  },
+  "gallery": {
+    "heading": "Talks and collaborations",
+    "intro": "Workshops, panels and fieldwork across Asia, Europe, Australia and North America.",
+    "items": [
+      {
+        "src": "assets/img/banner/2026-nottingham-group",
+        "widths": [
+          800,
+          1600,
+          1772
+        ],
+        "width": 1772,
+        "height": 1181,
+        "position": "50% 60%",
+        "alt": "Large group photo of InnoLab participants beside the lake at the University of Nottingham, with the Trent Building clock tower behind.",
+        "size": "lg",
+        "caption": "ASEF Higher Education InnoLab participants",
+        "place": "Nottingham, UK",
+        "date": "2026"
+      },
+      {
+        "src": "assets/img/banner/2026-perth-launch-panel",
+        "widths": [
+          800,
+          1600,
+          2400
+        ],
+        "width": 2400,
+        "height": 1600,
+        "position": "60% 55%",
+        "alt": "Yang Bong giving a thumbs-up on a five-person panel, beneath a screen titled ‘What is the Role of Universities in Advancing AI for the Common Good?’",
+        "caption": "Launch of the ASEFInnoLab7 white papers",
+        "place": "Perth, Australia",
+        "date": "Nov 2026"
+      },
+      {
+        "src": "assets/img/banner/2026-shanghai-forum",
+        "widths": [
+          800,
+          1600,
+          2400
+        ],
+        "width": 2400,
+        "height": 1800,
+        "position": "55% 45%",
+        "alt": "Yang Bong with two colleagues in front of the Shanghai Forum 2026 backdrop.",
+        "caption": "Shanghai Forum",
+        "place": "Shanghai, China",
+        "date": "Apr 2026"
+      },
+      {
+        "src": "assets/img/banner/2024-pdc-ethnography",
+        "widths": [
+          800,
+          1600,
+          2016
+        ],
+        "width": 2016,
+        "height": 1134,
+        "position": "58% 50%",
+        "alt": "Yang Bong speaking to a group of conference participants in a covered market hall, surrounded by stalls of woven hats and baskets.",
+        "size": "wide",
+        "caption": "Ethnography workshop, Participatory Design Conference",
+        "place": "Sarawak, Malaysia",
+        "date": "2024"
+      },
+      {
+        "src": "assets/img/banner/2026-nottingham-white-paper",
+        "widths": [
+          800,
+          1600
+        ],
+        "width": 1600,
+        "height": 1066,
+        "position": "40% 40%",
+        "alt": "Yang Bong and other InnoLab participants in discussion around a lectern.",
+        "caption": "White paper working session, InnoLab",
+        "place": "Nottingham, UK",
+        "date": "2026"
+      },
+      {
+        "src": "assets/img/banner/2025-toronto-compass",
+        "widths": [
+          800,
+          1600,
+          2400
+        ],
+        "width": 2400,
+        "height": 1800,
+        "position": "45% 50%",
+        "alt": "Yang Bong at a lectern in a lecture theatre, presenting a slide with a photo of two Sarawak micro-entrepreneurs and their shop jingle.",
+        "caption": "Presenting at ACM COMPASS ’25",
+        "place": "Toronto, Canada",
+        "date": "2025"
+      },
+      {
+        "src": "assets/img/banner/2025-manila-group",
+        "widths": [
+          800,
+          1242
+        ],
+        "width": 1242,
+        "height": 712,
+        "position": "50% 40%",
+        "alt": "Group photo of ASEFInnoLab conference participants at De La Salle University, Manila, taken from above.",
+        "size": "wide",
+        "caption": "ASEFInnoLab conference, De La Salle University",
+        "place": "Manila, Philippines",
+        "date": "Nov 2025",
+        "credit": "Photo: Riz Ornada, Archers Network"
+      },
+      {
+        "src": "assets/img/banner/2025-manila-panel",
+        "widths": [
+          800,
+          1600,
+          2400
+        ],
+        "width": 2400,
+        "height": 1803,
+        "position": "40% 45%",
+        "alt": "Yang Bong speaking into a microphone on a four-person panel at De La Salle University, Manila.",
+        "caption": "Panel discussion, De La Salle University",
+        "place": "Manila, Philippines",
+        "date": "2025"
+      },
+      {
+        "src": "assets/img/banner/2024-fudan",
+        "widths": [
+          800,
+          1024
+        ],
+        "width": 1024,
+        "height": 576,
+        "position": "50% 40%",
+        "alt": "Yang Bong with seven colleagues in front of a Fudan University backdrop.",
+        "size": "wide",
+        "caption": "With colleagues at Fudan University",
+        "place": "Shanghai, China",
+        "date": "2024"
+      },
+      {
+        "src": "assets/img/banner/2023-shanghai-talk",
+        "widths": [
+          800,
+          1600
+        ],
+        "width": 800,
+        "height": 600,
+        "position": "70% 35%",
+        "alt": "Yang Bong presenting in front of a slide titled ‘AI for Sustainable Development, ASEFInnolab, Oct 2023, Shanghai’.",
+        "caption": "Talk on AI for Sustainable Development, ASEFInnoLab",
+        "place": "Shanghai, China",
+        "date": "Oct 2023"
+      }
+    ]
   }
 }

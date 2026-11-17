@@ -120,25 +120,187 @@
     return html + citeHtml(p, c.labels) + '</div></div></li>';
   };
 
-  /* ---------- impact map (equirectangular, matches scripts/make_map.mjs) ---------- */
-  var mapHtml = function (m, timeline) {
-    var W = m.size[0], H = m.size[1], b = m.bounds;
-    var kx = W / (b[2] - b[0]), ky = H / (b[3] - b[1]);
-    var marks = m.places.map(function (pl) {
-      var x = ((pl.lon - b[0]) * kx).toFixed(1), y = ((b[3] - pl.lat) * ky).toFixed(1);
-      var left = pl.labelSide === 'left', dx = left ? -12 : 12, anchor = left ? 'end' : 'start';
-      var r = pl.primary ? 7 : 5;
-      return '<g class="mark' + (pl.primary ? ' mark--primary' : '') + '" data-place="' + esc(pl.id) + '" transform="translate(' + x + ' ' + y + ')">' +
-        (pl.primary ? '<circle class="mark__halo" r="18"/>' : '') +
-        '<circle class="mark__dot" r="' + r + '"/>' +
-        '<text class="mark__label" x="' + dx + '" y="-1" text-anchor="' + anchor + '">' + esc(pl.label) + '</text>' +
-        '<text class="mark__note" x="' + dx + '" y="1.15em" text-anchor="' + anchor + '">' + esc(pl.note) + '</text></g>';
+  /* ---------- impact map: zoomable world map ----------
+     Base map: assets/img/map-world.svg (made by scripts/make_map.mjs), loaded
+     inline so it stays sharp at every zoom. Markers and labels are HTML laid
+     over it with the same equirectangular projection, so they keep their size.
+     Views: preset buttons, +/- buttons, drag, pinch, Ctrl/⌘ + scroll,
+     double-click, and the keyboard (+, -, arrows) when the map has focus. */
+  var mapHtml = function (m) {
+    var C = m.controls;
+    var places = m.places.map(function (pl) {
+      return '<div class="mk' + (pl.primary ? ' mk--primary' : '') + (pl.home ? ' mk--home' : '') + (pl.labelSide === 'left' ? ' mk--left' : '') +
+        '" data-place="' + esc(pl.id) + '"><span class="mk__dot"></span><span class="mk__text"><span class="mk__label">' + esc(pl.label) + '</span>' +
+        '<span class="mk__note">' + esc(pl.note) + '</span></span></div>';
     }).join('');
-    return '<figure class="map"><div class="map__frame" role="img" aria-label="' + esc(m.alt) + '">' +
-      '<img src="assets/img/map-region.svg" alt="" width="' + W + '" height="' + H + '" decoding="async">' +
-      '<svg class="map__marks" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true" focusable="false">' + marks + '</svg></div>' +
-      '<figcaption>' + esc(m.caption) + '</figcaption></figure>';
+    var labels = m.labels.map(function (l, i) {
+      return '<span class="gl gl--' + esc(l.kind || 'country') + '" data-label="' + i + '">' + esc(l.text) + '</span>';
+    }).join('');
+    var btn = function (cls, label, txt) { return '<button type="button" class="map__btn ' + cls + '" aria-label="' + esc(label) + '">' + txt + '</button>'; };
+    return '<figure class="map"><div class="map__frame" tabindex="0" role="region" aria-label="' + esc(m.alt) + '">' +
+        '<div class="map__svg" aria-hidden="true"></div>' +
+        '<div class="map__layer" aria-hidden="true">' + labels + places + '</div>' +
+        '<div class="map__zoom">' + btn('map__in', C.zoomIn, '+') + btn('map__out', C.zoomOut, '−') + '</div>' +
+        '<div class="map__views" role="group" aria-label="' + esc(C.views) + '">' + m.views.map(function (v) {
+          return '<button type="button" data-view="' + esc(v.id) + '" aria-pressed="false">' + esc(v.label) + '</button>';
+        }).join('') + '</div>' +
+      '</div><figcaption>' + esc(m.caption) + ' <span class="map__hint">' + esc(C.hint) + '</span></figcaption></figure>';
   };
+
+  function initMap(m) {
+    var frame = document.querySelector('.map__frame');
+    if (!frame) return;
+    var P = m.projection, MW = 360 * P.scale, MH = (P.lat1 - P.latMin) * P.scale;
+    var proj = function (lon, lat) { return [(lon - P.lon0) * P.scale, (P.lat1 - lat) * P.scale]; };
+    var byId = {}; m.places.forEach(function (pl) { byId[pl.id] = pl; });
+    var marks = [].slice.call(frame.querySelectorAll('.mk')), labels = [].slice.call(frame.querySelectorAll('.gl'));
+    var svg = null, cam = { x: 0, y: 0, z: 1 }, W = 0, H = 0, zMin = 0.1, zMax = 10, anim = null;
+    var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var fit = function (b) {
+      var p0 = proj(b[0], b[3]), p1 = proj(b[2], b[1]);
+      return { x: (p0[0] + p1[0]) / 2, y: (p0[1] + p1[1]) / 2, z: Math.min(W / (p1[0] - p0[0]), H / (p1[1] - p0[1])) };
+    };
+    var clamp = function (c) {
+      var z = Math.max(zMin, Math.min(zMax, c.z)), hw = W / z / 2, hh = H / z / 2;
+      var x = hw * 2 >= MW ? MW / 2 : Math.max(hw, Math.min(MW - hw, c.x));
+      var y = hh * 2 >= MH ? MH / 2 : Math.max(hh, Math.min(MH - hh, c.y));
+      return { x: x, y: y, z: z };
+    };
+    var draw = function () {
+      var vx = cam.x - W / cam.z / 2, vy = cam.y - H / cam.z / 2;
+      if (svg) svg.setAttribute('viewBox', vx.toFixed(2) + ' ' + vy.toFixed(2) + ' ' + (W / cam.z).toFixed(2) + ' ' + (H / cam.z).toFixed(2));
+      var span = W / cam.z / P.scale;
+      var at = function (el, lon, lat) {
+        var p = proj(lon, lat), x = (p[0] - vx) * cam.z, y = (p[1] - vy) * cam.z;
+        el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+        return x > -40 && x < W + 40 && y > -40 && y < H + 40;
+      };
+      labels.forEach(function (el) {
+        var l = m.labels[+el.getAttribute('data-label')];
+        var on = span >= (l.minSpan || 0) && span < (l.maxSpan || 1e9);
+        el.hidden = !(at(el, l.lon, l.lat) && on);
+      });
+      marks.forEach(function (el) {
+        var pl = byId[el.getAttribute('data-place')];
+        var on = pl.home ? span >= 40 : (pl.primary || span < 35);
+        el.hidden = !(at(el, pl.lon, pl.lat) && on);
+        if (pl.labelWide) el.querySelector('.mk__label').textContent = span > 25 ? pl.labelWide : pl.label;
+      });
+      frame.classList.toggle('is-wide', span >= 40);
+      frame.querySelector('.map__in').disabled = cam.z >= zMax - 1e-6;
+      frame.querySelector('.map__out').disabled = cam.z <= zMin + 1e-6;
+    };
+    var setView = function (id) {
+      frame.querySelectorAll('.map__views button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-view') === id)); });
+    };
+    var flyTo = function (t) {
+      t = clamp(t);
+      cancelAnimationFrame(anim);
+      if (reduced) { cam = t; draw(); return; }
+      var s = { x: cam.x, y: cam.y, z: cam.z }, t0 = performance.now(), D = 700;
+      var step = function (now) {
+        var k = Math.min(1, (now - t0) / D), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        var z = Math.exp(Math.log(s.z) + (Math.log(t.z) - Math.log(s.z)) * e);
+        cam = { x: s.x + (t.x - s.x) * e, y: s.y + (t.y - s.y) * e, z: z };
+        draw();
+        if (k < 1) anim = requestAnimationFrame(step);
+      };
+      anim = requestAnimationFrame(step);
+    };
+    /* Zoom by factor f keeping the screen point (px, py) fixed. */
+    var zoomAt = function (f, px, py, smooth) {
+      var z = Math.max(zMin, Math.min(zMax, cam.z * f));
+      var mx = cam.x + (px - W / 2) / cam.z, my = cam.y + (py - H / 2) / cam.z;
+      var t = { x: mx - (px - W / 2) / z, y: my - (py - H / 2) / z, z: z };
+      setView('');
+      if (smooth) flyTo(t); else { cancelAnimationFrame(anim); cam = clamp(t); draw(); }
+    };
+    var size = function () {
+      var r = frame.getBoundingClientRect(), span = W ? W / cam.z : 0;
+      W = r.width; H = r.height;
+      zMin = Math.max(W / MW, H / MH);
+      zMax = fit(m.views[0].bounds).z * 2.5;
+      if (span) cam.z = W / span;
+      cam = clamp(cam); draw();
+    };
+
+    size();
+    cam = clamp(fit(m.views[0].bounds)); setView(m.views[0].id); draw();
+    if ('ResizeObserver' in window) new ResizeObserver(size).observe(frame);
+
+    fetch('assets/img/map-world.svg').then(function (r) { return r.text(); }).then(function (t) {
+      var box = frame.querySelector('.map__svg');
+      box.innerHTML = t;
+      svg = box.querySelector('svg');
+      svg.removeAttribute('width'); svg.removeAttribute('height');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      var a = proj(byId[m.routeFrom].lon, byId[m.routeFrom].lat), b = proj(byId[m.routeTo].lon, byId[m.routeTo].lat);
+      var route = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      route.setAttribute('class', 'route');
+      route.setAttribute('d', 'M' + a + 'Q' + ((a[0] + b[0]) / 2) + ',' + (Math.min(a[1], b[1]) - 260) + ' ' + b);
+      svg.appendChild(route);
+      draw();
+    });
+
+    frame.querySelectorAll('.map__views button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var v = m.views.filter(function (x) { return x.id === b.getAttribute('data-view'); })[0];
+        setView(v.id); flyTo(fit(v.bounds));
+      });
+    });
+    frame.querySelector('.map__in').addEventListener('click', function () { zoomAt(2, W / 2, H / 2, true); });
+    frame.querySelector('.map__out').addEventListener('click', function () { zoomAt(0.5, W / 2, H / 2, true); });
+
+    /* Drag with one pointer, pinch with two. */
+    var pts = {}, last = null, pinch = null;
+    var local = function (e) { var r = frame.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    var layerTarget = function (e) { return !e.target.closest('button'); };
+    frame.addEventListener('pointerdown', function (e) {
+      if (!layerTarget(e)) return;
+      pts[e.pointerId] = local(e); frame.setPointerCapture(e.pointerId);
+      cancelAnimationFrame(anim); last = local(e); frame.classList.add('is-dragging');
+    });
+    frame.addEventListener('pointermove', function (e) {
+      if (!pts[e.pointerId]) return;
+      pts[e.pointerId] = local(e);
+      var ids = Object.keys(pts);
+      if (ids.length === 2) {
+        var p = pts[ids[0]], q = pts[ids[1]], d = Math.hypot(p[0] - q[0], p[1] - q[1]);
+        var mid = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+        if (pinch) { zoomAt(d / pinch.d, mid[0], mid[1]); cam = clamp({ x: cam.x - (mid[0] - pinch.m[0]) / cam.z, y: cam.y - (mid[1] - pinch.m[1]) / cam.z, z: cam.z }); draw(); }
+        pinch = { d: d, m: mid };
+      } else if (last) {
+        var c = local(e);
+        cam = clamp({ x: cam.x - (c[0] - last[0]) / cam.z, y: cam.y - (c[1] - last[1]) / cam.z, z: cam.z });
+        last = c; setView(''); draw();
+      }
+    });
+    var end = function (e) {
+      delete pts[e.pointerId]; pinch = null;
+      var ids = Object.keys(pts); last = ids.length ? pts[ids[0]] : null;
+      if (!ids.length) frame.classList.remove('is-dragging');
+    };
+    frame.addEventListener('pointerup', end); frame.addEventListener('pointercancel', end);
+    frame.addEventListener('dblclick', function (e) { if (layerTarget(e)) { var c = local(e); zoomAt(2, c[0], c[1], true); } });
+    /* Plain scrolling keeps scrolling the page; Ctrl/⌘ + scroll (and trackpad pinch) zooms. */
+    frame.addEventListener('wheel', function (e) {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      var c = local(e); zoomAt(Math.exp(-e.deltaY * 0.01), c[0], c[1]);
+    }, { passive: false });
+    frame.addEventListener('keydown', function (e) {
+      if (e.target !== frame) return;
+      var k = e.key, step = 80 / cam.z;
+      if (k === '+' || k === '=') zoomAt(2, W / 2, H / 2, true);
+      else if (k === '-' || k === '_') zoomAt(0.5, W / 2, H / 2, true);
+      else if (/^Arrow/.test(k)) {
+        cam = clamp({ x: cam.x + (k === 'ArrowLeft' ? -step : k === 'ArrowRight' ? step : 0), y: cam.y + (k === 'ArrowUp' ? -step : k === 'ArrowDown' ? step : 0), z: cam.z });
+        setView(''); draw();
+      } else return;
+      e.preventDefault();
+    });
+  }
 
   var projectHtml = function (pr, m) {
     return '<div class="project">' +
@@ -249,123 +411,9 @@
     document.head.appendChild(s);
   }
 
-  /* ---------- full-width photo banner (between About and Research) ----------
-     Crossfading slideshow. Images load only when their slide is next up; it
-     autoplays unless the visitor prefers reduced motion, pauses on hover,
-     focus, when off screen or when the tab is hidden, and has a pause button
-     (WCAG 2.2.2). */
-  var GI = {
-    prev: '<path d="M15 5 8 12l7 7"/>',
-    next: '<path d="m9 5 7 7-7 7"/>',
-    pause: '<path d="M9 6v12M15 6v12"/>',
-    play: '<path d="M8 5.5v13l10.5-6.5L8 5.5Z"/>'
-  };
-  var gicon = function (k) {
-    return '<svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + GI[k] + '</svg>';
-  };
   var srcset = function (it, ext) {
     return (it.widths || []).map(function (w) { return esc(it.src) + '-' + w + '.' + ext + ' ' + w + 'w'; }).join(', ');
   };
-  function bannerHtml(g) {
-    if (!g || !g.items || !g.items.length) return '';
-    var n = g.items.length;
-    var slides = g.items.map(function (it, i) {
-      var meta = [it.date, it.credit].filter(Boolean).map(esc).join(' · ');
-      var big = it.widths[it.widths.length - 1];
-      return '<li class="banner__slide" role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' ' + esc(g.of) + ' ' + n + '">' +
-        '<figure><picture>' +
-          '<source data-srcset="' + srcset(it, 'webp') + '" sizes="100vw" type="image/webp">' +
-          '<img data-srcset="' + srcset(it, 'jpg') + '" data-src="' + esc(it.src) + '-' + big + '.jpg" sizes="100vw" alt="' + esc(it.alt) + '"' +
-          ' width="' + it.width + '" height="' + it.height + '" decoding="async" style="--pos:' + esc(it.position || '50% 50%') + '">' +
-        '</picture><figcaption class="banner__caption"><span class="banner__text">' + esc(it.caption) + '</span>' +
-          (meta ? '<span class="banner__meta">' + meta + '</span>' : '') + '</figcaption></figure></li>';
-    }).join('');
-    var btn = function (cls, label, ic) {
-      return '<button type="button" class="banner__btn ' + cls + '" aria-label="' + esc(label) + '">' + gicon(ic) + '</button>';
-    };
-    return '<section class="banner" aria-roledescription="carousel" aria-label="' + esc(g.label) + '">' +
-      '<ul class="banner__slides" aria-live="off">' + slides + '</ul>' +
-      '<div class="banner__bar"><div class="banner__controls">' +
-        '<span class="banner__count" aria-hidden="true"><span class="banner__now">1</span> / ' + n + '</span>' +
-        btn('banner__toggle', g.pause, 'pause') + btn('banner__prev', g.prev, 'prev') + btn('banner__next', g.next, 'next') +
-      '</div></div></section>';
-  }
-  function banner(g) {
-    var root = document.querySelector('.banner');
-    if (!root) return;
-    var list = root.querySelector('.banner__slides');
-    var slides = [].slice.call(root.querySelectorAll('.banner__slide'));
-    var toggle = root.querySelector('.banner__toggle');
-    var now = root.querySelector('.banner__now');
-    var n = slides.length, i = 0, timer = null;
-    var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var playing = !reduced && n > 1, hovered = false, focused = false, visible = false;
-
-    var load = function (k) {
-      var s = slides[(k + n) % n];
-      s.querySelectorAll('[data-srcset]').forEach(function (e) { e.srcset = e.getAttribute('data-srcset'); e.removeAttribute('data-srcset'); });
-      s.querySelectorAll('[data-src]').forEach(function (e) { e.src = e.getAttribute('data-src'); e.removeAttribute('data-src'); });
-    };
-    var show = function (k) {
-      i = (k + n) % n;
-      slides.forEach(function (s, j) {
-        var on = j === i;
-        s.classList.toggle('is-active', on);
-        s.setAttribute('aria-hidden', on ? 'false' : 'true');
-        if (on) s.removeAttribute('inert'); else s.setAttribute('inert', '');
-      });
-      now.textContent = i + 1;
-      if (visible) { load(i); load(i + 1); }
-    };
-    var stop = function () { clearInterval(timer); timer = null; };
-    var sync = function () {
-      var run = playing && !hovered && !focused && visible && !document.hidden;
-      if (run && !timer) timer = setInterval(function () { show(i + 1); }, g.interval || 7000);
-      if (!run) stop();
-      list.setAttribute('aria-live', playing ? 'off' : 'polite');
-    };
-    var setPlaying = function (on) {
-      playing = on;
-      toggle.setAttribute('aria-label', on ? g.pause : g.play);
-      toggle.innerHTML = gicon(on ? 'pause' : 'play');
-      sync();
-    };
-    var go = function (d) { show(i + d); stop(); sync(); };
-
-    root.querySelector('.banner__prev').addEventListener('click', function () { go(-1); });
-    root.querySelector('.banner__next').addEventListener('click', function () { go(1); });
-    toggle.addEventListener('click', function () { setPlaying(!playing); });
-    root.addEventListener('mouseenter', function () { hovered = true; sync(); });
-    root.addEventListener('mouseleave', function () { hovered = false; sync(); });
-    root.addEventListener('focusin', function () { focused = true; sync(); });
-    root.addEventListener('focusout', function (e) { if (!root.contains(e.relatedTarget)) { focused = false; sync(); } });
-    root.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
-      if (e.key === 'ArrowRight') { go(1); e.preventDefault(); }
-    });
-    document.addEventListener('visibilitychange', sync);
-
-    /* Swipe on touch screens; vertical scrolling stays with the page. */
-    var x0 = null;
-    list.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
-    list.addEventListener('pointerup', function (e) {
-      if (x0 === null) return;
-      var dx = e.clientX - x0; x0 = null;
-      if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
-    });
-    list.addEventListener('pointercancel', function () { x0 = null; });
-
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (en) {
-        visible = en[0].isIntersecting;
-        if (visible) { load(i); load(i + 1); }
-        sync();
-      }, { rootMargin: '300px 0px' }).observe(root);
-    } else { visible = true; load(0); load(1); }
-    if (n < 2) root.querySelector('.banner__controls').hidden = true;
-    show(0);
-    setPlaying(playing);
-  }
 
   /* ---------- shared pieces ---------- */
   /* <picture> for a photo object from content.json. With `widths` the files are
@@ -379,7 +427,7 @@
     return '<picture><source srcset="' + webp + '"' + (im.widths ? ' sizes="' + sizes + '"' : '') + ' type="image/webp">' +
       '<img src="' + src + '"' + (jpg ? ' srcset="' + jpg + '" sizes="' + sizes + '"' : '') +
       ' alt="' + esc(im.alt) + '" width="' + im.width + '" height="' + im.height + '"' +
-      (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async" style="--pos:' + esc(im.position || '50% 50%') + '"></picture>';
+      (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async" style="--pos:' + esc(im.position || '50% 50%') + (im.positionMobile ? ';--pos-m:' + esc(im.positionMobile) : '') + '"></picture>';
   };
   var pages = function (c) { return c.nav.filter(function (n) { return c.pages[n.id]; }); };
   var arrowRow = function (left, right, href) {
@@ -491,8 +539,7 @@
         '<ul class="feature__points">' + f.points.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul></div>' +
         '</div>' + '<div class="band__rule">' + '<div class="wrap">' + arrowRow(f.meta, f.metaEnd, f.link) + '</div></div></section>' +
 
-      '<section class="gallery" aria-labelledby="gallery-h"><div class="wrap"><div class="bandhead"><h2 id="gallery-h" class="display">' + esc(H.galleryHeading) + '</h2></div></div>' +
-        '<div id="banner"></div></section>' +
+      galleryHtml(c.gallery) +
 
       '<section class="recent wrap" aria-labelledby="recent-h"><div class="bandhead"><h2 id="recent-h" class="display">' + esc(H.recentHeading) + '</h2>' +
         '<a class="more" href="publications.html">' + esc(H.allPubs) + icon('arrow') + '</a></div>' +
@@ -500,6 +547,23 @@
           return '<li><p class="pub__year">' + esc(p.year) + '</p><div><h3 class="pub__title"><a href="publications.html#pub-' + esc(p.key) + '">' + esc(p.title) + '</a></h3>' +
             '<p class="pub__venue">' + venueHtml(p) + '</p></div></li>';
         }).join('') + '</ol></section>';
+  }
+
+  /* Photo grid: the breadth of talks, panels and fieldwork at a glance.
+     item.size: "lg" (2x2), "wide" (2x1) or nothing (1x1). */
+  function galleryHtml(g) {
+    var places = [];
+    g.items.forEach(function (it) { var p = it.place.split(',')[0]; if (places.indexOf(p) < 0) places.push(p); });
+    return '<section class="gallery wrap" aria-labelledby="gallery-h"><div class="bandhead"><h2 id="gallery-h" class="display">' + esc(g.heading) + '</h2>' +
+        '<p class="gallery__intro">' + esc(g.intro) + '</p></div>' +
+      '<ul class="places" aria-label="Places">' + places.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>' +
+      '<ul class="mosaic">' + g.items.map(function (it) {
+        var sizes = it.size === 'lg' ? '(min-width: 48rem) 50vw, 100vw' : (it.size === 'wide' ? '(min-width: 48rem) 50vw, 100vw' : '(min-width: 48rem) 25vw, 50vw');
+        return '<li class="tile' + (it.size ? ' tile--' + esc(it.size) : '') + '"><figure>' + pic(it, sizes) +
+          '<figcaption><span class="tile__place">' + esc(it.place) + ' · ' + esc(it.date) + '</span>' +
+          '<span class="tile__cap">' + esc(it.caption) + '</span>' +
+          (it.credit ? '<span class="tile__credit">' + esc(it.credit) + '</span>' : '') + '</figcaption></figure></li>';
+      }).join('') + '</ul></section>';
   }
 
   /* ---------- inner pages ---------- */
@@ -557,8 +621,6 @@
       '<p><a href="#top">' + esc(c.footer.backToTop) + '</a></p>';
 
     if (page === 'home') {
-      $('banner').innerHTML = bannerHtml(c.banner);
-      banner(c.banner);
       overCover();
     }
     if (page === 'publications') {
@@ -568,7 +630,7 @@
       filterPubs('');
       wireCopy(c.labels);
     }
-    if (page === 'impact') linkTimeline();
+    if (page === 'impact') { linkTimeline(); initMap(c.impact.map); }
     if (page === 'home' || page === 'publications') structuredData(c, page === 'publications' ? pubs : []);
     if (location.hash) {
       var target = document.querySelector(location.hash);

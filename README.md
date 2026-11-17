@@ -76,29 +76,30 @@ While both paths are empty, the site shows a green "YB" monogram instead.
 
 ## Photos
 
-There are two sets of photos, both listed in `content.json`:
+Photos are listed in `content.json`:
 
-- **Banner** (`banner.items`): the full-width slideshow between About and
-  Research. Use landscape photos only. Each item has `src` (path without the
-  size and extension), `widths`, `width`/`height` (the photo's shape),
-  `position` (which part to keep in view when the banner crops a wide strip,
-  e.g. `50% 30%` keeps the upper part), `caption`, `date`, `alt` and an
-  optional `credit`.
-- **Field photos** (`impact.project.photos`): the three Long Semadoh photos in
-  the Impact section.
+- **Gallery** (`gallery.items`): the photo grid on the home page. Each item has
+  `src` (path without the size and extension), `widths`, `width`/`height` (the
+  original's size), `position` (which part to keep in view when a tile crops
+  the photo, e.g. `50% 30%` keeps the upper part), `caption`, `place`, `date`,
+  `alt`, an optional `credit`, and an optional `size`: `"lg"` (big square) or
+  `"wide"`. Places in the strip above the grid come from `place`.
+- **Page photos** (`pages.<section>.image`) and the **cover** (`home.heroImage`;
+  `positionMobile` sets the crop on phones).
+- **Field photos** (`impact.project.photos`): the Long Semadoh photos on the
+  Impact page.
 
-To add a banner photo:
+To add a photo:
 
-1. Run `python3 scripts/enhance_photos.py assets/img/banner photo.jpg 2027-some-event --sizes 800,1600`.
-   It lightly cleans up compression artefacts and sharpens, without cropping or
-   recolouring, and writes an 800px and a 1600px version as `.webp` and `.jpg`.
-   (For a field photo: `python3 scripts/enhance_photos.py assets/img/impact photo.jpg name`.)
+1. For a good original (camera or event photographer), run
+   `python3 scripts/enhance_photos.py --light assets/img/banner photo.jpg 2027-some-event --sizes 800,1600,2400`.
+   It only resizes (never crops or recolours), skips widths bigger than the
+   original, and writes `.webp` and `.jpg` versions.
+   For a small or re-compressed copy (e.g. saved from LinkedIn), leave out
+   `--light`: it then also cleans up compression artefacts.
    On a computer without Python, make those files with e.g.
    [Squoosh](https://squoosh.app), keeping the same names.
-2. Add an entry to `banner.items` with a short `alt` describing the picture.
-
-The banner plays on its own, pauses on hover and has a pause button; visitors
-who ask their system for reduced motion get it paused.
+2. Add an entry to `gallery.items` with a short `alt` describing the picture.
 
 ## Connect a custom domain later (e.g. yangbong.com)
 
@@ -123,14 +124,20 @@ The Long Semadoh project in the Impact section is set in `content.json` under
   `note`, and `labelSide` (`left` or `right`, whichever avoids overlaps).
 - **Link a timeline entry to a place:** give the entry a `place` that matches
   the place's `id`. Hovering the entry then highlights that place on the map.
-- **Change what the map covers:** edit `impact.map.bounds`
-  (`[west, south, east, north]`), keep `impact.map.size` in the same
-  proportion, then redraw the base map:
+- **Map views and labels:** `impact.map.views` are the preset buttons
+  (Borneo, Southeast Asia, World; the first is where the map opens), each a
+  `[west, south, east, north]` box. `impact.map.labels` are the country, sea
+  and state names; `minSpan`/`maxSpan` (in degrees across the map) set the
+  zoom range where each one shows.
+- **Redraw the base map** (only if `impact.map.projection` changes):
 
   ```
   npm i world-atlas@2 topojson-client
   node scripts/make_map.mjs ./node_modules
   ```
+
+Visitors can zoom with the + and − buttons, pinch, double-click, or Ctrl/⌘ +
+scroll, and drag to move. Plain scrolling still scrolls the page.
 
 ## Citations and search engines
 

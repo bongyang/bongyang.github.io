@@ -1,12 +1,14 @@
-// Regenerates assets/img/map-region.svg, the quiet base map used in the
-// Impact section. Only needed if you change the map's extent.
+// Regenerates assets/img/map-world.svg, the zoomable base map in the Impact
+// page. Only needed if you change the projection in content.json.
 //
 //   npm i world-atlas@2 topojson-client      (once, in any scratch folder)
 //   node scripts/make_map.mjs path/to/node_modules
 //
-// The extent and size below must match "impact.map.bounds" and
-// "impact.map.size" in content.json, because main.js uses the same
-// equirectangular projection to place the markers.
+// Equirectangular: x = (lon - lon0) * scale, y = (lat1 - lat) * scale, with
+// lon0/lat1/scale/latMin from "impact.map.projection" in content.json; main.js
+// uses the same numbers to place markers and labels.
+// Malaysian Borneo (Sarawak and Sabah) is drawn darker than the rest of Borneo.
+// Detail: 50m coastlines near Borneo (where the map zooms in), 110m elsewhere.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -14,35 +16,55 @@ import path from 'node:path';
 const modules = path.resolve(process.argv[2] || 'node_modules');
 const require = createRequire(path.join(modules, 'x.js'));
 const { feature } = require('topojson-client');
-const topo = JSON.parse(readFileSync(path.join(modules, 'world-atlas/countries-50m.json'), 'utf8'));
+const load = (f) => { const t = JSON.parse(readFileSync(path.join(modules, 'world-atlas', f), 'utf8')); return feature(t, t.objects.countries).features; };
 const content = JSON.parse(readFileSync(new URL('../content.json', import.meta.url), 'utf8'));
-const [W, H] = content.impact.map.size;
-const [lon0, lat0, lon1, lat1] = content.impact.map.bounds;
-
-const kx = W / (lon1 - lon0), ky = H / (lat1 - lat0);
-const px = (lon, lat) => [((lon - lon0) * kx).toFixed(1), ((lat1 - lat) * ky).toFixed(1)];
-
-const countries = feature(topo, topo.objects.countries).features;
-// Borneo is split between Malaysia, Brunei and Indonesia; pick out its rings by position.
-const inBorneo = (ring) => {
+const { lon0, lat1, latMin, scale } = content.impact.map.projection;
+const W = 360 * scale, H = (lat1 - latMin) * scale;
+const DETAIL = [85, -15, 145, 28];           // lon/lat box drawn from 50m data
+const inBox = (ring) => {
+  const xs = ring.map((p) => p[0]), ys = ring.map((p) => p[1]);
+  return Math.max(...xs) > DETAIL[0] && Math.min(...xs) < DETAIL[2] && Math.max(...ys) > DETAIL[1] && Math.min(...ys) < DETAIL[3];
+};
+const isBorneo = (ring) => {
   const [lon, lat] = ring.reduce((a, p) => [a[0] + p[0] / ring.length, a[1] + p[1] / ring.length], [0, 0]);
   return lon > 108.5 && lon < 119.5 && lat > -4.5 && lat < 7.5 && ring.length > 200;
 };
-let land = '', borneo = '';
-for (const f of countries) {
-  const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
-  for (const poly of polys) {
-    const ring = poly[0];
-    const xs = ring.map((p) => p[0]), ys = ring.map((p) => p[1]);
-    if (Math.max(...xs) < lon0 - 1 || Math.min(...xs) > lon1 + 1 || Math.max(...ys) < lat0 - 1 || Math.min(...ys) > lat1 + 1) continue;
-    const d = 'M' + ring.map((p) => px(p[0], p[1]).join(' ')).join('L') + 'Z';
-    if (inBorneo(ring)) borneo += d; else land += d;
+// Rings that cross the date line (Russia, Fiji) would draw a line across the
+// whole map; shift their western half past 180 degrees instead (off the map).
+const unwrap = (ring) => ring.some((p, i) => i && Math.abs(p[0] - ring[i - 1][0]) > 180)
+  ? ring.map(([lon, lat]) => [lon < 0 ? lon + 360 : lon, lat]) : ring;
+const pathOf = (ring0, dp) => {
+  const ring = unwrap(ring0);
+  let out = '', last = null;
+  for (const [lon, lat] of ring) {
+    const x = ((lon - lon0) * scale).toFixed(dp), y = ((lat1 - Math.max(lat, latMin)) * scale).toFixed(dp);
+    const k = x + ' ' + y;
+    if (k === last) continue;
+    out += (out ? 'L' : 'M') + k; last = k;
+  }
+  return out + 'Z';
+};
+const rings = (f) => (f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates).map((p) => p[0]);
+let land = '', borneo = '', borneoMy = '', malaysia = '';
+for (const f of load('countries-110m.json')) {
+  if (f.properties.name === 'Antarctica') continue;
+  for (const r of rings(f)) if (!inBox(r)) land += pathOf(r, 0);
+}
+for (const f of load('countries-50m.json')) {
+  for (const r of rings(f)) {
+    if (!inBox(r)) continue;
+    const d = pathOf(r, 1);
+    if (isBorneo(r)) { if (f.properties.name === 'Malaysia') borneoMy += d; else borneo += d; }
+    else if (f.properties.name === 'Malaysia') malaysia += d;
+    else land += d;
   }
 }
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
-<path d="${land}" fill="#EEEBE1" stroke="#CFC9B9" stroke-width="0.8" stroke-linejoin="round"/>
-<path d="${borneo}" fill="#E3EAE2" stroke="#1E4D3B" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/>
+<path class="land" d="${land}"/>
+<path class="land land--my" d="${malaysia}"/>
+<path class="land land--borneo" d="${borneo}"/>
+<path class="land land--sarawak" d="${borneoMy}"/>
 </svg>
 `;
-writeFileSync(new URL('../assets/img/map-region.svg', import.meta.url), svg);
-console.log(`map-region.svg: ${(svg.length / 1024).toFixed(1)} KB`);
+writeFileSync(new URL('../assets/img/map-world.svg', import.meta.url), svg);
+console.log(`map-world.svg: ${(svg.length / 1024).toFixed(1)} KB, ${W}x${H}`);
