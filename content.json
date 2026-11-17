@@ -13,7 +13,8 @@
     "TODO: Long Semadoh field photos in assets/img/impact/ are still 800px copies; originals would help.",
     "TODO: Check the ASEFInnoLab7 text in service.feature and the new Citizenship entry (theme taken from the banner in the Nottingham group photo: 'The Role of Universities in Advancing AI for Good'; 'participants worked in teams on white papers' inferred from the photos and the Perth launch; year 2026). Add a link to the public event page if there is one.",
     "TODO: Check the new Publications photo captions (publications.photoBreaks): Subsistence Marketplaces Immersion Conference 2025 has no location; the three small photos are 800px copies.",
-    "TODO: 'Rethinking Good in AI for Good' (bong2026rethinking): add page numbers once the IS2026 proceedings are published. Venue from https://naixus.net/ai4sdg2026/ (AI4SDG 2026 workshop, co-located with the 29th International Multiconference IS2026, 9 Oct 2026, Jozef Stefan Institute, Ljubljana). Title follows the PDF; the workshop page lists it as 'Rethinking the ‘Good’ in AI for Good'."
+    "TODO: 'Rethinking Good in AI for Good' (bong2026rethinking): add page numbers once the IS2026 proceedings are published. Venue from https://naixus.net/ai4sdg2026/ (AI4SDG 2026 workshop, co-located with the 29th International Multiconference IS2026, 9 Oct 2026, Jozef Stefan Institute, Ljubljana). Title follows the PDF; the workshop page lists it as 'Rethinking the ‘Good’ in AI for Good'.",
+    "TODO: Check the new Citizenship photo captions: the AE4AI launch photo (4th ASEF Higher Education InnoLab; year and place not stated, the board shows the Fudan University logo) and the two PDC 2024 photos (dinner photo captioned only as PDC 2024; performers described as 'in traditional dress' without naming communities)."
   ],
   "nav": [
     {
@@ -491,50 +492,6 @@
   },
   "service": {
     "heading": "Academic Citizenship",
-    "items": [
-      {
-        "role": "Co-organiser",
-        "org": "ASEF Higher Education InnoLab 7 (ASEFInnoLab7), with the Asia-Europe Foundation (ASEF), the University of Nottingham and Fudan University",
-        "year": "2026",
-        "url": ""
-      },
-      {
-        "role": "Communication Chair",
-        "org": "Participatory Design Conference",
-        "year": "2024",
-        "url": ""
-      },
-      {
-        "role": "Reviewer",
-        "org": "CHI",
-        "year": "2025",
-        "url": ""
-      },
-      {
-        "role": "Reviewer",
-        "org": "INTERACT",
-        "year": "2025",
-        "url": ""
-      },
-      {
-        "role": "Reviewer",
-        "org": "International Journal of Entrepreneurship and Innovation",
-        "year": "",
-        "url": ""
-      },
-      {
-        "role": "Reviewer",
-        "org": "Rural Entrepreneurship Symposium",
-        "year": "2024",
-        "url": ""
-      },
-      {
-        "role": "Founding Member and Coordinator",
-        "org": "Asia-Europe for AI (AE4AI) Network",
-        "year": "",
-        "url": "https://www.asiaeurope4ai.org/"
-      }
-    ],
     "feature": {
       "label": "Featured",
       "heading": "Co-organising ASEFInnoLab7",
@@ -597,7 +554,98 @@
         }
       ]
     },
-    "listHeading": "Roles and reviewing"
+    "groups": [
+      {
+        "heading": "Conferences and networks",
+        "items": [
+          {
+            "role": "Co-organiser",
+            "org": "ASEF Higher Education InnoLab 7 (ASEFInnoLab7), with the Asia-Europe Foundation (ASEF), the University of Nottingham and Fudan University",
+            "year": "2026",
+            "url": ""
+          },
+          {
+            "role": "Communication Chair",
+            "org": "Participatory Design Conference",
+            "year": "2024",
+            "url": ""
+          },
+          {
+            "role": "Founding Member and Coordinator",
+            "org": "Asia-Europe for AI (AE4AI) Network",
+            "year": "",
+            "url": "https://www.asiaeurope4ai.org/"
+          }
+        ],
+        "photos": [
+          {
+            "src": "assets/img/banner/ae4ai-launch",
+            "widths": [
+              800,
+              1600
+            ],
+            "width": 1600,
+            "height": 835,
+            "position": "50% 45%",
+            "alt": "Around thirty people gathered behind a signed board reading ‘Joint Statement: Launch of the Asia-Europe for Artificial Intelligence (AE4AI) Network’ at the ASEF Higher Education InnoLab.",
+            "caption": "Signing the joint statement that launched the AE4AI Network, 4th ASEF Higher Education InnoLab"
+          },
+          {
+            "src": "assets/img/banner/2024-pdc-dinner",
+            "widths": [
+              800,
+              1600
+            ],
+            "width": 1600,
+            "height": 1200,
+            "position": "50% 45%",
+            "alt": "Yang Bong standing with five people around a round dinner table, several wearing beaded necklaces.",
+            "caption": "Participatory Design Conference 2024"
+          },
+          {
+            "src": "assets/img/banner/2024-pdc-performers",
+            "widths": [
+              800,
+              1600
+            ],
+            "width": 1600,
+            "height": 1200,
+            "position": "50% 40%",
+            "alt": "Eight performers in traditional dress standing in a row with a hand on their heart.",
+            "caption": "Performers in traditional dress, Participatory Design Conference 2024"
+          }
+        ]
+      },
+      {
+        "heading": "Peer review",
+        "items": [
+          {
+            "role": "Reviewer",
+            "org": "CHI",
+            "year": "2025",
+            "url": ""
+          },
+          {
+            "role": "Reviewer",
+            "org": "INTERACT",
+            "year": "2025",
+            "url": ""
+          },
+          {
+            "role": "Reviewer",
+            "org": "International Journal of Entrepreneurship and Innovation",
+            "year": "",
+            "url": ""
+          },
+          {
+            "role": "Reviewer",
+            "org": "Rural Entrepreneurship Symposium",
+            "year": "2024",
+            "url": ""
+          }
+        ]
+      }
+    ]
   },
   "contact": {
     "heading": "Contact",

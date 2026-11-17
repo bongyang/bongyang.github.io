@@ -418,7 +418,6 @@ a.metarow:hover .metarow__line { opacity: 1; }
 .page h2:not(.group) { font: 500 1.375rem/1.25 var(--serif); letter-spacing: -.005em; }
 .page--research .themes, .page--teaching .rows { margin-top: 0; }
 .page--research .theme:first-child, .page--teaching .row:first-child { border-top: 0; padding-top: 0; }
-.page--service .service li:first-child { border-top: 0; padding-top: 0; }
 .page--publications .pubtools { margin-top: 0; }
 .next { border-top: 1px solid var(--rule); }
 .next a { display: grid; gap: .3rem; padding: 3rem 0 3.5rem; color: var(--ink); text-decoration: none; }
@@ -541,4 +540,7 @@ a.metarow:hover .metarow__line { opacity: 1; }
 .sfeature__text p { font-size: 1.0625rem; line-height: 1.65; }
 .mosaic--feature { margin-top: .75rem; grid-column: 1 / -1; }
 .mosaic--feature .tile:not(.tile--lg):not(.tile--wide) .tile__cap { display: block; font-size: .8125rem; }
-.page--service > .group { margin-top: 0; }
+.page--service > .group { margin-top: 3rem; }
+.page--service > .sfeature + .group { margin-top: 0; }
+.page--service .pstrip { margin-bottom: 0; }
+.page--service .group + .service li:first-child { padding-top: 1.1rem; }

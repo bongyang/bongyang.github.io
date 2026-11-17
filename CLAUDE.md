@@ -74,7 +74,9 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
 - Publications: `publications.photoBreaks` puts photos after a group (`after`
   = group id): one item = wide banner, several = a strip.
 - Citizenship: `service.feature` (ASEFInnoLab7: text + photo tiles via
-  `tileHtml()`) above the roles list (`service.listHeading`).
+  `tileHtml()`), then `service.groups` in order: "Conferences and networks"
+  (with a `photos` strip via `photoBreak()`), then "Peer review" (owner wants
+  conferences listed before reviewing).
 - Publications: theme filter (`data-themes` from `research.themes`), Cite
   panel (`<details>`, APA built by `apa()`, raw BibTeX from the `bibtex`
   field), schema.org JSON-LD injected by `structuredData()`.
