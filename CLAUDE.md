@@ -25,21 +25,23 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   differ. Do not hand-edit the page HTML; rerun the script.
 - `content.json` — all visible text. `todos` is never rendered.
   Inline links use `[label](https://url)` (see `rich()` in `main.js`).
-  `nav[]` has `href` per page (Contact is `#contact`, on every page).
+  `nav[]` has `href` per page (Home is `./`; Contact is `#contact`, on every page).
   `pages.<id>` holds each page's teaser and photo (home cards + page hero).
   `home` holds the cover photo, tagline, statement and featured project.
 - `publications.bib` → `python3 scripts/bib_to_json.py` → `publications.json`.
   Never hand-edit the JSON. Commit both. Groups: `article` → journal,
   `inproceedings` → conference, everything else → report.
 - `assets/js/main.js` — fetches both JSON files and renders `#page` according
-  to `data-page`: `renderHome()` (full-bleed cover with name, intro, image
+  to `data-page`: `renderHome()` (full-bleed cover with crossfading photos
+  from `home.heroSlides` (6 s, pause button, off for reduced motion;
+  `coverSlides()`), name, intro, image
   cards, dark featured-project band with meta row, photo mosaic from
   `gallery`, three newest publications) or `renderPage()` (page hero with photo, section body
   from `body.<id>()`, "Next" link to the following page). Contact band and
   footer render on every page. Old one-page links (`/#research`) redirect to
   the new pages. No dependencies. Escape everything with `esc()`.
 - `assets/css/style.css` — mobile-first; breakpoints at 48rem and 64rem.
-  Pill nav; on home the masthead floats over the cover (`.is-over`) until it
+  Pill nav (swipeable below 64rem, where seven pills don't fit); on home the masthead floats over the cover (`.is-over`) until it
   scrolls past.
 - Research themes link to publications by BibTeX key
   (`research.themes[].publications`), rendered as `publications.html#pub-<key>`.
@@ -65,6 +67,18 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   `kind`: country (default), state, small (both hidden on phones), island,
   water. Places are town-level; timeline entries link to places via `place` =
   place `id`.
+- Page heroes: title left, photo right; `pages.<id>.heroImage: false` gives a
+  text-only hero (Publications, where `image` is used only for the home card).
+  Title size is tied to the column width so long words never run under the
+  photo.
+- Publications: `publications.photoBreaks` puts photos after a group (`after`
+  = group id). `photoBreak()`: one photo = wide banner; several = rotating
+  banner (`rotatorHtml()` / `initRotators()`: 6 s, dots, pause, holds on
+  hover/focus, still for reduced motion). Owner prefers rotating banners to
+  showing many photos at once.
+- Citizenship: `service.feature` (ASEFInnoLab7: text + rotating banner), then `service.groups` in order: "Conferences and networks"
+  (its `photos` shown as a rotating banner), then "Peer review" (owner wants
+  conferences listed before reviewing).
 - Publications: theme filter (`data-themes` from `research.themes`), Cite
   panel (`<details>`, APA built by `apa()`, raw BibTeX from the `bibtex`
   field), schema.org JSON-LD injected by `structuredData()`.
@@ -85,8 +99,8 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   (variable, self-hosted). No external CDNs.
 - Dark bands (featured project, contact, footer) use ink `#1B2420` with
   sage text `#A9C2B2` / `#C9D8CD` (tints of the green, not a new accent).
-- Display headings: large Newsreader (`.display`); the cover name is the
-  biggest type on the site.
+- Display headings: large Newsreader (`.display`). The cover name is kept
+  modest on purpose (owner finds a giant name conceited); one line.
 - Light mode only. Borneo nod: the thin woven-diamond band (`.motif`) and the
   green; keep it quiet.
 - Small uppercase letter-spaced labels in green or muted; hairline rules;
