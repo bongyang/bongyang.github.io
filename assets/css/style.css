@@ -565,3 +565,8 @@ a.metarow:hover .metarow__line { opacity: 1; }
 .current li { position: relative; padding-left: 1.1rem; font: 400 1.0625rem/1.45 var(--serif); }
 .current li::before { content: ""; position: absolute; left: 0; top: .5em; width: .45rem; height: .45rem; border-radius: 50%; background: var(--accent); }
 .current + .label { margin-top: 1.4rem; }
+
+/* ---------- impact: full-width section (SARI) ---------- */
+.impact__item--wide { grid-column: 1 / -1; padding: 1.75rem 1.5rem; border-top: 3px solid var(--accent); margin-top: 1.5rem; }
+.page .impact__item--wide h2 { font-size: 1.625rem; font-weight: 400; }
+.impact__item--wide p:not(.label) { font: 400 1.125rem/1.6 var(--serif); max-width: 46rem; }

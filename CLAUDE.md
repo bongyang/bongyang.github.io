@@ -85,6 +85,9 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
 - Publications: theme filter (`data-themes` from `research.themes`), Cite
   panel (`<details>`, APA built by `apa()`, raw BibTeX from the `bibtex`
   field), schema.org JSON-LD injected by `structuredData()`.
+- Impact items: first is the dark lead (Long Semadoh, followed by the project
+  block); `wide: true` makes a full-width section (SARI report, facts from the
+  IRC report page). Page intro: `impact.intro`.
 - Facts in `impact.project` come from the Horizon CDT page
   (https://cdt.horizon.ac.uk/yang-bong-large-impact-grant/); do not embellish.
 - Each page preloads `content.json`, `publications.json` and its hero photo

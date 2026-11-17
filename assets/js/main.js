@@ -400,7 +400,7 @@
   };
   body.impact = function (c) {
     return '<div class="impact">' + c.impact.items.map(function (it, i) {
-      return '<article class="impact__item' + (i === 0 ? ' impact__item--lead' : '') + '">' +
+      return '<article class="impact__item' + (i === 0 ? ' impact__item--lead' : '') + (it.wide ? ' impact__item--wide' : '') + '">' +
         '<p class="label">' + esc(it.meta) + '</p><h2>' + esc(it.title) + '</h2><p>' + rich(it.text) + '</p>' +
         (it.link && it.link.url ? '<p>' + link(it.link.url, esc(it.link.label) + icon('arrow'), 'more') + '</p>' : '') +
         '</article>' + (i === 0 && c.impact.project ? projectHtml(c.impact.project, c.impact.map) : '');
