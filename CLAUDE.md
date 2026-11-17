@@ -33,7 +33,7 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   `inproceedings` → conference, everything else → report.
 - `assets/js/main.js` — fetches both JSON files and renders `#page` according
   to `data-page`: `renderHome()` (full-bleed cover with crossfading photos
-  from `home.heroSlides` (6 s, pause button, off for reduced motion;
+  from `home.heroSlides` (5.5 s, pause button, off for reduced motion;
   `coverSlides()`), name, intro, image
   cards, dark featured-project band with meta row, photo mosaic from
   `gallery`, three newest publications) or `renderPage()` (page hero with photo, section body
@@ -43,14 +43,17 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
 - `assets/css/style.css` — mobile-first; breakpoints at 48rem and 64rem.
   Pill nav (swipeable below 64rem, where seven pills don't fit); on home the masthead floats over the cover (`.is-over`) until it
   scrolls past.
-- Research themes link to publications by BibTeX key
+- Research themes: optional `current` list (rendered under the label
+  `research.currentLabel`, inline links allowed) above the related
+  publications. Themes link to publications by BibTeX key
   (`research.themes[].publications`), rendered as `publications.html#pub-<key>`.
 - Photos: `pic()` in `main.js` takes `{src, widths?, width, height, alt,
   position}`; with `widths` files are `NAME-800/NAME-1600` (.webp + .jpg),
   without, `NAME.webp/.jpg`. `position` is the object-position for crops.
 - Photo mosaic (`gallery` in content.json) on the home page, rendered by
   `galleryHtml()`: `size` "lg" (2x2) or "wide" (2x1), else 1x1; the places
-  strip is built from each item's `place`. Event photos live in
+  strip is `gallery.places` (owner's list of countries), falling back to each
+  item's `place`. Event photos live in
   `assets/img/banner/` as `NAME-800/-1600/-2400` (only widths up to the
   original's size), field photos in `assets/img/impact/`. All made by
   `scripts/enhance_photos.py` (use `--light` for good originals), which must
@@ -82,6 +85,9 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
 - Publications: theme filter (`data-themes` from `research.themes`), Cite
   panel (`<details>`, APA built by `apa()`, raw BibTeX from the `bibtex`
   field), schema.org JSON-LD injected by `structuredData()`.
+- Impact items: first is the dark lead (Long Semadoh, followed by the project
+  block); `wide: true` makes a full-width section (SARI report, facts from the
+  IRC report page). Page intro: `impact.intro`.
 - Facts in `impact.project` come from the Horizon CDT page
   (https://cdt.horizon.ac.uk/yang-bong-large-impact-grant/); do not embellish.
 - Each page preloads `content.json`, `publications.json` and its hero photo

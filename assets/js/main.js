@@ -82,6 +82,7 @@
       out += p.venue + (p.volume ? ', ' + p.volume + (p.number ? '(' + p.number + ')' : '') : '') +
         (p.pages ? ', ' + p.pages : '') + '.';
     } else if (p.type === 'techreport') {
+      if (p.number) out = out.replace(/\. $/, ' (' + p.number + '). ');
       out += p.venue + '.';
     } else {
       out += 'In ' + p.venue + (p.pages ? ' (pp. ' + p.pages + ')' : '') + '.' + (p.publisher ? ' ' + p.publisher + '.' : '');
@@ -323,6 +324,8 @@
       }).join('');
       return '<li class="theme"><p class="theme__no" aria-hidden="true">' + pad(i + 1) + '</p>' +
         '<div><h2>' + esc(t.title) + '</h2><p>' + rich(t.description) + '</p>' +
+        (t.current && t.current.length ? '<p class="label">' + esc(c.research.currentLabel) + '</p><ul class="current">' +
+          t.current.map(function (x) { return '<li>' + rich(x) + '</li>'; }).join('') + '</ul>' : '') +
         (rel ? '<p class="label">' + esc(c.research.relatedLabel) + '</p><ul class="related">' + rel + '</ul>' : '') +
         '</div></li>';
     }).join('') + '</ol>';
@@ -397,7 +400,7 @@
   };
   body.impact = function (c) {
     return '<div class="impact">' + c.impact.items.map(function (it, i) {
-      return '<article class="impact__item' + (i === 0 ? ' impact__item--lead' : '') + '">' +
+      return '<article class="impact__item' + (i === 0 ? ' impact__item--lead' : '') + (it.wide ? ' impact__item--wide' : '') + '">' +
         '<p class="label">' + esc(it.meta) + '</p><h2>' + esc(it.title) + '</h2><p>' + rich(it.text) + '</p>' +
         (it.link && it.link.url ? '<p>' + link(it.link.url, esc(it.link.label) + icon('arrow'), 'more') + '</p>' : '') +
         '</article>' + (i === 0 && c.impact.project ? projectHtml(c.impact.project, c.impact.map) : '');
@@ -484,8 +487,10 @@
   /* Photo grid: the breadth of talks, panels and fieldwork at a glance.
      item.size: "lg" (2x2), "wide" (2x1) or nothing (1x1). */
   function galleryHtml(g) {
-    var places = [];
-    g.items.forEach(function (it) { var p = it.place.split(',')[0]; if (places.indexOf(p) < 0) places.push(p); });
+    /* The places strip: gallery.places if given (countries worked in), else
+       the towns of the photos shown. */
+    var places = (g.places || []).slice();
+    if (!places.length) g.items.forEach(function (it) { var p = it.place.split(',')[0]; if (places.indexOf(p) < 0) places.push(p); });
     return '<section class="gallery wrap" aria-labelledby="gallery-h"><div class="bandhead"><h2 id="gallery-h" class="display">' + esc(g.heading) + '</h2>' +
         '<p class="gallery__intro">' + esc(g.intro) + '</p></div>' +
       '<ul class="places" aria-label="Places">' + places.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>' +
@@ -577,7 +582,7 @@
     }
   }
 
-  /* Cover photos crossfade every 6 s. Paused for reduced motion, when the tab
+  /* Cover photos crossfade every 5.5 s. Paused for reduced motion, when the tab
      is hidden, and by the pause button (WCAG 2.2.2). */
   function coverSlides(H) {
     var slides = [].slice.call(document.querySelectorAll('.cover__slide')), btn = document.querySelector('.cover__pause');
@@ -592,7 +597,7 @@
       var nx = slides[(i + 1) % slides.length].querySelector('img');
       if (nx) nx.loading = 'eager';
     };
-    var run = function () { clearInterval(timer); if (!paused && !document.hidden) timer = setInterval(function () { show(i + 1); }, 6000); };
+    var run = function () { clearInterval(timer); if (!paused && !document.hidden) timer = setInterval(function () { show(i + 1); }, 5500); };
     var label = function () {
       btn.setAttribute('aria-pressed', String(paused));
       btn.setAttribute('aria-label', paused ? H.slideLabels.play : H.slideLabels.pause);

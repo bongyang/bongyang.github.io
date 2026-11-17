@@ -14,7 +14,8 @@
     "TODO: Check the ASEFInnoLab7 text in service.feature and the new Citizenship entry (theme taken from the banner in the Nottingham group photo: 'The Role of Universities in Advancing AI for Good'; 'participants worked in teams on white papers' inferred from the photos and the Perth launch; year 2026). Add a link to the public event page if there is one.",
     "TODO: Check the new Publications photo captions (publications.photoBreaks): Subsistence Marketplaces Immersion Conference 2025 has no location; the three small photos are 800px copies.",
     "TODO: 'Rethinking Good in AI for Good' (bong2026rethinking): add page numbers once the IS2026 proceedings are published. Venue from https://naixus.net/ai4sdg2026/ (AI4SDG 2026 workshop, co-located with the 29th International Multiconference IS2026, 9 Oct 2026, Jozef Stefan Institute, Ljubljana). Title follows the PDF; the workshop page lists it as 'Rethinking the ‘Good’ in AI for Good'.",
-    "TODO: Check the new Citizenship photo captions: the AE4AI launch photo (4th ASEF Higher Education InnoLab; year and place not stated, the board shows the Fudan University logo) and the two PDC 2024 photos (dinner photo captioned only as PDC 2024; performers described as 'in traditional dress' without naming communities)."
+    "TODO: Check the new Citizenship photo captions: the AE4AI launch photo (4th ASEF Higher Education InnoLab; year and place not stated, the board shows the Fudan University logo) and the two PDC 2024 photos (dinner photo captioned only as PDC 2024; performers described as 'in traditional dress' without naming communities).",
+    "TODO: Check the SARI section on the Impact page (impact.items[1]): figures are from the IRC report page; 'My part included…' is written from earlier notes (classification of project records by theme and intervention type, stakeholder survey analysis)."
   ],
   "nav": [
     {
@@ -107,7 +108,7 @@
   ],
   "research": {
     "heading": "Research",
-    "intro": "Current work follows three connected themes.",
+    "intro": "Current and past research.",
     "relatedLabel": "Related publications",
     "themes": [
       {
@@ -120,15 +121,24 @@
           "bong2024selling",
           "bong2024digital"
         ],
-        "short": "Digital inclusion"
+        "short": "Digital inclusion",
+        "current": [
+          "Indigenous entrepreneurship and digital platforms in Sarawak, Borneo",
+          "Subsistence marketplaces in Puebla, Mexico: the use of affective orchestration in enterprise coordination"
+        ]
       },
       {
-        "title": "Machine learning for social science",
+        "title": "Machine learning for social good",
         "description": "Machine learning and data analytics for social-science research, including innovation in agriculture research and household energy.",
         "publications": [
+          "tiwasing2026strategic",
           "bong2026multi"
         ],
-        "short": "Machine learning"
+        "short": "Machine learning",
+        "current": [
+          "Poverty amidst abundance: tackling energy poverty in the UK through machine learning and a marketplace literacy intervention",
+          "[Strategic Priorities for Agricultural Research Infrastructure Investment](https://ircaucus.ac.uk/publications/strategic-priorities-for-agricultural-research-infrastructure-investment/): report published; journal article in preparation"
+        ]
       },
       {
         "title": "AI for sustainable development",
@@ -140,13 +150,17 @@
           "bong2025white",
           "wawn2024positioning"
         ],
-        "short": "AI for sustainable development"
+        "short": "AI for sustainable development",
+        "current": [
+          "Sustainability of artificial intelligence: a conceptual framework"
+        ]
       }
-    ]
+    ],
+    "currentLabel": "Current research"
   },
   "publications": {
     "heading": "Publications",
-    "intro": "A full list, newest first. Citation details are on [Google Scholar](https://scholar.google.com/citations?user=ZRQISOwAAAAJ).",
+    "intro": "Selected publications. Full details are on [Google Scholar](https://scholar.google.com/citations?user=ZRQISOwAAAAJ).",
     "highlightAuthor": {
       "family": "Bong",
       "given": "Yang"
@@ -238,6 +252,16 @@
           "label": "Read about the project at Horizon CDT",
           "url": "https://cdt.horizon.ac.uk/yang-bong-large-impact-grant/"
         }
+      },
+      {
+        "meta": "Innovation Research Caucus · October 2026",
+        "title": "Strategic priorities for UK agricultural research infrastructure",
+        "text": "Funded by the ESRC through the Innovation Research Caucus, this study asked where the UK should invest in agricultural research infrastructure. It analysed £1.2 billion of funding across 2,131 projects, alongside a national infrastructure directory, a survey of 604 stakeholders, and interviews and workshops. The report sets out four investment propositions (Preserve, Predict, Ground and Connect). My part included classifying the UK’s agricultural research projects by research theme and type of intervention, using rule-based and AI-assisted text classification, and analysing the stakeholder survey.",
+        "link": {
+          "label": "Read the report (IRC Report No. 083)",
+          "url": "https://ircaucus.ac.uk/publications/strategic-priorities-for-agricultural-research-infrastructure-investment/"
+        },
+        "wide": true
       },
       {
         "title": "Asia-Europe for AI (AE4AI) Network",
@@ -457,7 +481,8 @@
         127,
         11.5
       ]
-    }
+    },
+    "intro": "From the highlands of Borneo to the agricultural landscape of the UK."
   },
   "teaching": {
     "heading": "Teaching",
@@ -711,7 +736,7 @@
       "heroImage": false
     },
     "impact": {
-      "teaser": "Community co-design in the Lun Bawang highlands of Sarawak, and Asia–Europe work on AI for sustainable development.",
+      "teaser": "Community co-design in the Lun Bawang highlands of Sarawak, agricultural investment landscape in the UK, and Asia–Europe collaboration on AI for sustainable development.",
       "image": {
         "src": "assets/img/impact/semadoh-highlands",
         "width": 800,
@@ -991,6 +1016,17 @@
         "place": "Shanghai, China",
         "date": "Oct 2023"
       }
+    ],
+    "places": [
+      "UK",
+      "Malaysia",
+      "China",
+      "USA",
+      "Mexico",
+      "Canada",
+      "Philippines",
+      "Brunei",
+      "Australia"
     ]
   }
 }

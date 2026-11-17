@@ -189,6 +189,51 @@
     "bibtex": "@inproceedings{bong2026rethinking,\n  title     = {Rethinking 'Good' in AI for Good: Communities as Judges of University-Led AI for Sustainable Development},\n  author    = {Bong, Yang and Sailaja, Neelima and Chen, Minjia and Annamali, Devisakti and Tada, Jin and Cellérier, Leïla and Iqbal, Muhammad Zahid and Pitogo, Vicente},\n  booktitle = {Artificial Intelligence Accelerating Sustainable Development Goals (AI4SDG 2026) Workshop, 29th International Multiconference Information Society (IS2026)},\n  address   = {Ljubljana, Slovenia},\n  month     = oct,\n  year      = {2026},\n  doi       = {10.70314/is.2026.ai4sdg.163},\n  url       = {https://www.researchgate.net/publication/418000723}\n}"
   },
   {
+    "key": "tiwasing2026strategic",
+    "type": "techreport",
+    "group": "report",
+    "title": "Strategic Priorities for Agricultural Research Infrastructure Investment",
+    "authors": [
+      {
+        "given": "Pattanapong",
+        "family": "Tiwasing"
+      },
+      {
+        "given": "Tom",
+        "family": "MacMillan"
+      },
+      {
+        "given": "Kayleigh",
+        "family": "Crouch"
+      },
+      {
+        "given": "Yang",
+        "family": "Bong"
+      },
+      {
+        "given": "Amr",
+        "family": "Khafagy"
+      },
+      {
+        "given": "Kate",
+        "family": "Pressland"
+      },
+      {
+        "given": "Katherine",
+        "family": "Lewis"
+      }
+    ],
+    "year": 2026,
+    "venue": "Innovation Research Caucus",
+    "volume": "",
+    "number": "IRC Report No. 083",
+    "pages": "",
+    "publisher": "",
+    "doi": "",
+    "url": "https://ircaucus.ac.uk/publications/strategic-priorities-for-agricultural-research-infrastructure-investment/",
+    "bibtex": "@techreport{tiwasing2026strategic,\n  title       = {Strategic Priorities for Agricultural Research Infrastructure Investment},\n  author      = {Tiwasing, Pattanapong and MacMillan, Tom and Crouch, Kayleigh and Bong, Yang and Khafagy, Amr and Pressland, Kate and Lewis, Katherine},\n  institution = {Innovation Research Caucus},\n  number      = {IRC Report No. 083},\n  month       = oct,\n  year        = {2026},\n  url         = {https://ircaucus.ac.uk/publications/strategic-priorities-for-agricultural-research-infrastructure-investment/}\n}"
+  },
+  {
     "key": "billones2025ai",
     "type": "article",
     "group": "journal",
