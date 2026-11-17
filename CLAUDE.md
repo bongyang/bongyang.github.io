@@ -72,12 +72,12 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   Title size is tied to the column width so long words never run under the
   photo.
 - Publications: `publications.photoBreaks` puts photos after a group (`after`
-  = group id): one item = wide banner, several = a strip.
-- Citizenship: `service.feature` (ASEFInnoLab7: text + photo tiles via
-  `tileHtml()`), then `service.groups` in order: "Conferences and networks"
-  (its `photos` shown as a rotating banner, `rotate: true` → `rotatorHtml()` /
-  `initRotators()`: 6 s, dots, pause, holds on hover/focus, off for reduced
-  motion), then "Peer review" (owner wants
+  = group id). `photoBreak()`: one photo = wide banner; several = rotating
+  banner (`rotatorHtml()` / `initRotators()`: 6 s, dots, pause, holds on
+  hover/focus, still for reduced motion). Owner prefers rotating banners to
+  showing many photos at once.
+- Citizenship: `service.feature` (ASEFInnoLab7: text + rotating banner), then `service.groups` in order: "Conferences and networks"
+  (its `photos` shown as a rotating banner), then "Peer review" (owner wants
   conferences listed before reviewing).
 - Publications: theme filter (`data-themes` from `research.themes`), Cite
   panel (`<details>`, APA built by `apa()`, raw BibTeX from the `bibtex`

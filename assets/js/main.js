@@ -346,7 +346,7 @@
         var brk = (C.photoBreaks || []).filter(function (b) { return b.after === g.id; })[0];
         return '<h2 class="group">' + esc(g.label) + '</h2><ol class="pubs">' +
           items.map(function (p) { return pubHtml(p, c, themesOf[p.key]); }).join('') + '</ol>' +
-          (brk ? photoBreak(brk.items) : '');
+          (brk ? photoBreak(brk.items, c.labels) : '');
       }).join('');
   };
   /* Rotating banner: one photo at a time with its caption, dots and a pause
@@ -387,15 +387,13 @@
     });
   }
 
-  /* Photos between publication groups: one wide banner, or a strip of up to three. */
+  /* Photos between sections: one photo = wide banner; several = rotating banner. */
   var capHtml = function (it) {
     return '<figcaption>' + esc(it.caption) + (it.credit ? ' <span class="credit">' + esc(it.credit) + '</span>' : '') + '</figcaption>';
   };
-  var photoBreak = function (items) {
+  var photoBreak = function (items, L) {
     if (items.length === 1) return '<figure class="pbreak">' + pic(items[0], '(min-width: 64rem) 58rem, 100vw') + capHtml(items[0]) + '</figure>';
-    return '<ul class="pstrip">' + items.map(function (it) {
-      return '<li><figure>' + pic(it, '(min-width: 48rem) 19rem, 100vw') + capHtml(it) + '</figure></li>';
-    }).join('') + '</ul>';
+    return rotatorHtml(items, L);
   };
   body.impact = function (c) {
     return '<div class="impact">' + c.impact.items.map(function (it, i) {
@@ -417,16 +415,14 @@
     var feature = f ? '<section class="sfeature" aria-labelledby="sfeature-h"><p class="eyebrow">' + esc(f.label) + '</p>' +
         '<h2 id="sfeature-h" class="display">' + esc(f.heading) + '</h2>' +
         '<div class="sfeature__text">' + f.text.map(function (t) { return '<p>' + rich(t) + '</p>'; }).join('') + '</div>' +
-        '<ul class="mosaic mosaic--feature">' + f.photos.map(function (it) {
-          return tileHtml(it, it.size ? '(min-width: 48rem) 50vw, 100vw' : '(min-width: 48rem) 25vw, 50vw', '');
-        }).join('') + '</ul></section>' : '';
+        rotatorHtml(f.photos, c.labels) + '</section>' : '';
     /* Groups: conferences and networks first (with a photo strip), then peer review. */
     return feature + c.service.groups.map(function (g) {
       return '<h2 class="group">' + esc(g.heading) + '</h2><ul class="service">' + g.items.map(function (it) {
         var org = esc(it.org) + (it.year ? ' ' + esc(it.year) : '');
         return '<li><span class="service__role">' + esc(it.role) + '</span><span class="service__org">' +
           (it.url ? link(it.url, org) : org) + '</span></li>';
-      }).join('') + '</ul>' + (g.photos && g.photos.length ? (g.rotate ? rotatorHtml(g.photos, c.labels) : photoBreak(g.photos)) : '');
+      }).join('') + '</ul>' + (g.photos && g.photos.length ? photoBreak(g.photos, c.labels) : '');
     }).join('');
   };
   var ledeOf = function (c, id) { return (c[id] && c[id].intro) || c.pages[id].teaser; };

@@ -454,7 +454,6 @@ a.metarow:hover .metarow__line { opacity: 1; }
   .phero__title { font-size: min(6.25rem, 7.2vw); overflow-wrap: break-word; }
   .phero--text { grid-template-columns: minmax(0, 1fr); padding-bottom: 2.5rem; }
   .phero--text .phero__title { font-size: clamp(4rem, 9vw, 7.5rem); }
-  .pstrip { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
   .sfeature { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 3rem; }
   .sfeature .eyebrow, .sfeature .display { grid-column: 1 / -1; }
   .sfeature__text { grid-column: 1 / -1; columns: 2; column-gap: 2.5rem; }
@@ -526,11 +525,9 @@ a.metarow:hover .metarow__line { opacity: 1; }
 }
 
 /* ---------- publications: photo breaks between groups ---------- */
-.pbreak, .pstrip { margin: 3rem 0 1rem; }
+.pbreak { margin: 3rem 0 1rem; }
 .pbreak img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; object-position: var(--pos, 50% 50%); border-radius: 2px; background: var(--paper-deep); }
-.pstrip { display: grid; gap: 1.25rem; }
-.pstrip img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: var(--pos, 50% 50%); border-radius: 2px; background: var(--paper-deep); }
-.pbreak figcaption, .pstrip figcaption { margin-top: .5rem; font-size: .8125rem; line-height: 1.4; color: var(--muted); }
+.pbreak figcaption { margin-top: .5rem; font-size: .8125rem; line-height: 1.4; color: var(--muted); }
 .credit { display: block; font-size: .75rem; color: #7C847E; }
 
 /* ---------- citizenship: featured ASEFInnoLab7 ---------- */
@@ -538,15 +535,14 @@ a.metarow:hover .metarow__line { opacity: 1; }
 .page .sfeature .display { font: 400 clamp(2rem, 5.5vw, 3.25rem)/1.05 var(--serif); letter-spacing: -.025em; margin-top: -.5rem; }
 .sfeature__text p + p { margin-top: 1rem; }
 .sfeature__text p { font-size: 1.0625rem; line-height: 1.65; }
-.mosaic--feature { margin-top: .75rem; grid-column: 1 / -1; }
-.mosaic--feature .tile:not(.tile--lg):not(.tile--wide) .tile__cap { display: block; font-size: .8125rem; }
 .page--service > .group { margin-top: 3rem; }
 .page--service > .sfeature + .group { margin-top: 0; }
-.page--service .pstrip { margin-bottom: 0; }
 .page--service .group + .service li:first-child { padding-top: 1.1rem; }
 
 /* ---------- rotating banner (Citizenship) ---------- */
 .rotator { margin: 2.5rem 0 0; }
+.sfeature .rotator { grid-column: 1 / -1; margin-top: .75rem; }
+.page--publications .rotator { margin: 3rem 0 1rem; }
 .rotator__stage { display: grid; }
 .rotator__slide { grid-area: 1 / 1; margin: 0; opacity: 0; visibility: hidden; transition: opacity 1s ease, visibility 0s linear 1s; }
 .rotator__slide.is-on { opacity: 1; visibility: visible; transition: opacity 1s ease; }
