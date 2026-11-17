@@ -50,7 +50,8 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   without, `NAME.webp/.jpg`. `position` is the object-position for crops.
 - Photo mosaic (`gallery` in content.json) on the home page, rendered by
   `galleryHtml()`: `size` "lg" (2x2) or "wide" (2x1), else 1x1; the places
-  strip is built from each item's `place`. Event photos live in
+  strip is `gallery.places` (owner's list of countries), falling back to each
+  item's `place`. Event photos live in
   `assets/img/banner/` as `NAME-800/-1600/-2400` (only widths up to the
   original's size), field photos in `assets/img/impact/`. All made by
   `scripts/enhance_photos.py` (use `--light` for good originals), which must

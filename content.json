@@ -991,6 +991,17 @@
         "place": "Shanghai, China",
         "date": "Oct 2023"
       }
+    ],
+    "places": [
+      "UK",
+      "Malaysia",
+      "China",
+      "USA",
+      "Mexico",
+      "Canada",
+      "Philippines",
+      "Brunei",
+      "Australia"
     ]
   }
 }

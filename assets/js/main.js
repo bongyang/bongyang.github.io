@@ -484,8 +484,10 @@
   /* Photo grid: the breadth of talks, panels and fieldwork at a glance.
      item.size: "lg" (2x2), "wide" (2x1) or nothing (1x1). */
   function galleryHtml(g) {
-    var places = [];
-    g.items.forEach(function (it) { var p = it.place.split(',')[0]; if (places.indexOf(p) < 0) places.push(p); });
+    /* The places strip: gallery.places if given (countries worked in), else
+       the towns of the photos shown. */
+    var places = (g.places || []).slice();
+    if (!places.length) g.items.forEach(function (it) { var p = it.place.split(',')[0]; if (places.indexOf(p) < 0) places.push(p); });
     return '<section class="gallery wrap" aria-labelledby="gallery-h"><div class="bandhead"><h2 id="gallery-h" class="display">' + esc(g.heading) + '</h2>' +
         '<p class="gallery__intro">' + esc(g.intro) + '</p></div>' +
       '<ul class="places" aria-label="Places">' + places.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>' +
