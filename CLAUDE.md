@@ -33,7 +33,7 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   `inproceedings` → conference, everything else → report.
 - `assets/js/main.js` — fetches both JSON files and renders `#page` according
   to `data-page`: `renderHome()` (full-bleed cover with crossfading photos
-  from `home.heroSlides` (6 s, pause button, off for reduced motion;
+  from `home.heroSlides` (5.5 s, pause button, off for reduced motion;
   `coverSlides()`), name, intro, image
   cards, dark featured-project band with meta row, photo mosaic from
   `gallery`, three newest publications) or `renderPage()` (page hero with photo, section body

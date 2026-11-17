@@ -582,7 +582,7 @@
     }
   }
 
-  /* Cover photos crossfade every 6 s. Paused for reduced motion, when the tab
+  /* Cover photos crossfade every 5.5 s. Paused for reduced motion, when the tab
      is hidden, and by the pause button (WCAG 2.2.2). */
   function coverSlides(H) {
     var slides = [].slice.call(document.querySelectorAll('.cover__slide')), btn = document.querySelector('.cover__pause');
@@ -597,7 +597,7 @@
       var nx = slides[(i + 1) % slides.length].querySelector('img');
       if (nx) nx.loading = 'eager';
     };
-    var run = function () { clearInterval(timer); if (!paused && !document.hidden) timer = setInterval(function () { show(i + 1); }, 6000); };
+    var run = function () { clearInterval(timer); if (!paused && !document.hidden) timer = setInterval(function () { show(i + 1); }, 5500); };
     var label = function () {
       btn.setAttribute('aria-pressed', String(paused));
       btn.setAttribute('aria-label', paused ? H.slideLabels.play : H.slideLabels.pause);
