@@ -410,7 +410,8 @@
   };
   body.teaching = function (c) {
     return '<div class="rows">' + c.teaching.items.map(function (it) {
-      return '<div class="row"><h2>' + esc(it.place) + '</h2><div><p>' + rich(it.text) + '</p>' +
+      return '<div class="row"><div><h2>' + esc(it.place) + '</h2>' +
+        (it.dates ? '<p class="row__dates">' + esc(it.dates) + '</p>' : '') + '</div><div><p>' + rich(it.text) + '</p>' +
         (it.topics && it.topics.length ? '<ul class="tags">' + it.topics.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '') +
         '</div></div>';
     }).join('') + '</div>';

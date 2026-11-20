@@ -489,6 +489,7 @@
     "items": [
       {
         "place": "Birmingham Newman University",
+        "dates": "May 2026 – Present",
         "text": "Leading and delivering undergraduate modules across marketing, digital marketing and entrepreneurship.",
         "topics": [
           "Principles of Marketing",
@@ -499,6 +500,7 @@
       },
       {
         "place": "University of Nottingham",
+        "dates": "Feb 2023 – Apr 2026",
         "text": "Taught machine learning, predictive analytics and customer insights in the Marketing, Tourism and Analytics department, with guest lectures in the School of Computer Science.",
         "topics": [
           "Machine Learning and Predictive Analytics",

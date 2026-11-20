@@ -237,6 +237,7 @@ h3 { font: 500 1.375rem/1.25 var(--serif); letter-spacing: -.005em; }
 /* teaching */
 .rows { margin-top: 1.75rem; }
 .row { display: grid; gap: .5rem; padding: 1.5rem 0; border-top: 1px solid var(--rule); }
+.row__dates { margin-top: .3rem; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .9rem; }
 .tags li { font-size: .8125rem; font-weight: 500; padding: .25rem .65rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
 
