@@ -140,6 +140,27 @@
     "bibtex": "@article{bong2026multi,\n  title     = {Multi-dimensional predictors of sharing platform growth: A machine learning study},\n  author    = {Bong, Yang and Harvey, John and Nica-Avram, Georgiana and Smith, Gavin and Goulding, James},\n  journal   = {International Journal of Market Research},\n  year      = {2026},\n  publisher = {SAGE Publications},\n  doi       = {10.1177/14707853261431371}\n}"
   },
   {
+    "key": "bong2026reimagining",
+    "type": "phdthesis",
+    "group": "thesis",
+    "title": "Reimagining digital marketplaces with rural micro-entrepreneurs in Sarawak",
+    "authors": [
+      {
+        "given": "Yang",
+        "family": "Bong"
+      }
+    ],
+    "year": 2026,
+    "venue": "PhD thesis, University of Nottingham",
+    "volume": "",
+    "number": "",
+    "pages": "",
+    "publisher": "",
+    "doi": "",
+    "url": "https://repository.nottingham.ac.uk/handle/123456789/73641",
+    "bibtex": "@phdthesis{bong2026reimagining,\n  title  = {Reimagining digital marketplaces with rural micro-entrepreneurs in Sarawak},\n  author = {Bong, Yang},\n  school = {University of Nottingham},\n  year   = {2026},\n  type   = {PhD thesis},\n  url    = {https://repository.nottingham.ac.uk/handle/123456789/73641}\n}"
+  },
+  {
     "key": "bong2026rethinking",
     "type": "inproceedings",
     "group": "conference",

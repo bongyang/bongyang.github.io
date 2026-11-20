@@ -65,7 +65,7 @@
     "heading": "About",
     "paragraphs": [
       "The work combines fieldwork and community co-design with machine learning and data analytics to study inequality and sustainable development. I also helped found the [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/) and now coordinate it and its AI for Sustainable Development working group.",
-      "Before entering academia, I spent eight years in international marketing and business development. I completed my PhD in Digital Economy at the University of Nottingham through the Horizon Centre for Doctoral Training."
+      "Before entering academia, I spent eight years in international marketing and business development. I completed my [PhD in Digital Economy](https://repository.nottingham.ac.uk/handle/123456789/73641) at the University of Nottingham through the Horizon Centre for Doctoral Training."
     ]
   },
   "links": [
@@ -111,6 +111,7 @@
         "publications": [
           "bong2026mapping",
           "bong2026two",
+          "bong2026reimagining",
           "bong2025can",
           "bong2024selling",
           "bong2024digital"
@@ -163,6 +164,10 @@
       {
         "id": "journal",
         "label": "Journal articles"
+      },
+      {
+        "id": "thesis",
+        "label": "Doctoral thesis"
       },
       {
         "id": "conference",

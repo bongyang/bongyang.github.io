@@ -81,6 +81,8 @@
     if (p.group === 'journal') {
       out += p.venue + (p.volume ? ', ' + p.volume + (p.number ? '(' + p.number + ')' : '') : '') +
         (p.pages ? ', ' + p.pages : '') + '.';
+    } else if (p.type === 'phdthesis') {
+      out = out.replace(/\. $/, ' [Doctoral thesis, ' + p.venue.replace(/^PhD thesis, /, '') + ']. ');
     } else if (p.type === 'techreport') {
       if (p.number) out = out.replace(/\. $/, ' (' + p.number + '). ');
       out += p.venue + '.';
@@ -266,7 +268,7 @@
     if (c.hero.photo && c.hero.photo.jpg) person.image = site + c.hero.photo.jpg;
     var works = pubs.map(function (p) {
       var w = {
-        '@type': p.group === 'journal' ? 'ScholarlyArticle' : (p.type === 'incollection' ? 'Chapter' : (p.type === 'techreport' ? 'Report' : 'ScholarlyArticle')),
+        '@type': p.group === 'journal' ? 'ScholarlyArticle' : (p.type === 'incollection' ? 'Chapter' : (p.type === 'techreport' ? 'Report' : (p.type === 'phdthesis' ? 'Thesis' : 'ScholarlyArticle'))),
         headline: p.title, name: p.title, datePublished: String(p.year),
         author: p.authors.map(function (a) {
           return a.family === 'Bong' && a.given.indexOf('Yang') === 0 ? { '@id': site + '#person' } : { '@type': 'Person', name: a.given + ' ' + a.family };

@@ -37,8 +37,8 @@ Then open <http://localhost:8000>.
 3. Commit both `publications.bib` and `publications.json`.
 
 The entry type decides the group: `@article` goes under Journal articles,
-`@inproceedings` under Conference papers, anything else under Reports & book
-chapters. Entries are sorted newest first.
+`@inproceedings` under Conference papers, `@phdthesis` under Doctoral thesis,
+anything else under Reports & book chapters. Entries are sorted newest first.
 
 To show the new paper under a research theme, add its key (the word after
 `@article{`) to that theme's `publications` list in `content.json`.

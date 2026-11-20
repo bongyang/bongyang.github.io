@@ -33,7 +33,7 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
   `home` holds the cover photo, tagline, statement and featured project.
 - `publications.bib` → `python3 scripts/bib_to_json.py` → `publications.json`.
   Never hand-edit the JSON. Commit both. Groups: `article` → journal,
-  `inproceedings` → conference, everything else → report.
+  `inproceedings` → conference, `phdthesis` → thesis, everything else → report.
 - `assets/js/main.js` — fetches both JSON files and renders `#page` according
   to `data-page`: `renderHome()` (full-bleed cover with crossfading photos
   from `home.heroSlides` (5.5 s, pause button, off for reduced motion;
