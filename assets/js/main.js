@@ -418,7 +418,7 @@
     var feature = f ? '<section class="sfeature" aria-labelledby="sfeature-h"><p class="eyebrow">' + esc(f.label) + '</p>' +
         '<h2 id="sfeature-h" class="display">' + esc(f.heading) + '</h2>' +
         '<div class="sfeature__text">' + f.text.map(function (t) { return '<p>' + rich(t) + '</p>'; }).join('') + '</div>' +
-        (f.quote ? '<figure class="sfeature__quote"><blockquote><p>' + esc(f.quote.text) + '</p></blockquote>' +
+        (f.quote ? '<figure class="sfeature__quote"><blockquote><p>\u201C' + esc(f.quote.text) + '\u201D</p></blockquote>' +
           '<figcaption>' + esc(f.quote.source) + '</figcaption></figure>' : '') +
         rotatorHtml(f.photos, c.labels) + '</section>' : '';
     /* Groups: conferences and networks first (with a photo strip), then peer review. */
