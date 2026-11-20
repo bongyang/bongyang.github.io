@@ -536,6 +536,11 @@ a.metarow:hover .metarow__line { opacity: 1; }
 .page .sfeature .display { font: 400 clamp(2rem, 5.5vw, 3.25rem)/1.05 var(--serif); letter-spacing: -.025em; margin-top: -.5rem; }
 .sfeature__text p + p { margin-top: 1rem; }
 .sfeature__text p { font-size: 1.0625rem; line-height: 1.65; }
+.sfeature__quote { grid-column: 1 / -1; margin: .75rem 0 .5rem; padding-left: 1.25rem; border-left: 3px solid var(--accent); max-width: 52rem; }
+.sfeature__quote blockquote { margin: 0; }
+.sfeature__quote p { font: 600 clamp(1.2rem, 2.4vw, 1.45rem)/1.45 var(--serif); color: var(--ink); }
+.sfeature__quote figcaption { margin-top: .75rem; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.sfeature__quote figcaption::before { content: "— "; }
 .page--service > .group { margin-top: 3rem; }
 .page--service > .sfeature + .group { margin-top: 0; }
 .page--service .group + .service li:first-child { padding-top: 1.1rem; }
