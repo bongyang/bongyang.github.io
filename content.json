@@ -11,7 +11,7 @@
     "TODO: The 2023 Shanghai talk photo is still the 800px LinkedIn copy; replace it if an original exists. The 2024 InnoLab5 photo was taken out of the gallery for the same reason.",
     "TODO: Long Semadoh field photos in assets/img/impact/ are still 800px copies; originals would help.",
     "TODO: Check the ASEFInnoLab7 text in service.feature and the new Citizenship entry (theme taken from the banner in the Nottingham group photo: 'The Role of Universities in Advancing AI for Good'; 'participants worked in teams on white papers' inferred from the photos and the Perth launch; year 2026). Add a link to the public event page if there is one.",
-    "TODO: Check the new Publications photo captions (publications.photoBreaks): Subsistence Marketplaces Immersion Conference 2025 has no location; the three small photos are 800px copies.",
+    "TODO: The three small Publications photos (publications.photoBreaks) are 800px copies; originals would help.",
     "TODO: 'Rethinking Good in AI for Good' (bong2026rethinking): add page numbers once the IS2026 proceedings are published. Venue from https://naixus.net/ai4sdg2026/ (AI4SDG 2026 workshop, co-located with the 29th International Multiconference IS2026, 9 Oct 2026, Jozef Stefan Institute, Ljubljana). Title follows the PDF; the workshop page lists it as 'Rethinking the ‘Good’ in AI for Good'.",
     "TODO: Check the new Citizenship photo captions: the AE4AI launch photo (4th ASEF Higher Education InnoLab; year and place not stated, the board shows the Fudan University logo) and the two PDC 2024 photos (dinner photo captioned only as PDC 2024; performers described as 'in traditional dress' without naming communities).",
     "TODO: Check the SARI section on the Impact page (impact.items[1]): figures are from the IRC report page; 'My part included…' is written from earlier notes (classification of project records by theme and intervention type, stakeholder survey analysis)."
@@ -194,7 +194,7 @@
             "height": 450,
             "position": "62% 50%",
             "alt": "Yang Bong presenting a slide titled ‘What WEIRD assumptions can you identify?’, comparing screenshots of eBay, Amazon and other online marketplaces.",
-            "caption": "Subsistence Marketplaces Immersion Conference · 2025"
+            "caption": "Subsistence Marketplaces Immersion Conference, Puebla, Mexico · 2025"
           },
           {
             "src": "assets/img/banner/2025-compass-title",
@@ -205,7 +205,7 @@
             "height": 572,
             "position": "50% 50%",
             "alt": "Yang Bong at a lectern beside a projected title slide reading ‘Can My Voice Be Heard? Taking non-WEIRD voices seriously in digital marketplaces’.",
-            "caption": "ACM COMPASS ’25, Toronto · 2025"
+            "caption": "ACM COMPASS ’25, Toronto, Canada · 2025"
           },
           {
             "src": "assets/img/banner/2025-manila-innolab6-speaking",
@@ -216,7 +216,7 @@
             "height": 533,
             "position": "35% 40%",
             "alt": "Yang Bong speaking into a microphone at a panel table.",
-            "caption": "ASEFInnoLab6, Manila · 2025",
+            "caption": "ASEFInnoLab6, Manila, Philippines · 2025",
             "credit": "Photo: AJ Olivete, Archers Network"
           }
         ]
