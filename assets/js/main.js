@@ -456,7 +456,7 @@
         '</div></section>' +
 
       '<section class="intro wrap" aria-labelledby="intro-h">' +
-        '<p class="eyebrow">' + esc(c.about.heading) + ' · ' + esc(h.credentials) + '</p>' +
+        '<p class="eyebrow">' + esc(h.credentials) + '</p>' +
         '<h2 id="intro-h" class="display">' + esc(H.statement) + '</h2>' +
         '<div class="intro__cols"><figure class="intro__photo"><picture>' +
           (ph.webp ? '<source srcset="' + esc(ph.webp) + '" type="image/webp">' : '') +
@@ -555,7 +555,7 @@
 
     var ct = c.contact;
     $('contact').innerHTML = '<div class="wrap contact">' +
-      '<div><p class="eyebrow">' + esc(ct.heading) + '</p><h2 id="contact-h" class="display">' + rich(ct.text) + '</h2></div>' +
+      '<div><h2 id="contact-h" class="display">' + esc(ct.heading) + '</h2><p class="contact__lead">' + rich(ct.text) + '</p></div>' +
       '<div class="contact__side"><p class="contact__email">' + link('mailto:' + ct.email, esc(ct.email)) + '</p>' +
       '<address>' + ct.address.map(esc).join('<br>') + '</address>' + linksHtml(c) + '</div></div>';
 

@@ -4,7 +4,6 @@
     "TODO: Check the wording of impact.items[0].text and the impact.project section (timeline, outputs, tagline, workshop size). They were summarised from the Horizon CDT page and should be confirmed by the site owner.",
     "TODO: The Horizon CDT page spells the brand 'Semaduh Valley' and the village both 'Semadoh' and 'Semaduh'. The site uses 'Long Semadoh' for the village and 'Semaduh Valley' for the brand; correct if needed.",
     "TODO: Map markers for Sibu, Butuan and Gadong are placed at town level (approximate), not at exact campus locations.",
-    "TODO (optional): The headshot's bright cyan stage backdrop competes with the calm palette. A photo against a plain or outdoor background would sit better; replace assets/img/headshot.* (see README).",
     "TODO: Add the year(s) for the International Journal of Entrepreneurship and Innovation reviewer entry in service.items, if wanted.",
     "TODO: Check the three Long Semadoh photos in impact.project.photos are from the Dec 2025 fieldwork, and their captions.",
     "TODO: Check the new home-page text written from existing site content: home.tagline, home.feature.points and pages.*.teaser.",
@@ -70,7 +69,7 @@
   "about": {
     "heading": "About",
     "paragraphs": [
-      "My research combines fieldwork and community co-design with machine learning and data analytics in studying inequality and sustainable development. I also helped found the [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/) and now coordinate it and its AI for Sustainable Development working group.",
+      "The work combines fieldwork and community co-design with machine learning and data analytics to study inequality and sustainable development. I also helped found the [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/) and now coordinate it and its AI for Sustainable Development working group.",
       "Before entering academia, I spent eight years in international marketing and business development. I completed my PhD in Digital Economy at the University of Nottingham through the Horizon Centre for Doctoral Training."
     ]
   },
@@ -108,7 +107,7 @@
   ],
   "research": {
     "heading": "Research",
-    "intro": "Current and past research.",
+    "intro": "Three connected strands, linked by one question: how can digital technologies widen, rather than narrow, economic opportunity?",
     "relatedLabel": "Related publications",
     "themes": [
       {
@@ -160,7 +159,7 @@
   },
   "publications": {
     "heading": "Publications",
-    "intro": "Selected publications. Full details are on [Google Scholar](https://scholar.google.com/citations?user=ZRQISOwAAAAJ).",
+    "intro": "Publications to date. Citation metrics are on [Google Scholar](https://scholar.google.com/citations?user=ZRQISOwAAAAJ).",
     "highlightAuthor": {
       "family": "Bong",
       "given": "Yang"
@@ -673,7 +672,7 @@
     ]
   },
   "contact": {
-    "heading": "Contact",
+    "heading": "Get in touch",
     "text": "Conversations about research collaboration and community partnerships are welcome.",
     "email": "y.bong@staff.newman.ac.uk",
     "address": [

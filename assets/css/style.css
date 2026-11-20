@@ -401,7 +401,8 @@ a.metarow:hover .metarow__line { opacity: 1; }
 
 /* ---------- contact band ---------- */
 .contact { display: grid; gap: 2rem; padding-top: 4.5rem; padding-bottom: 4rem; }
-.contact .display { margin-top: .8rem; font-size: clamp(2rem, 5.5vw, 3.5rem); max-width: 18ch; }
+.contact .display { margin-top: 0; font-size: clamp(2rem, 5.5vw, 3.5rem); max-width: 18ch; }
+.contact__lead { margin-top: 1rem; max-width: 34ch; color: #C9D8CD; font-size: 1.0625rem; }
 .contact__email { margin-top: 0; font: 400 clamp(1.25rem, 5vw, 1.75rem)/1.2 var(--serif); overflow-wrap: anywhere; }
 .contact address { margin-top: .75rem; color: rgba(251, 249, 244, .72); font-size: .9375rem; }
 .band--dark .links a { background: transparent; color: var(--paper); border-color: rgba(251, 249, 244, .3); }
