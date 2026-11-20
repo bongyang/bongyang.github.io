@@ -13,7 +13,7 @@ pages = [('home', 'index.html', f"{NAME} · Senior Lecturer, Birmingham Newman U
 for n in c['nav']:
     if n['id'] in c['pages']:
         pg = c['pages'][n['id']]
-        pages.append((n['id'], n['href'], f"{c[n['id']]['heading']} · {NAME}", pg['teaser'], pg['image'] if pg.get('heroImage', True) else None))
+        pages.append((n['id'], n['href'], f"{c[n['id']]['heading']} · {NAME}", pg.get('description', pg['teaser']), pg['image'] if pg.get('heroImage', True) else None))
 
 def preload(im):
     if im is None:

@@ -81,6 +81,8 @@
     if (p.group === 'journal') {
       out += p.venue + (p.volume ? ', ' + p.volume + (p.number ? '(' + p.number + ')' : '') : '') +
         (p.pages ? ', ' + p.pages : '') + '.';
+    } else if (p.type === 'phdthesis') {
+      out = out.replace(/\. $/, ' [Doctoral thesis, ' + p.venue.replace(/^PhD thesis, /, '') + ']. ');
     } else if (p.type === 'techreport') {
       if (p.number) out = out.replace(/\. $/, ' (' + p.number + '). ');
       out += p.venue + '.';
@@ -266,7 +268,7 @@
     if (c.hero.photo && c.hero.photo.jpg) person.image = site + c.hero.photo.jpg;
     var works = pubs.map(function (p) {
       var w = {
-        '@type': p.group === 'journal' ? 'ScholarlyArticle' : (p.type === 'incollection' ? 'Chapter' : (p.type === 'techreport' ? 'Report' : 'ScholarlyArticle')),
+        '@type': p.group === 'journal' ? 'ScholarlyArticle' : (p.type === 'incollection' ? 'Chapter' : (p.type === 'techreport' ? 'Report' : (p.type === 'phdthesis' ? 'Thesis' : 'ScholarlyArticle'))),
         headline: p.title, name: p.title, datePublished: String(p.year),
         author: p.authors.map(function (a) {
           return a.family === 'Bong' && a.given.indexOf('Yang') === 0 ? { '@id': site + '#person' } : { '@type': 'Person', name: a.given + ' ' + a.family };
@@ -418,6 +420,8 @@
     var feature = f ? '<section class="sfeature" aria-labelledby="sfeature-h"><p class="eyebrow">' + esc(f.label) + '</p>' +
         '<h2 id="sfeature-h" class="display">' + esc(f.heading) + '</h2>' +
         '<div class="sfeature__text">' + f.text.map(function (t) { return '<p>' + rich(t) + '</p>'; }).join('') + '</div>' +
+        (f.quote ? '<figure class="sfeature__quote"><blockquote><p>\u201C' + esc(f.quote.text) + '\u201D</p></blockquote>' +
+          '<figcaption>' + esc(f.quote.source) + '</figcaption></figure>' : '') +
         rotatorHtml(f.photos, c.labels) + '</section>' : '';
     /* Groups: conferences and networks first (with a photo strip), then peer review. */
     return feature + c.service.groups.map(function (g) {
@@ -456,7 +460,7 @@
         '</div></section>' +
 
       '<section class="intro wrap" aria-labelledby="intro-h">' +
-        '<p class="eyebrow">' + esc(c.about.heading) + ' · ' + esc(h.credentials) + '</p>' +
+        '<p class="eyebrow">' + esc(h.credentials) + '</p>' +
         '<h2 id="intro-h" class="display">' + esc(H.statement) + '</h2>' +
         '<div class="intro__cols"><figure class="intro__photo"><picture>' +
           (ph.webp ? '<source srcset="' + esc(ph.webp) + '" type="image/webp">' : '') +
@@ -499,7 +503,7 @@
         return tileHtml(it, sizes, it.place + ' · ' + it.date);
       }).join('') + '</ul></section>';
   }
-  /* One photo tile (home mosaic and the Citizenship feature). */
+  /* One photo tile (home mosaic and the Service feature). */
   function tileHtml(it, sizes, placeLine) {
     return '<li class="tile' + (it.size ? ' tile--' + esc(it.size) : '') + '"><figure>' + pic(it, sizes) +
       '<figcaption>' + (placeLine ? '<span class="tile__place">' + esc(placeLine) + '</span>' : '') +
@@ -555,7 +559,7 @@
 
     var ct = c.contact;
     $('contact').innerHTML = '<div class="wrap contact">' +
-      '<div><p class="eyebrow">' + esc(ct.heading) + '</p><h2 id="contact-h" class="display">' + rich(ct.text) + '</h2></div>' +
+      '<div><h2 id="contact-h" class="display">' + esc(ct.heading) + '</h2><p class="contact__lead">' + rich(ct.text) + '</p></div>' +
       '<div class="contact__side"><p class="contact__email">' + link('mailto:' + ct.email, esc(ct.email)) + '</p>' +
       '<address>' + ct.address.map(esc).join('<br>') + '</address>' + linksHtml(c) + '</div></div>';
 

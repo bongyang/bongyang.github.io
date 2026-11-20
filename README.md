@@ -37,8 +37,8 @@ Then open <http://localhost:8000>.
 3. Commit both `publications.bib` and `publications.json`.
 
 The entry type decides the group: `@article` goes under Journal articles,
-`@inproceedings` under Conference papers, anything else under Reports & book
-chapters. Entries are sorted newest first.
+`@inproceedings` under Conference papers, `@phdthesis` under Doctoral thesis,
+anything else under Reports & book chapters. Entries are sorted newest first.
 
 To show the new paper under a research theme, add its key (the word after
 `@article{`) to that theme's `publications` list in `content.json`.
@@ -53,7 +53,9 @@ Each section page's short description is `pages.<section>.teaser`; its photo is
 `pages.<section>.image`. The home-page cover photo, tagline and featured
 project are under `home`. After changing a teaser or photo, run
 `python3 scripts/make_pages.py` so the page titles and link previews match.
-The home-page description for Google lives in `scripts/make_pages.py`.
+Each section page's description for Google and link previews is
+`pages.<section>.description` (falls back to the teaser). The home-page
+description lives in `scripts/make_pages.py`.
 
 ## Change the photo
 

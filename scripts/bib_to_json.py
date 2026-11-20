@@ -22,6 +22,7 @@ GROUPS = {
     "article": "journal",
     "inproceedings": "conference",
     "conference": "conference",
+    "phdthesis": "thesis",
 }
 DEFAULT_GROUP = "report"  # techreport, incollection, book, misc, ...
 
@@ -108,7 +109,8 @@ def main():
             "title": f.get("title", ""),
             "authors": parse_authors(f.get("author", "")),
             "year": int(f["year"]) if f.get("year", "").isdigit() else None,
-            "venue": f.get("journal") or f.get("booktitle") or f.get("institution") or "",
+            "venue": f.get("journal") or f.get("booktitle") or f.get("institution")
+                     or (", ".join(x for x in (f.get("type", ""), f.get("school", "")) if x)) or "",
             "volume": f.get("volume", ""),
             "number": f.get("number", ""),
             "pages": f.get("pages", "").replace("--", "–"),

@@ -4,25 +4,19 @@
     "TODO: Check the wording of impact.items[0].text and the impact.project section (timeline, outputs, tagline, workshop size). They were summarised from the Horizon CDT page and should be confirmed by the site owner.",
     "TODO: The Horizon CDT page spells the brand 'Semaduh Valley' and the village both 'Semadoh' and 'Semaduh'. The site uses 'Long Semadoh' for the village and 'Semaduh Valley' for the brand; correct if needed.",
     "TODO: Map markers for Sibu, Butuan and Gadong are placed at town level (approximate), not at exact campus locations.",
-    "TODO (optional): The headshot's bright cyan stage backdrop competes with the calm palette. A photo against a plain or outdoor background would sit better; replace assets/img/headshot.* (see README).",
     "TODO: Add the year(s) for the International Journal of Entrepreneurship and Innovation reviewer entry in service.items, if wanted.",
     "TODO: Check the three Long Semadoh photos in impact.project.photos are from the Dec 2025 fieldwork, and their captions.",
     "TODO: Check the new home-page text written from existing site content: home.tagline, home.feature.points and pages.*.teaser.",
     "TODO: Check the new photo captions (gallery.items, pages.*.image.caption): especially the PDC 2024 market walk (place given as Sarawak; the market itself is not named), the Nottingham 'group presentations' and 'white paper working session' photos, the Fudan 2024 photo, and the Manila panel date and credit (the new copy has no Archers Network watermark, so the credit was dropped).",
     "TODO: The 2023 Shanghai talk photo is still the 800px LinkedIn copy; replace it if an original exists. The 2024 InnoLab5 photo was taken out of the gallery for the same reason.",
     "TODO: Long Semadoh field photos in assets/img/impact/ are still 800px copies; originals would help.",
-    "TODO: Check the ASEFInnoLab7 text in service.feature and the new Citizenship entry (theme taken from the banner in the Nottingham group photo: 'The Role of Universities in Advancing AI for Good'; 'participants worked in teams on white papers' inferred from the photos and the Perth launch; year 2026). Add a link to the public event page if there is one.",
-    "TODO: Check the new Publications photo captions (publications.photoBreaks): Subsistence Marketplaces Immersion Conference 2025 has no location; the three small photos are 800px copies.",
+    "TODO: Check the ASEFInnoLab7 text in service.feature and the new Service entry (theme taken from the banner in the Nottingham group photo: 'The Role of Universities in Advancing AI for Good'; 'participants worked in teams on white papers' inferred from the photos and the Perth launch; year 2026). Add a link to the public event page if there is one.",
+    "TODO: The three small Publications photos (publications.photoBreaks) are 800px copies; originals would help.",
     "TODO: 'Rethinking Good in AI for Good' (bong2026rethinking): add page numbers once the IS2026 proceedings are published. Venue from https://naixus.net/ai4sdg2026/ (AI4SDG 2026 workshop, co-located with the 29th International Multiconference IS2026, 9 Oct 2026, Jozef Stefan Institute, Ljubljana). Title follows the PDF; the workshop page lists it as 'Rethinking the ‘Good’ in AI for Good'.",
-    "TODO: Check the new Citizenship photo captions: the AE4AI launch photo (4th ASEF Higher Education InnoLab; year and place not stated, the board shows the Fudan University logo) and the two PDC 2024 photos (dinner photo captioned only as PDC 2024; performers described as 'in traditional dress' without naming communities).",
+    "TODO: Check the new Service photo captions: the AE4AI launch photo (4th ASEF Higher Education InnoLab; year and place not stated, the board shows the Fudan University logo) and the PDC 2024 dinner photo (captioned only as PDC 2024).",
     "TODO: Check the SARI section on the Impact page (impact.items[1]): figures are from the IRC report page; 'My part included…' is written from earlier notes (classification of project records by theme and intervention type, stakeholder survey analysis)."
   ],
   "nav": [
-    {
-      "id": "home",
-      "label": "Home",
-      "href": "./"
-    },
     {
       "id": "research",
       "label": "Research",
@@ -45,7 +39,7 @@
     },
     {
       "id": "service",
-      "label": "Citizenship",
+      "label": "Service",
       "href": "citizenship.html"
     },
     {
@@ -70,8 +64,8 @@
   "about": {
     "heading": "About",
     "paragraphs": [
-      "My research combines fieldwork and community co-design with machine learning and data analytics in studying inequality and sustainable development. I also helped found the [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/) and now coordinate it and its AI for Sustainable Development working group.",
-      "Before entering academia, I spent eight years in international marketing and business development. I completed my PhD in Digital Economy at the University of Nottingham through the Horizon Centre for Doctoral Training."
+      "The work combines fieldwork and community co-design with machine learning and data analytics to study inequality and sustainable development. I also helped found the [Asia-Europe for AI (AE4AI) Network](https://www.asiaeurope4ai.org/) and now coordinate it and its AI for Sustainable Development working group.",
+      "Before entering academia, I spent eight years in international marketing and business development. I completed my [PhD in Digital Economy](https://repository.nottingham.ac.uk/handle/123456789/73641) at the University of Nottingham through the Horizon Centre for Doctoral Training."
     ]
   },
   "links": [
@@ -108,7 +102,7 @@
   ],
   "research": {
     "heading": "Research",
-    "intro": "Current and past research.",
+    "intro": "My research explores how digital technologies and AI can address inequality, advance social good and support sustainable development.",
     "relatedLabel": "Related publications",
     "themes": [
       {
@@ -117,6 +111,7 @@
         "publications": [
           "bong2026mapping",
           "bong2026two",
+          "bong2026reimagining",
           "bong2025can",
           "bong2024selling",
           "bong2024digital"
@@ -160,7 +155,7 @@
   },
   "publications": {
     "heading": "Publications",
-    "intro": "Selected publications. Full details are on [Google Scholar](https://scholar.google.com/citations?user=ZRQISOwAAAAJ).",
+    "intro": "Publications to date. Citation metrics are on [Google Scholar](https://scholar.google.com/citations?user=ZRQISOwAAAAJ).",
     "highlightAuthor": {
       "family": "Bong",
       "given": "Yang"
@@ -169,6 +164,10 @@
       {
         "id": "journal",
         "label": "Journal articles"
+      },
+      {
+        "id": "thesis",
+        "label": "Doctoral thesis"
       },
       {
         "id": "conference",
@@ -195,7 +194,7 @@
             "height": 450,
             "position": "62% 50%",
             "alt": "Yang Bong presenting a slide titled ‘What WEIRD assumptions can you identify?’, comparing screenshots of eBay, Amazon and other online marketplaces.",
-            "caption": "Subsistence Marketplaces Immersion Conference · 2025"
+            "caption": "Subsistence Marketplaces Immersion Conference, Puebla, Mexico · 2025"
           },
           {
             "src": "assets/img/banner/2025-compass-title",
@@ -206,7 +205,7 @@
             "height": 572,
             "position": "50% 50%",
             "alt": "Yang Bong at a lectern beside a projected title slide reading ‘Can My Voice Be Heard? Taking non-WEIRD voices seriously in digital marketplaces’.",
-            "caption": "ACM COMPASS ’25, Toronto · 2025"
+            "caption": "ACM COMPASS ’25, Toronto, Canada · 2025"
           },
           {
             "src": "assets/img/banner/2025-manila-innolab6-speaking",
@@ -217,7 +216,7 @@
             "height": 533,
             "position": "35% 40%",
             "alt": "Yang Bong speaking into a microphone at a panel table.",
-            "caption": "ASEFInnoLab6, Manila · 2025",
+            "caption": "ASEFInnoLab6, Manila, Philippines · 2025",
             "credit": "Photo: AJ Olivete, Archers Network"
           }
         ]
@@ -516,7 +515,7 @@
     ]
   },
   "service": {
-    "heading": "Academic Citizenship",
+    "heading": "Service",
     "feature": {
       "label": "Featured",
       "heading": "Co-organising ASEFInnoLab7",
@@ -524,6 +523,10 @@
         "The seventh ASEF Higher Education InnoLab asked what role universities should play in advancing AI for good. It was co-organised with the Asia-Europe Foundation (ASEF), the University of Nottingham and Fudan University, with sessions hosted at the University of Nottingham.",
         "Participants worked in teams on white papers, which were launched at Murdoch University, Perth, in November 2026."
       ],
+      "quote": {
+        "text": "…our heartfelt appreciation for your invaluable leadership, commitment, and intellectual contributions to the programme… Your expertise and guidance have been instrumental in shaping this edition and enriching the learning and collaboration within our cohort.",
+        "source": "Asia-Europe Foundation"
+      },
       "photos": [
         {
           "src": "assets/img/banner/2026-nottingham-group",
@@ -626,18 +629,6 @@
             "position": "50% 45%",
             "alt": "Yang Bong standing with five people around a round dinner table, several wearing beaded necklaces.",
             "caption": "Participatory Design Conference 2024"
-          },
-          {
-            "src": "assets/img/banner/2024-pdc-performers",
-            "widths": [
-              800,
-              1600
-            ],
-            "width": 1600,
-            "height": 1200,
-            "position": "50% 40%",
-            "alt": "Eight performers in traditional dress standing in a row with a hand on their heart.",
-            "caption": "Performers in traditional dress, Participatory Design Conference 2024"
           }
         ]
       },
@@ -673,7 +664,7 @@
     ]
   },
   "contact": {
-    "heading": "Contact",
+    "heading": "Get in touch",
     "text": "Conversations about research collaboration and community partnerships are welcome.",
     "email": "y.bong@staff.newman.ac.uk",
     "address": [
@@ -705,6 +696,7 @@
   "pages": {
     "research": {
       "teaser": "Three connected themes, from digital inclusion in rural marketplaces to AI for sustainable development.",
+      "description": "Research by Dr Yang Bong (Birmingham Newman University) on digital inclusion, subsistence marketplaces, machine learning for social good and AI for sustainable development.",
       "image": {
         "src": "assets/img/banner/2025-toronto-compass",
         "widths": [
@@ -721,6 +713,7 @@
     },
     "publications": {
       "teaser": "Journal articles, conference papers and reports, with citations ready to copy.",
+      "description": "Publications by Dr Yang Bong, Birmingham Newman University: journal articles, conference papers and reports, with DOIs and citations ready to copy.",
       "image": {
         "src": "assets/img/banner/2026-iau-perth",
         "widths": [
@@ -737,6 +730,7 @@
     },
     "impact": {
       "teaser": "Community co-design in the Lun Bawang highlands of Sarawak, agricultural investment landscape in the UK, and Asia–Europe collaboration on AI for sustainable development.",
+      "description": "Impact work by Dr Yang Bong: community co-design in the Lun Bawang highlands of Sarawak, UK agricultural research infrastructure and the AE4AI Network.",
       "image": {
         "src": "assets/img/impact/semadoh-highlands",
         "width": 800,
@@ -748,6 +742,7 @@
     },
     "teaching": {
       "teaser": "Marketing, entrepreneurship and machine learning, at Birmingham Newman and Nottingham.",
+      "description": "Teaching by Dr Yang Bong in marketing, digital marketing, entrepreneurship and machine learning at Birmingham Newman University and the University of Nottingham.",
       "image": {
         "src": "assets/img/banner/2024-pdc-ethnography",
         "widths": [
@@ -764,6 +759,7 @@
     },
     "service": {
       "teaser": "Conference roles, peer review and network leadership.",
+      "description": "Service by Dr Yang Bong: co-organising ASEFInnoLab7, conference roles, AE4AI Network leadership and peer review.",
       "image": {
         "src": "assets/img/banner/2026-nottingham-sessions",
         "widths": [

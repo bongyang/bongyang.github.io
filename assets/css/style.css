@@ -349,7 +349,7 @@ html:not(.is-ready) #page { visibility: hidden; }
 .intro { padding-top: 4rem; padding-bottom: 1rem; }
 .intro .display { margin-top: .9rem; max-width: 22ch; }
 .intro__cols { display: grid; gap: 2rem; margin-top: 2.5rem; }
-.intro__photo { width: min(55%, 14rem); }
+.intro__photo { width: min(80%, 20rem); }
 .intro__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 2px; }
 .intro__text p { font-size: 1.0625rem; line-height: 1.65; }
 .intro__text p + p { margin-top: 1rem; }
@@ -401,7 +401,8 @@ a.metarow:hover .metarow__line { opacity: 1; }
 
 /* ---------- contact band ---------- */
 .contact { display: grid; gap: 2rem; padding-top: 4.5rem; padding-bottom: 4rem; }
-.contact .display { margin-top: .8rem; font-size: clamp(2rem, 5.5vw, 3.5rem); max-width: 18ch; }
+.contact .display { margin-top: 0; font-size: clamp(2rem, 5.5vw, 3.5rem); max-width: 18ch; }
+.contact__lead { margin-top: 1rem; max-width: 34ch; color: #C9D8CD; font-size: 1.0625rem; }
 .contact__email { margin-top: 0; font: 400 clamp(1.25rem, 5vw, 1.75rem)/1.2 var(--serif); overflow-wrap: anywhere; }
 .contact address { margin-top: .75rem; color: rgba(251, 249, 244, .72); font-size: .9375rem; }
 .band--dark .links a { background: transparent; color: var(--paper); border-color: rgba(251, 249, 244, .3); }
@@ -436,7 +437,7 @@ a.metarow:hover .metarow__line { opacity: 1; }
   .cover__role { grid-column: 1; grid-row: 2; align-self: end; }
   .cover__tag { grid-column: 2; grid-row: 2; margin: 1.5rem 0 0; font-size: 1.25rem; max-width: 24rem; text-align: right; }
   .intro { padding-top: 6rem; }
-  .intro__cols { grid-template-columns: 14rem minmax(0, 1fr); column-gap: 3rem; }
+  .intro__cols { grid-template-columns: 20rem minmax(0, 1fr); column-gap: 3rem; }
   .intro__photo { width: 100%; }
   .intro__text { columns: 2; column-gap: 2.5rem; }
   .intro__text p { break-inside: avoid; }
@@ -535,6 +536,11 @@ a.metarow:hover .metarow__line { opacity: 1; }
 .page .sfeature .display { font: 400 clamp(2rem, 5.5vw, 3.25rem)/1.05 var(--serif); letter-spacing: -.025em; margin-top: -.5rem; }
 .sfeature__text p + p { margin-top: 1rem; }
 .sfeature__text p { font-size: 1.0625rem; line-height: 1.65; }
+.sfeature__quote { grid-column: 1 / -1; margin: .75rem 0 .5rem; padding-left: 1.25rem; border-left: 3px solid var(--accent); max-width: 52rem; }
+.sfeature__quote blockquote { margin: 0; }
+.sfeature__quote p { font: 600 clamp(1.2rem, 2.4vw, 1.45rem)/1.45 var(--serif); color: var(--ink); }
+.sfeature__quote figcaption { margin-top: .75rem; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.sfeature__quote figcaption::before { content: "— "; }
 .page--service > .group { margin-top: 3rem; }
 .page--service > .sfeature + .group { margin-top: 0; }
 .page--service .group + .service li:first-child { padding-top: 1.1rem; }
