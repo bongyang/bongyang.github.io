@@ -13,7 +13,7 @@
     "TODO: Check the ASEFInnoLab7 text in service.feature and the new Service entry (theme taken from the banner in the Nottingham group photo: 'The Role of Universities in Advancing AI for Good'; 'participants worked in teams on white papers' inferred from the photos and the Perth launch; year 2026). Add a link to the public event page if there is one.",
     "TODO: The three small Publications photos (publications.photoBreaks) are 800px copies; originals would help.",
     "TODO: 'Rethinking Good in AI for Good' (bong2026rethinking): add page numbers once the IS2026 proceedings are published. Venue from https://naixus.net/ai4sdg2026/ (AI4SDG 2026 workshop, co-located with the 29th International Multiconference IS2026, 9 Oct 2026, Jozef Stefan Institute, Ljubljana). Title follows the PDF; the workshop page lists it as 'Rethinking the ‘Good’ in AI for Good'.",
-    "TODO: Check the new Service photo captions: the AE4AI launch photo (4th ASEF Higher Education InnoLab; year and place not stated, the board shows the Fudan University logo) and the two PDC 2024 photos (dinner photo captioned only as PDC 2024; performers described as 'in traditional dress' without naming communities).",
+    "TODO: Check the new Service photo captions: the AE4AI launch photo (4th ASEF Higher Education InnoLab; year and place not stated, the board shows the Fudan University logo) and the PDC 2024 dinner photo (captioned only as PDC 2024).",
     "TODO: Check the SARI section on the Impact page (impact.items[1]): figures are from the IRC report page; 'My part included…' is written from earlier notes (classification of project records by theme and intervention type, stakeholder survey analysis)."
   ],
   "nav": [
@@ -629,18 +629,6 @@
             "position": "50% 45%",
             "alt": "Yang Bong standing with five people around a round dinner table, several wearing beaded necklaces.",
             "caption": "Participatory Design Conference 2024"
-          },
-          {
-            "src": "assets/img/banner/2024-pdc-performers",
-            "widths": [
-              800,
-              1600
-            ],
-            "width": 1600,
-            "height": 1200,
-            "position": "50% 40%",
-            "alt": "Eight performers in traditional dress standing in a row with a hand on their heart.",
-            "caption": "Performers in traditional dress, Participatory Design Conference 2024"
           }
         ]
       },
