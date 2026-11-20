@@ -501,7 +501,7 @@
         return tileHtml(it, sizes, it.place + ' · ' + it.date);
       }).join('') + '</ul></section>';
   }
-  /* One photo tile (home mosaic and the Citizenship feature). */
+  /* One photo tile (home mosaic and the Service feature). */
   function tileHtml(it, sizes, placeLine) {
     return '<li class="tile' + (it.size ? ' tile--' + esc(it.size) : '') + '"><figure>' + pic(it, sizes) +
       '<figcaption>' + (placeLine ? '<span class="tile__place">' + esc(placeLine) + '</span>' : '') +
