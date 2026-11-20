@@ -704,6 +704,7 @@
   "pages": {
     "research": {
       "teaser": "Three connected themes, from digital inclusion in rural marketplaces to AI for sustainable development.",
+      "description": "Research by Dr Yang Bong (Birmingham Newman University) on digital inclusion, subsistence marketplaces, machine learning for social good and AI for sustainable development.",
       "image": {
         "src": "assets/img/banner/2025-toronto-compass",
         "widths": [
@@ -720,6 +721,7 @@
     },
     "publications": {
       "teaser": "Journal articles, conference papers and reports, with citations ready to copy.",
+      "description": "Publications by Dr Yang Bong, Birmingham Newman University: journal articles, conference papers and reports, with DOIs and citations ready to copy.",
       "image": {
         "src": "assets/img/banner/2026-iau-perth",
         "widths": [
@@ -736,6 +738,7 @@
     },
     "impact": {
       "teaser": "Community co-design in the Lun Bawang highlands of Sarawak, agricultural investment landscape in the UK, and Asia–Europe collaboration on AI for sustainable development.",
+      "description": "Impact work by Dr Yang Bong: community co-design in the Lun Bawang highlands of Sarawak, UK agricultural research infrastructure and the AE4AI Network.",
       "image": {
         "src": "assets/img/impact/semadoh-highlands",
         "width": 800,
@@ -747,6 +750,7 @@
     },
     "teaching": {
       "teaser": "Marketing, entrepreneurship and machine learning, at Birmingham Newman and Nottingham.",
+      "description": "Teaching by Dr Yang Bong in marketing, digital marketing, entrepreneurship and machine learning at Birmingham Newman University and the University of Nottingham.",
       "image": {
         "src": "assets/img/banner/2024-pdc-ethnography",
         "widths": [
@@ -763,6 +767,7 @@
     },
     "service": {
       "teaser": "Conference roles, peer review and network leadership.",
+      "description": "Academic citizenship of Dr Yang Bong: co-organising ASEFInnoLab7, conference roles, AE4AI Network leadership and peer review.",
       "image": {
         "src": "assets/img/banner/2026-nottingham-sessions",
         "widths": [

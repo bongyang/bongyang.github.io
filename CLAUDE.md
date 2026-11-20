@@ -26,7 +26,8 @@ section (Nov 2026 restructure), plain HTML/CSS/vanilla JS, no build step, hosted
 - `content.json` — all visible text. `todos` is never rendered.
   Inline links use `[label](https://url)` (see `rich()` in `main.js`).
   `nav[]` has `href` per page (Home is `./`; Contact is `#contact`, on every page).
-  `pages.<id>` holds each page's teaser and photo (home cards + page hero).
+  `pages.<id>` holds each page's teaser and photo (home cards + page hero)
+  and `description` (meta/OG description only; rerun `make_pages.py`).
   `home` holds the cover photo, tagline, statement and featured project.
 - `publications.bib` → `python3 scripts/bib_to_json.py` → `publications.json`.
   Never hand-edit the JSON. Commit both. Groups: `article` → journal,
