@@ -349,7 +349,7 @@ html:not(.is-ready) #page { visibility: hidden; }
 .intro { padding-top: 4rem; padding-bottom: 1rem; }
 .intro .display { margin-top: .9rem; max-width: 22ch; }
 .intro__cols { display: grid; gap: 2rem; margin-top: 2.5rem; }
-.intro__photo { width: min(55%, 14rem); }
+.intro__photo { width: min(80%, 20rem); }
 .intro__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 2px; }
 .intro__text p { font-size: 1.0625rem; line-height: 1.65; }
 .intro__text p + p { margin-top: 1rem; }
@@ -437,7 +437,7 @@ a.metarow:hover .metarow__line { opacity: 1; }
   .cover__role { grid-column: 1; grid-row: 2; align-self: end; }
   .cover__tag { grid-column: 2; grid-row: 2; margin: 1.5rem 0 0; font-size: 1.25rem; max-width: 24rem; text-align: right; }
   .intro { padding-top: 6rem; }
-  .intro__cols { grid-template-columns: 14rem minmax(0, 1fr); column-gap: 3rem; }
+  .intro__cols { grid-template-columns: 20rem minmax(0, 1fr); column-gap: 3rem; }
   .intro__photo { width: 100%; }
   .intro__text { columns: 2; column-gap: 2.5rem; }
   .intro__text p { break-inside: avoid; }
